@@ -2,6 +2,8 @@
   <div>
 
     <!--Stats cards-->
+    <h1>User: {{ $store.state.user }}</h1>
+    <button @click="change">Change!</button>
     <div class="row">
       <div class="col-lg-3 col-sm-6" v-for="stats in statsCards">
         <stats-card>
@@ -74,6 +76,13 @@
     components: {
       StatsCard,
       ChartCard
+    },
+
+    methods: {
+      change: function () {
+        console.log('CHANGE!')
+        this.$store.commit('updateUser', {first: 'Finnegan'})
+      }
     },
     /**
      * Chart data used to render stats, charts. Should be replaced with server data

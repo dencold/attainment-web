@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import firebase from 'firebase'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -13,7 +14,7 @@ import routes from './routes/routes'
 
 // library imports
 import Chartist from 'chartist'
-import firebase from 'firebase'
+import store from './store/store'
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/sass/paper-dashboard.scss'
 import 'es6-promise/auto'
@@ -33,13 +34,15 @@ const router = new VueRouter({
 })
 
 // configure firebase
-firebase.initializeApp({
+const config = {
   apiKey: 'AIzaSyBy6wjkoJPJVpysm2ZsFZ6VOxF8FhCtx68',                             // Auth / General Use
   authDomain: 'attainment-dev.firebaseapp.com',         // Auth with popup/redirect
   databaseURL: 'https://attainment-dev.firebaseio.com', // Realtime Database
   storageBucket: 'attainment-dev.appspot.com',          // Storage
   messagingSenderId: '123456789'                  // Cloud Messaging
-})
+}
+
+firebase.initializeApp(config)
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
@@ -48,18 +51,13 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
-Object.defineProperty(Vue.prototype, '$firebase', {
-  get () {
-    return this.$root.firebase
-  }
-})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  render: h => h(App),
-  router,
   data: {
-    Chartist: Chartist,
-    firebase: firebase
-  }
+    Chartist: Chartist
+  },
+  router,
+  store,
+  render: h => h(App)
 })
