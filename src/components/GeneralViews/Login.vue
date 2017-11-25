@@ -5,13 +5,20 @@
 
 <template>
   <div class="login">
+    <img
+      src="/static/img/attain-logo.jpg"
+      height="500px"
+      width="500px"
+    />
+    <h3>Welcome</h3>
+
     <div v-if="!$store.getters.isLoggedIn">
-      <h3>Login With Google Now!</h3>
-      <button color="primary" @click="signIn">Login</button>
+      <button class="btn btn-fill btn-info btn-wd" @click="signIn">Login With Google</button>
     </div>
     <div v-if="$store.getters.isLoggedIn">
-      <button color="primary" @click="signOut">Log out</button>
+      <button class="btn btn-fill btn-info btn-wd" @click="signOut">Logout</button>
     </div>
+
   </div>
 </template>
 
@@ -23,7 +30,6 @@
 
     methods: {
       signIn: function () {
-        console.log('IN SIGNIN!')
         const provider = new firebase.auth.GoogleAuthProvider()
 
         firebase.auth().signInWithRedirect(provider)
@@ -45,7 +51,9 @@
 </script>
 
 <style scoped>
-  .icon {
-    cursor: pointer;
+  .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
