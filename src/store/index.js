@@ -9,10 +9,7 @@ Vue.use(Vuex)
 
 const state = {
   user: {},
-  projects: [
-    {name: 'Do this'},
-    {name: 'No, do that'}
-  ]
+  projects: {}
 }
 
 /*

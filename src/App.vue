@@ -57,7 +57,7 @@ export default {
       console.log('Setting User!')
       this.$store.commit('SET_USER', user)
       // this.$store.dispatch('fetchTasks')
-      // this.$store.dispatch('fetchProjects')
+      this.$store.dispatch('syncProjects')
     }
   }
 }

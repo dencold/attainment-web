@@ -33,15 +33,7 @@
         const provider = new firebase.auth.GoogleAuthProvider()
 
         firebase.auth().signInWithRedirect(provider)
-          .then((result) => {
-            console.log('after redirect!')
-            this.$store.commit('SET_USER', result.user)
-            this.$router.replace({name: 'overview'})
-          })
-          .catch(err => {
-            console.log('YEPPPERS!!!')
-            console.log(err)
-          })
+        // we handle the aftermath of the signin flow on App.vue's beforeCreate hook
       },
       signOut: function () {
         this.$store.dispatch('signOut')

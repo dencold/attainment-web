@@ -1,12 +1,14 @@
 import firebase from 'firebase'
+import 'firebase/firestore'
 
 // configure firebase
 const config = {
-  apiKey: 'AIzaSyBy6wjkoJPJVpysm2ZsFZ6VOxF8FhCtx68',                             // Auth / General Use
-  authDomain: 'attainment-dev.firebaseapp.com',         // Auth with popup/redirect
-  databaseURL: 'https://attainment-dev.firebaseio.com', // Realtime Database
-  storageBucket: 'attainment-dev.appspot.com',          // Storage
-  messagingSenderId: '123456789'                  // Cloud Messaging
+  apiKey: 'AIzaSyBy6wjkoJPJVpysm2ZsFZ6VOxF8FhCtx68',
+  authDomain: 'attainment-dev.firebaseapp.com',
+  databaseURL: 'https://attainment-dev.firebaseio.com',
+  projectId: 'attainment-dev',
+  storageBucket: 'attainment-dev.appspot.com',
+  messagingSenderId: '646574338415'
 }
 
 const fireApp = firebase.initializeApp(config)

@@ -3,7 +3,7 @@
     <div class="header">
       <h4 class="title">{{project.name}}</h4>
       <p class="category">
-        <span>{{project.subTitle}}</span>
+        <span>{{project.description}}</span>
       </p>
     </div>
     <div class="content">

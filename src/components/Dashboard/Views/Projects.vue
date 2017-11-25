@@ -1,5 +1,14 @@
 <template>
   <div>
+    <input
+      name="addProject"
+      ref="addProject"
+      v-model.trim="projectName"
+      placeholder="Add a new project (& hit enter)"
+      @keyup.enter="addProject()"
+      @keyup.esc="$refs.addnew.blur()"
+    />
+    <button @click="addProject">+</button>
 
     <!--Stats cards-->
     <div class="row">
@@ -17,10 +26,21 @@
       ProjectCard
     },
 
+    data () {
+      return {
+        projectName: ''
+      }
+    },
+
     methods: {
-      change: function () {
-        console.log('CHANGE!')
-        this.$store.commit('updateUser', {first: 'Finnegan'})
+      addProject () {
+        if (this.projectName.trim().length === 0) {
+          console.log('ERROR!')
+        } else {
+          const newPrj = {name: this.projectName, description: ''}
+          this.$store.dispatch('addProject', newPrj)
+          this.projectName = ''
+        }
       }
     }
   }
