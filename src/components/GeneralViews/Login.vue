@@ -5,8 +5,13 @@
 
 <template>
   <div class="login">
-    <h3>Login With Google</h3>
-    <button color="primary" @click="signIn">Login</button>
+    <div v-if="!$store.getters.isLoggedIn">
+      <h3>Login With Google Now!</h3>
+      <button color="primary" @click="signIn">Login</button>
+    </div>
+    <div v-if="$store.getters.isLoggedIn">
+      <button color="primary" @click="signOut">Log out</button>
+    </div>
   </div>
 </template>
 
@@ -21,10 +26,10 @@
         console.log('IN SIGNIN!')
         const provider = new firebase.auth.GoogleAuthProvider()
 
-        firebase.auth().signInWithPopup(provider)
+        firebase.auth().signInWithRedirect(provider)
           .then((result) => {
             console.log('after redirect!')
-            this.$store.commit('updateUser', result.user)
+            this.$store.commit('SET_USER', result.user)
             this.$router.replace({name: 'overview'})
           })
           .catch(err => {
@@ -33,10 +38,7 @@
           })
       },
       signOut: function () {
-        firebase.auth().signOut()
-          .then(() => {
-            this.user = null
-          }).catch(err => console.log(err))
+        this.$store.dispatch('signOut')
       }
     }
   }

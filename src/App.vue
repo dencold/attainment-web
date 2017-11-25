@@ -1,6 +1,7 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
-    <router-view></router-view>
+    <login v-if="!$store.getters.isLoggedIn"></login>
+    <router-view v-if="$store.getters.isLoggedIn"></router-view>
     <!--This sidebar appears only for screens smaller than 992px-->
     <side-bar type="navbar" :sidebar-links="$sidebar.sidebarLinks">
       <ul class="nav navbar-nav">
@@ -32,8 +33,15 @@
 </template>
 
 <script>
+import fireApp from './modules/firebase'
+import Login from 'components/GeneralViews/Login.vue'
+
 export default {
   name: 'app',
+
+  components: {
+    'login': Login
+  },
 
   beforeCreate () {
     // setup app-wide keyboard shortcuts
@@ -42,6 +50,15 @@ export default {
         this.$router.replace({name: 'projects'})
       }
     })
+
+    // check if we already have a user logged in
+    const user = fireApp.auth().currentUser
+    if (user) {
+      console.log('Setting User!')
+      this.$store.commit('SET_USER', user)
+      // this.$store.dispatch('fetchTasks')
+      // this.$store.dispatch('fetchProjects')
+    }
   }
 }
 </script>
