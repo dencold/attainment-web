@@ -18,14 +18,11 @@ export default {
 
     collection.onSnapshot(snapshot => {
       snapshot.docChanges.forEach(change => {
-        if (change.type === 'added') {
-          context.commit('ADD_PROJECT', {id: change.doc.id, newProj: change.doc.data()})
-        }
-        if (change.type === 'modified') {
-          console.log('Modified city: ', change.doc.data())
+        if (change.type === 'added' || change.type === 'modified') {
+          context.commit('ADD_OR_UPDATE_PROJECT', {id: change.doc.id, newProj: change.doc.data()})
         }
         if (change.type === 'removed') {
-          console.log('Removed city: ', change.doc.data())
+          context.commit('DELETE_PROJECT', change.doc.id)
         }
       })
     })

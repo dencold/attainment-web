@@ -10,7 +10,10 @@ export default {
     // Resetting state for proper local storage sync.
     state.tasks = {}
   },
-  ADD_PROJECT (state, {id, newProj}) {
+  ADD_OR_UPDATE_PROJECT (state, {id, newProj}) {
     Vue.set(state.projects, id, newProj)
+  },
+  DELETE_PROJECT (state, id) {
+    Vue.delete(state.projects, id)
   }
 }

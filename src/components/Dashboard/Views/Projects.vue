@@ -4,16 +4,16 @@
       name="addProject"
       ref="addProject"
       v-model.trim="projectName"
-      placeholder="Add a new project (& hit enter)"
+      placeholder="Add a new project"
       @keyup.enter="addProject()"
-      @keyup.esc="$refs.addnew.blur()"
+      @keyup.esc="$refs.addProject.blur()"
     />
     <button @click="addProject">+</button>
 
     <!--Stats cards-->
     <div class="row">
       <div class="col-lg-3 col-sm-6" v-for="project in $store.state.projects">
-        <project-card :project="project" @click="alert('blah')"></project-card>
+        <project-card :project="project" @click="console.log('blah')"></project-card>
       </div>
     </div>
 
