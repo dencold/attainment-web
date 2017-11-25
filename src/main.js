@@ -1,6 +1,4 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import firebase from 'firebase'
 
 // Plugins
 import GlobalComponents from './globalComponents'
@@ -9,40 +7,21 @@ import Notifications from './components/UIComponents/NotificationPlugin'
 import SideBar from './components/UIComponents/SidebarPlugin'
 import App from './App'
 
-// router setup
-import routes from './routes/routes'
-
 // library imports
 import Chartist from 'chartist'
-import store from './store/store'
+import store from './store'
+import router from './router'
+import fireApp from './modules/firebase'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/sass/paper-dashboard.scss'
 import 'es6-promise/auto'
 
 // plugin setup
-Vue.use(VueRouter)
 Vue.use(GlobalComponents)
 Vue.use(GlobalDirectives)
 Vue.use(Notifications)
 Vue.use(SideBar)
-
-// configure router
-const router = new VueRouter({
-  routes, // short for routes: routes
-  mode: 'history',
-  linkActiveClass: 'active'
-})
-
-// configure firebase
-const config = {
-  apiKey: 'AIzaSyBy6wjkoJPJVpysm2ZsFZ6VOxF8FhCtx68',                             // Auth / General Use
-  authDomain: 'attainment-dev.firebaseapp.com',         // Auth with popup/redirect
-  databaseURL: 'https://attainment-dev.firebaseio.com', // Realtime Database
-  storageBucket: 'attainment-dev.appspot.com',          // Storage
-  messagingSenderId: '123456789'                  // Cloud Messaging
-}
-
-firebase.initializeApp(config)
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
@@ -51,13 +30,28 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
+Vue.config.productionTip = false
+
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  data: {
-    Chartist: Chartist
-  },
-  router,
-  store,
-  render: h => h(App)
+const vueApp = fireApp.auth().onAuthStateChanged(() => {
+  new Vue({
+    el: '#app',
+    data: {
+      Chartist: Chartist
+    },
+    router,
+    store,
+    render: h => h(App)
+  })
+
+  vueApp()
 })
+
+          /*
+window.addEventListener('keyup', function (e) {
+  if (e.key === 'p') {
+    router.replace({name: 'projects'})
+    console.log(e)
+  }
+})
+*/
