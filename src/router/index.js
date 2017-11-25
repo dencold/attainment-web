@@ -79,8 +79,10 @@ const routes = [
   { path: '*', component: NotFound }
 ]
 
-export default new Router({
+const router = new VueRouter({
   mode: 'history',
   linkActiveClass: 'active',
   routes: routes
 })
+
+export default router

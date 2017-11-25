@@ -32,7 +32,18 @@
 </template>
 
 <script>
-  export default {}
+export default {
+  name: 'app',
+
+  beforeCreate () {
+    // setup app-wide keyboard shortcuts
+    window.addEventListener('keyup', e => {
+      if (e.key === 'p') {
+        this.$router.replace({name: 'projects'})
+      }
+    })
+  }
+}
 </script>
 
 <style lang="scss"></style>
