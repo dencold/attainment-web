@@ -9,6 +9,7 @@ import Login from '../components/GeneralViews/Login.vue'
 // Admin pages
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
+import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
@@ -48,6 +49,12 @@ const routes = [
         path: 'projects',
         name: 'projects',
         component: Projects
+      },
+      {
+        path: 'project/:id',
+        name: 'project',
+        props: true,
+        component: ProjectDetail
       },
       {
         path: 'notifications',

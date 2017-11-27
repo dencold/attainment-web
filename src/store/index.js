@@ -9,16 +9,9 @@ Vue.use(Vuex)
 
 const state = {
   user: {},
-  projects: {}
+  projects: {},
+  tasks: {}
 }
-
-/*
-const actions = {
-  updateUser: (context, payload) => {
-    context.commit('updateUser', payload)
-  }
-}
-*/
 
 const vx = new Vuex.Store({
   state,

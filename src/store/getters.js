@@ -8,5 +8,8 @@ export default {
     }
 
     return true
+  },
+  projectTasks: state => projId => {
+    return Object.values(state.tasks).filter(task => task.projectId === projId)
   }
 }

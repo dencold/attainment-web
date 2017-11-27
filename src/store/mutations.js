@@ -15,5 +15,11 @@ export default {
   },
   DELETE_PROJECT (state, id) {
     Vue.delete(state.projects, id)
+  },
+  ADD_OR_UPDATE_TASK (state, {id, newTask}) {
+    Vue.set(state.tasks, id, newTask)
+  },
+  DELETE_TASK (state, id) {
+    Vue.delete(state.tasks, id)
   }
 }

@@ -12,8 +12,8 @@
 
     <!--Stats cards-->
     <div class="row">
-      <div class="col-lg-3 col-sm-6" v-for="project in $store.state.projects">
-        <project-card :project="project" @click="console.log('blah')"></project-card>
+      <div class="col-lg-3 col-sm-6" v-for="(project, id) in $store.state.projects">
+        <project-card :id="id" :project="project" @click.native="toDetail(id)"></project-card>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
   import ProjectCard from 'components/UIComponents/Cards/ProjectCard.vue'
   export default {
     components: {
-      ProjectCard
+      'project-card': ProjectCard
     },
 
     data () {
@@ -37,10 +37,13 @@
         if (this.projectName.trim().length === 0) {
           console.log('ERROR!')
         } else {
-          const newPrj = {name: this.projectName, description: ''}
+          const newPrj = {name: this.projectName, details: ''}
           this.$store.dispatch('addProject', newPrj)
           this.projectName = ''
         }
+      },
+      toDetail: function (projectId) {
+        this.$router.push({name: 'project', params: { id: projectId }})
       }
     }
   }

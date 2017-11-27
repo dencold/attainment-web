@@ -26,5 +26,28 @@ export default {
         }
       })
     })
+  },
+  addTask: (context, newTask) => {
+    // add any default properties on our object
+    newTask['createdAt'] = Date.now()
+
+    // setup firebase connections
+    const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
+
+    collection.add(newTask)
+  },
+  syncTasks: (context) => {
+    const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
+
+    collection.onSnapshot(snapshot => {
+      snapshot.docChanges.forEach(change => {
+        if (change.type === 'added' || change.type === 'modified') {
+          context.commit('ADD_OR_UPDATE_TASK', {id: change.doc.id, newTask: change.doc.data()})
+        }
+        if (change.type === 'removed') {
+          context.commit('DELETE_TASK', change.doc.id)
+        }
+      })
+    })
   }
 }
