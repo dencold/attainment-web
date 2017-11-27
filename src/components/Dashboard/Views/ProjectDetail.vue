@@ -2,17 +2,10 @@
   <div class="content">
     <h4>{{project.name}}</h4>
     <code>{{project.details}}</code>
-    <input
-      name="addTask"
-      ref="addTask"
-      v-model.trim="taskName"
-      placeholder="Add a new task"
-      @keyup.enter="addTask()"
-      @keyup.esc="$refs.addTask.blur()"
-    />
-    <button @click="addTask">+</button>
 
-    <div class="flex-row" v-for="task in projectTasks">
+    <text-input placeholder="Add a task" @submitted="addTask"></text-input>
+
+    <div class="flex-col" v-for="task in projectTasks">
       <task-card :task="task" @click="console.log('blah')"></task-card>
     </div>
   </div>
@@ -20,10 +13,12 @@
 
 <script>
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
+  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
 
   export default {
     components: {
-      'task-card': TaskCard
+      'task-card': TaskCard,
+      'text-input': TextInput
     },
 
     props: {
@@ -32,7 +27,6 @@
 
     data () {
       return {
-        taskName: '',
         project: this.$store.state.projects[this.id]
       }
     },
@@ -44,13 +38,14 @@
     },
 
     methods: {
-      addTask () {
-        if (this.taskName.trim().length === 0) {
+      addTask (e) {
+        const taskName = e.trim()
+
+        if (taskName.length === 0) {
           console.log('ERROR!')
         } else {
-          const newTask = {name: this.taskName, projectId: this.id, details: ''}
+          const newTask = {name: taskName, projectId: this.id, details: ''}
           this.$store.dispatch('addTask', newTask)
-          this.taskName = ''
         }
       }
     }
@@ -58,7 +53,7 @@
 </script>
 
 <style>
-  .flex-row{
+  .flex-col{
     display: flex;
     flex-direction: column;
   }

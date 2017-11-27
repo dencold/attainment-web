@@ -1,14 +1,6 @@
 <template>
   <div>
-    <input
-      name="addProject"
-      ref="addProject"
-      v-model.trim="projectName"
-      placeholder="Add a new project"
-      @keyup.enter="addProject()"
-      @keyup.esc="$refs.addProject.blur()"
-    />
-    <button @click="addProject">+</button>
+    <text-input placeholder="Add a task" @submitted="addProject"></text-input>
 
     <!--Stats cards-->
     <div class="row">
@@ -21,25 +13,23 @@
 </template>
 <script>
   import ProjectCard from 'components/UIComponents/Cards/ProjectCard.vue'
+  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+
   export default {
     components: {
-      'project-card': ProjectCard
-    },
-
-    data () {
-      return {
-        projectName: ''
-      }
+      'project-card': ProjectCard,
+      'text-input': TextInput
     },
 
     methods: {
-      addProject () {
-        if (this.projectName.trim().length === 0) {
+      addProject (e) {
+        const projectName = e.trim()
+
+        if (projectName.length === 0) {
           console.log('ERROR!')
         } else {
-          const newPrj = {name: this.projectName, details: ''}
+          const newPrj = {name: projectName, details: ''}
           this.$store.dispatch('addProject', newPrj)
-          this.projectName = ''
         }
       },
       toDetail: function (projectId) {
