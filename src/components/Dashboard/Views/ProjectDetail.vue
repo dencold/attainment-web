@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <h4>{{project.name}}</h4>
     <code>{{project.details}}</code>
     <input
@@ -12,11 +12,8 @@
     />
     <button @click="addTask">+</button>
 
-    <div class="row">
-      <div class="col-lg-3 col-sm-6" v-for="task in projectTasks">
-
-        <task-card :task="task" @click="console.log('blah')"></task-card>
-      </div>
+    <div class="flex-row" v-for="task in projectTasks">
+      <task-card :task="task" @click="console.log('blah')"></task-card>
     </div>
   </div>
 </template>
@@ -46,12 +43,6 @@
       }
     },
 
-    created: function () {
-      console.log('In created')
-      console.log(this.project)
-      console.log(this.$store.state.projects[this.id])
-    },
-
     methods: {
       addTask () {
         if (this.taskName.trim().length === 0) {
@@ -67,5 +58,11 @@
 </script>
 
 <style>
-
+  .flex-row{
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    max-width: 750px;
+  }
 </style>
