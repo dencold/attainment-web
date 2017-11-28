@@ -5,8 +5,8 @@
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
-    <div class="flex-col" v-for="task in projectTasks">
-      <task-card :task="task" @click="console.log('blah')"></task-card>
+    <div class="flex-col" v-for="(task, id) in projectTasks">
+      <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
     </div>
   </div>
 </template>
@@ -25,13 +25,10 @@
       id: String
     },
 
-    data () {
-      return {
-        project: this.$store.state.projects[this.id]
-      }
-    },
-
     computed: {
+      project () {
+        return this.$store.state.projects[this.id]
+      },
       projectTasks () {
         return this.$store.getters.projectTasks(this.id)
       }
@@ -44,9 +41,12 @@
         if (taskName.length === 0) {
           console.log('ERROR!')
         } else {
-          const newTask = {name: taskName, projectId: this.id, details: ''}
+          const newTask = {name: taskName, projectId: this.id, details: '', starred: false, poms: 3, dueAt: '2017-12-12'}
           this.$store.dispatch('addTask', newTask)
         }
+      },
+      toTask (taskId) {
+        this.$router.push({name: 'task', params: { id: taskId }})
       }
     }
   }
@@ -56,6 +56,10 @@
   .flex-col{
     display: flex;
     flex-direction: column;
+  }
+  .flex-row{
+    display: flex;
+    flex-direction: row;
   }
   .content {
     max-width: 750px;

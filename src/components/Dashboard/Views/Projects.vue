@@ -1,11 +1,11 @@
 <template>
   <div>
-    <text-input placeholder="Add a task" @submitted="addProject"></text-input>
+    <text-input placeholder="Add a project" @submitted="addProject"></text-input>
 
     <!--Stats cards-->
     <div class="row">
       <div class="col-lg-3 col-sm-6" v-for="(project, id) in $store.state.projects">
-        <project-card :id="id" :project="project" @click.native="toDetail(id)"></project-card>
+        <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
           this.$store.dispatch('addProject', newPrj)
         }
       },
-      toDetail: function (projectId) {
+      toProject: function (projectId) {
         this.$router.push({name: 'project', params: { id: projectId }})
       }
     }

@@ -9,7 +9,23 @@ export default {
 
     return true
   },
+
   projectTasks: state => projId => {
-    return Object.values(state.tasks).filter(task => task.projectId === projId)
+    var matchingTasks = {}
+
+    for (var key in state.tasks) {
+      if (state.tasks.hasOwnProperty(key) && state.tasks[key].projectId === projId) {
+        matchingTasks[key] = state.tasks[key]
+      }
+    }
+
+    return matchingTasks
+  },
+
+  numTasksInProject: (state, getters) => projId => {
+    const projTasks = getters.projectTasks(projId)
+
+    return Object.keys(projTasks).length
   }
+
 }

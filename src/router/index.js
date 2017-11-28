@@ -10,6 +10,7 @@ import Login from '../components/GeneralViews/Login.vue'
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
+import TaskDetail from 'src/components/Dashboard/Views/TaskDetail.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
@@ -55,6 +56,12 @@ const routes = [
         name: 'project',
         props: true,
         component: ProjectDetail
+      },
+      {
+        path: 'task/:id',
+        name: 'task',
+        props: true,
+        component: TaskDetail
       },
       {
         path: 'notifications',

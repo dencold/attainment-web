@@ -28,7 +28,7 @@
     },
     computed: {
       numTasks () {
-        return this.$store.getters.projectTasks(this.id).length
+        return this.$store.getters.numTasksInProject(this.id)
       }
     }
   }

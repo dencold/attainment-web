@@ -5,6 +5,7 @@ import GlobalComponents from './globalComponents'
 import GlobalDirectives from './globalDirectives'
 import Notifications from './components/UIComponents/NotificationPlugin'
 import SideBar from './components/UIComponents/SidebarPlugin'
+import VueMoment from 'vue-moment'
 import App from './App'
 
 // library imports
@@ -22,6 +23,7 @@ Vue.use(GlobalComponents)
 Vue.use(GlobalDirectives)
 Vue.use(Notifications)
 Vue.use(SideBar)
+Vue.use(VueMoment)
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
