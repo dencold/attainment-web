@@ -22,69 +22,64 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    component: DashboardLayout,
-    redirect: '/admin/overview'
-  },
-  {
     path: '/login',
     name: 'login',
     component: Login
   },
   {
-    path: '/admin',
+    path: '/',
     component: DashboardLayout,
-    redirect: '/admin/stats',
+    redirect: '/overview',
     children: [
       {
-        path: 'overview',
+        path: '/overview',
         name: 'overview',
         component: Overview
       },
       {
-        path: 'stats',
+        path: '/stats',
         name: 'stats',
         component: UserProfile
       },
       {
-        path: 'projects',
+        path: '/projects',
         name: 'projects',
         component: Projects
       },
       {
-        path: 'project/:id',
+        path: '/project/:id',
         name: 'project',
         props: true,
         component: ProjectDetail
       },
       {
-        path: 'task/:id',
+        path: '/task/:id',
         name: 'task',
         props: true,
         component: TaskDetail
       },
       {
-        path: 'notifications',
+        path: '/notifications',
         name: 'notifications',
         component: Notifications
       },
       {
-        path: 'icons',
+        path: '/icons',
         name: 'icons',
         component: Icons
       },
       {
-        path: 'maps',
+        path: '/maps',
         name: 'maps',
         component: Maps
       },
       {
-        path: 'typography',
+        path: '/typography',
         name: 'typography',
         component: Typography
       },
       {
-        path: 'table-list',
+        path: '/table-list',
         name: 'table-list',
         component: TableList
       }
