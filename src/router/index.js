@@ -1,12 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
-// GeneralViews
-import NotFound from '../components/GeneralViews/NotFoundPage.vue'
-import Login from '../components/GeneralViews/Login.vue'
-
-// Admin pages
+import DashboardLayout from 'src/components/Dashboard/Layout/DashboardLayout.vue'
+import NotFound from 'src/components/Dashboard/Views/NotFoundPage.vue'
+import Login from 'src/components/Dashboard/Views/Login.vue'
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'

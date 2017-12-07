@@ -34,7 +34,7 @@
 
 <script>
 import fireApp from './modules/firebase'
-import Login from 'components/GeneralViews/Login.vue'
+import Login from 'components/Dashboard/Views/Login.vue'
 
 export default {
   name: 'app',
