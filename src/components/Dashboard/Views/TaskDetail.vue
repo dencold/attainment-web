@@ -16,21 +16,21 @@
 
       <hr/>
 
-      <div class="flex-row">
+      <div class="flex-row highlight">
         <div class="icon" @click="toggleStar">
           <i class="ti-folder"></i>
         </div>
         <span class="name">{{project.name}}</span>
       </div>
 
-      <div class="flex-row">
+      <div class="flex-row highlight">
         <div class="icon" @click="toggleStar">
           <i class="ti-bolt"></i>
         </div>
         <span class="name">{{task.poms}}</span>
       </div>
 
-      <div class="flex-row">
+      <div class="flex-row highlight">
         <div class="icon" @click="toggleStar">
           <i class="ti-calendar"></i>
         </div>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="flex-row">
-        <div class="icon" @click="toggleStar">
+        <div class="icon highlight" @click="toggleStar">
           <i class="ti-pencil"></i>
         </div>
         <span class="name">{{task.details}}</span>
@@ -70,19 +70,13 @@
     },
 
     methods: {
-      addTask (e) {
-        const taskName = e.trim()
-
-        if (taskName.length === 0) {
-          console.log('ERROR!')
-        } else {
-          const newTask = {name: taskName, projectId: this.id, details: ''}
-          this.$store.dispatch('addTask', newTask)
-        }
-      },
       toggleStar () {
-        // this.task.starred = !this.task.starred
-        console.log('TOGGLE!')
+        let newTask = this.task
+        newTask.starred = !this.task.starred
+        this.$store.dispatch(
+          'updateTask',
+          {id: this.id, newTask: newTask}
+        )
       }
     }
   }
@@ -95,8 +89,11 @@
   .card {
     padding: 15px;
   }
+  .highlight {
+    color: #3091B2;
+  }
   .flex-row {
-    height: auto;
+    height: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;

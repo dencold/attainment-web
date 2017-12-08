@@ -30,11 +30,23 @@ export default {
   addTask: (context, newTask) => {
     // add any default properties on our object
     newTask['createdAt'] = Date.now()
+    newTask['updatedAt'] = Date.now()
 
     // setup firebase connections
     const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
 
     collection.add(newTask)
+  },
+  updateTask: (context, taskDetails) => {
+    let newTask = taskDetails['newTask']
+    newTask['updatedAt'] = Date.now()
+
+    // setup firebase connections
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .collection('tasks')
+      .doc(taskDetails['id'])
+      .update(newTask)
   },
   syncTasks: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
