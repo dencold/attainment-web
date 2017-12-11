@@ -34,7 +34,14 @@
         <div class="icon" @click="toggleStar">
           <i class="ti-calendar"></i>
         </div>
-        <span class="name">{{task.dueAt}}</span>
+        <datetime
+          :value="task.dueAt"
+          @input="updateDue"
+          placeholder="Set due date"
+          class="name"
+          input-class="datetime-input"
+          auto-close>
+        </datetime>
       </div>
 
       <div class="flex-row">
@@ -50,10 +57,12 @@
 
 <script>
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import { Datetime } from 'vue-datetime'
 
   export default {
     components: {
-      'text-input': TextInput
+      'text-input': TextInput,
+      'datetime': Datetime
     },
 
     props: {
@@ -73,6 +82,16 @@
       toggleStar () {
         let newTask = this.task
         newTask.starred = !this.task.starred
+        this.updateTask(newTask)
+      },
+      updateDue (dueAt) {
+        if (dueAt !== this.task.dueAt) {
+          let newTask = this.task
+          newTask.dueAt = dueAt
+          this.updateTask(newTask)
+        }
+      },
+      updateTask (newTask) {
         this.$store.dispatch(
           'updateTask',
           {id: this.id, newTask: newTask}
@@ -129,5 +148,9 @@
   }
   .content {
     max-width: 750px;
+  }
+  input {
+    padding: 0 10px 0 10px;
+    border: none;
   }
 </style>
