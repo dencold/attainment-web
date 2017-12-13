@@ -24,14 +24,14 @@
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon" @click="toggleStar">
+        <div class="icon" @click="startPom">
           <i class="ti-bolt"></i>
         </div>
-        <span class="name">{{task.poms}}</span>
+        <span class="name">{{task.poms_completed}} / {{task.poms_total}}</span>
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon" @click="toggleStar">
+        <div class="icon" @click="showDatePicker">
           <i class="ti-calendar"></i>
         </div>
         <datetime
@@ -96,6 +96,11 @@
           'updateTask',
           {id: this.id, newTask: newTask}
         )
+      },
+      startPom () {
+        let newTask = this.task
+        newTask.poms_completed += 1
+        this.updateTask(newTask)
       }
     }
   }

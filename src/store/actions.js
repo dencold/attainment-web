@@ -10,6 +10,7 @@ export default {
   addProject: (context, newProject) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
     newProject['createdAt'] = Date.now()
+    newProject['updatedAt'] = Date.now()
 
     collection.add(newProject)
   },

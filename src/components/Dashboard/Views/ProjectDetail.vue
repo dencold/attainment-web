@@ -41,7 +41,15 @@
         if (taskName.length === 0) {
           console.log('ERROR!')
         } else {
-          const newTask = {name: taskName, projectId: this.id, details: '', starred: false, poms: 3, dueAt: '2017-12-12'}
+          const newTask = {
+            name: taskName,
+            projectId: this.id,
+            details: '',
+            starred: false,
+            poms_completed: 0,
+            poms_total: 3,
+            dueAt: ''
+          }
           this.$store.dispatch('addTask', newTask)
         }
       },

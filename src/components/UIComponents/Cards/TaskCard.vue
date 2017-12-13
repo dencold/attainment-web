@@ -13,9 +13,9 @@
     <div v-if="project" class="project">{{project.name}}</div>
     <div class="task">{{task.name}}</div>
     <div class="poms">
-      <span v-if="task.poms">
-        <i class="fa fa-circle-o"></i>
-        {{task.poms}}
+      <span v-if="task.poms_total">
+        <i class="ti-bolt"></i>
+        {{task.poms_completed}} / {{task.poms_total}}
       </span>
     </div>
     <div class="due">
