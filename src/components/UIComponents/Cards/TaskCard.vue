@@ -15,13 +15,13 @@
     <div class="poms">
       <span v-if="task.poms_total">
         <i class="ti-bolt"></i>
-        {{task.poms_completed}} / {{task.poms_total}}
+        {{task.poms_total - task.poms_completed}}
       </span>
     </div>
     <div class="due">
       <span v-if="task.dueAt">
         <i class="fa fa-calendar-check-o"></i>
-        {{ [task.dueAt, "YYYY-MM-DD"] | moment("diff", Date.now(), "days") }}
+        {{ task.dueAt | moment("diff", Date.now(), "days") }}
       </span>
     </div>
 

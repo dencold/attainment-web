@@ -35,10 +35,13 @@
           <i class="ti-calendar"></i>
         </div>
         <datetime
+          ref="datepicker"
           :value="task.dueAt"
           @input="updateDue"
           placeholder="Set due date"
           class="name"
+          type="date"
+          input-format="YYYY-MM-DD"
           input-class="datetime-input"
           auto-close>
         </datetime>
@@ -79,6 +82,9 @@
     },
 
     methods: {
+      showDatePicker () {
+        this.$refs.datepicker.open()
+      },
       toggleStar () {
         let newTask = this.task
         newTask.starred = !this.task.starred
