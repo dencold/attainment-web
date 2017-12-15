@@ -48,7 +48,9 @@
             starred: false,
             poms_completed: 0,
             poms_total: 3,
-            dueAt: ''
+            dueAt: '',
+            completed: false,
+            completedAt: ''
           }
           this.$store.dispatch('addTask', newTask)
         }

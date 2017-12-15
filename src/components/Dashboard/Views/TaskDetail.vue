@@ -7,7 +7,9 @@
           <i v-show="task.completed" class="fa fa-check-square-o"></i>
           <i v-show="!task.completed" class="fa fa-square-o"></i>
         </div>
-        <span class="name">{{task.name}}</span>
+
+        <input class="name" :value="task.name" @input="updateName" type="text" />
+
         <div class="icon" @click="toggleStar">
           <i v-show="task.starred" class="fa fa-star"></i>
           <i v-show="!task.starred" class="fa fa-star-o"></i>
@@ -90,6 +92,14 @@
         newTask.starred = !this.task.starred
         this.updateTask(newTask)
       },
+      updateName (e) {
+        let name = e.target.value
+        if (name !== this.task.name) {
+          let newTask = this.task
+          newTask.name = name
+          this.updateTask(newTask)
+        }
+      },
       updateDue (dueAt) {
         if (dueAt !== this.task.dueAt) {
           let newTask = this.task
@@ -135,6 +145,9 @@
     font-size: 95%;
     justify-content: center;
     align-items: baseline;
+  }
+  .fa {
+    width: auto;
   }
   .title {
     font-size: 200%;
