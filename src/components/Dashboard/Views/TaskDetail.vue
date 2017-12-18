@@ -53,7 +53,9 @@
         <div class="icon highlight" @click="toggleStar">
           <i class="ti-pencil"></i>
         </div>
-        <span class="name">{{task.details}}</span>
+        <div class="name">
+          <textarea placeholder="Notes" :value="task.details" @input="updateDetails"/>
+        </div>
       </div>
 
     </div>
@@ -107,6 +109,14 @@
           this.updateTask(newTask)
         }
       },
+      updateDetails (e) {
+        let details = e.target.value
+        if (details !== this.task.details) {
+          let newTask = this.task
+          newTask.details = details
+          this.updateTask(newTask)
+        }
+      },
       updateTask (newTask) {
         this.$store.dispatch(
           'updateTask',
@@ -123,6 +133,13 @@
 </script>
 
 <style scoped>
+  textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    background-color: #F5F5F5;
+    border: none;
+  }
   .content {
     font-size: 16px;
   }
@@ -133,18 +150,10 @@
     color: #3091B2;
   }
   .flex-row {
-    height: 30px;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    padding: 0 15px 0 15px;
-  }
-  .icon {
-    display: flex;
-    width: auto;
-    font-size: 95%;
-    justify-content: center;
-    align-items: baseline;
+    padding: 0 15px;
+    margin: 0 0 5px 0;
   }
   .fa {
     width: auto;
@@ -157,7 +166,7 @@
   }
   .name {
     flex-grow: 1;
-    padding: 0 10px 0 10px;
+    padding: 0 10px;
   }
   .pom {
     width: 25px;
@@ -174,7 +183,7 @@
     max-width: 750px;
   }
   input {
-    padding: 0 10px 0 10px;
+    padding: 0 10px;
     border: none;
   }
 </style>
