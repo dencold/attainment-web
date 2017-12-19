@@ -3,7 +3,7 @@
     <div class="card">
 
       <div class="flex-row title">
-        <div class="icon" @click="toggleStar">
+        <div class="icon" @click="toggleComplete">
           <i v-show="task.completed" class="fa fa-check-square-o"></i>
           <i v-show="!task.completed" class="fa fa-square-o"></i>
         </div>
@@ -94,6 +94,12 @@
         newTask.starred = !this.task.starred
         this.updateTask(newTask)
       },
+      // there's a lot of boilerplate repeated code that I'm really unhappy with
+      // but this is what we're left with in the Vuex model. we need to use
+      // computed properties for accessing the data and that is read-only I might
+      // switch this all into the store's actions, but that's a future refactoring
+      // see more:
+      // https://vuex.vuejs.org/en/forms.html
       updateName (e) {
         let name = e.target.value
         if (name !== this.task.name) {
@@ -116,6 +122,12 @@
           newTask.details = details
           this.updateTask(newTask)
         }
+      },
+      toggleComplete () {
+        let newTask = this.task
+        newTask.completed = !this.task.completed
+        newTask.completedAt = Date.now()
+        this.updateTask(newTask)
       },
       updateTask (newTask) {
         this.$store.dispatch(
