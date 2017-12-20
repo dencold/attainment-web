@@ -5,7 +5,7 @@
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
-    <div class="flex-col" v-for="(task, id) in projectTasks">
+    <div class="flex-col" v-for="(task, id) in projectTasksActive">
       <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
     </div>
   </div>
@@ -29,8 +29,8 @@
       project () {
         return this.$store.state.projects[this.id]
       },
-      projectTasks () {
-        return this.$store.getters.projectTasks(this.id)
+      projectTasksActive () {
+        return this.$store.getters.projectTasksActive(this.id)
       }
     },
 

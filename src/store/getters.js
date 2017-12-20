@@ -10,11 +10,27 @@ export default {
     return true
   },
 
-  projectTasks: state => projId => {
+  projectTasksActive: state => projId => {
     var matchingTasks = {}
 
     for (var key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) && state.tasks[key].projectId === projId) {
+      if (state.tasks.hasOwnProperty(key) &&
+          state.tasks[key].projectId === projId &&
+          state.tasks[key].completed === false) {
+        matchingTasks[key] = state.tasks[key]
+      }
+    }
+
+    return matchingTasks
+  },
+
+  projectTasksCompleted: state => projId => {
+    var matchingTasks = {}
+
+    for (var key in state.tasks) {
+      if (state.tasks.hasOwnProperty(key) &&
+          state.tasks[key].projectId === projId &&
+          state.tasks[key].completed === true) {
         matchingTasks[key] = state.tasks[key]
       }
     }
@@ -23,7 +39,7 @@ export default {
   },
 
   numTasksInProject: (state, getters) => projId => {
-    const projTasks = getters.projectTasks(projId)
+    const projTasks = getters.projectTasksActive(projId)
 
     return Object.keys(projTasks).length
   }
