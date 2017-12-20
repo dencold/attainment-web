@@ -1,5 +1,5 @@
 <template>
-  <div class="row-card flex-row">
+  <div class="row-card flex-row" :class="{ completed: task.completed }">
 
     <div class="star">
       <span v-show="!task.starred">
@@ -47,7 +47,10 @@
     margin-bottom: 3px;
     padding: 0 15px 0 15px;
   }
-
+  .completed {
+    background-color: #DDD;
+    text-decoration: line-through;
+  }
   .flex-row {
     display: flex;
     flex-direction: row;

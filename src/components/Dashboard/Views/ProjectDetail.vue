@@ -8,6 +8,12 @@
     <div class="flex-col" v-for="(task, id) in projectTasksActive">
       <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
     </div>
+
+    <h6 @click="toggleShowCompleted">Completed Tasks</h6>
+
+    <div class="flex-col" v-show="showCompleted" v-for="(task, id) in projectTasksCompleted">
+      <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+    </div>
   </div>
 </template>
 
@@ -21,6 +27,12 @@
       'text-input': TextInput
     },
 
+    data () {
+      return {
+        showCompleted: false
+      }
+    },
+
     props: {
       id: String
     },
@@ -31,6 +43,9 @@
       },
       projectTasksActive () {
         return this.$store.getters.projectTasksActive(this.id)
+      },
+      projectTasksCompleted () {
+        return this.$store.getters.projectTasksCompleted(this.id)
       }
     },
 
@@ -57,6 +72,9 @@
       },
       toTask (taskId) {
         this.$router.push({name: 'task', params: { id: taskId }})
+      },
+      toggleShowCompleted () {
+        this.showCompleted = !this.showCompleted
       }
     }
   }
