@@ -10,6 +10,18 @@
       @keyup.esc="$refs.searchinput.blur()"
       @keyup.stop
     >
+    <!--
+      [dc] wow...autocomplete dropdown options really suck even in 2017 :*(
+      html5 included datalist (below) to help this, but browser support is pretty bad
+      and completely unsupported by safari, so iPhones are out :(
+      I'm settling with a <ul> approach for now. it should work everywhere, it just
+      needs some additional implementation for tab/arrow access from keyboard. can
+      be done at a later date as it's not super high priority.
+
+    <datalist id="projs" ref="datals">
+      <option v-for="project in filtered" :data-id="project.id" @click="toProject(project.id)">{{project.name}}</option>
+    </datalist>
+    -->
     <ul>
       <li v-for="project in filtered" @click="toProject(project.id)">
         {{project.name}}
@@ -57,3 +69,11 @@
     }
   }
 </script>
+<style scoped>
+  li:focus {
+    background-color: #edf8ff;
+  }
+  li:hover {
+    background-color: #edf8ff;
+  }
+</style>
