@@ -40,16 +40,31 @@ export default {
 
   // note there is probably a much better way to do this, its mostly used
   // for fuse.js which needs to operate on an array and not an array-like object
-  projectsAsArray: state => {
-    var projArray = []
+  searchItems: state => {
+    let retArray = []
 
-    for (var key in state.projects) {
-      var proj = state.projects[key]
-      proj['id'] = key
-      projArray.push(proj)
+    // first add our projects in
+    for (let key in state.projects) {
+      // we only search active projects
+      if (state.projects[key].completed === false) {
+        let proj = state.projects[key]
+        proj['id'] = key
+        proj['type'] = 'project'
+        retArray.push(proj)
+      }
     }
 
-    return projArray
+    // and now our tasks
+    for (let key in state.tasks) {
+      if (state.tasks[key].completed === false) {
+        let task = state.tasks[key]
+        task['id'] = key
+        task['type'] = 'task'
+        retArray.push(task)
+      }
+    }
+
+    return retArray
   },
 
   numTasksInProject: (state, getters) => projId => {

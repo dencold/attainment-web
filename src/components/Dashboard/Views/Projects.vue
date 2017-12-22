@@ -26,9 +26,13 @@
         const projectName = e.trim()
 
         if (projectName.length === 0) {
-          console.log('ERROR!')
+          console.log('ERROR! Please specify a project name')
         } else {
-          const newPrj = {name: projectName, details: ''}
+          const newPrj = {
+            name: projectName,
+            notes: '',
+            completed: false
+          }
           this.$store.dispatch('addProject', newPrj)
         }
       },
