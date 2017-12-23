@@ -38,6 +38,20 @@ export default {
     return matchingTasks
   },
 
+  // note there is probably a much better way to do this, its mostly used
+  // for fuse.js which needs to operate on an array and not an array-like object
+  projectsAsArray: state => {
+    var projArray = []
+
+    for (var key in state.projects) {
+      var proj = state.projects[key]
+      proj['id'] = key
+      projArray.push(proj)
+    }
+
+    return projArray
+  },
+
   numTasksInProject: (state, getters) => projId => {
     const projTasks = getters.projectTasksActive(projId)
 

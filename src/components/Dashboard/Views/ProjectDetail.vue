@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <global-search></global-search>
     <h4>{{project.name}}</h4>
     <code>{{project.details}}</code>
 
@@ -20,11 +21,13 @@
 <script>
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import GlobalSearch from 'components/UIComponents/GlobalSearch.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
-      'text-input': TextInput
+      'text-input': TextInput,
+      'global-search': GlobalSearch
     },
 
     data () {
