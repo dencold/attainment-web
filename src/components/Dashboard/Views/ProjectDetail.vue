@@ -59,7 +59,7 @@
           const newTask = {
             name: taskName,
             projectId: this.id,
-            details: '',
+            notes: '',
             starred: false,
             poms_completed: 0,
             poms_total: 3,

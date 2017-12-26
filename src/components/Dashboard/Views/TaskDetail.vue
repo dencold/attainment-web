@@ -50,11 +50,11 @@
       </div>
 
       <div class="flex-row">
-        <div class="icon highlight" @click="toggleStar">
+        <div class="icon highlight">
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <textarea placeholder="Notes" :value="task.details" @input="updateDetails"/>
+          <textarea placeholder="Notes" :value="task.notes" @change="updateNotes"/>
         </div>
       </div>
 
@@ -115,11 +115,11 @@
           this.updateTask(newTask)
         }
       },
-      updateDetails (e) {
-        let details = e.target.value
-        if (details !== this.task.details) {
+      updateNotes (e) {
+        let notes = e.target.value
+        if (notes !== this.task.notes) {
           let newTask = this.task
-          newTask.details = details
+          newTask.notes = notes
           this.updateTask(newTask)
         }
       },
