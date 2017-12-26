@@ -18,8 +18,8 @@
 
       <hr/>
 
-      <div class="flex-row highlight">
-        <div class="icon" @click="toggleStar">
+      <div class="flex-row highlight" @click="jumpToProj">
+        <div class="icon">
           <i class="ti-folder"></i>
         </div>
         <span class="name">{{project.name}}</span>
@@ -88,6 +88,9 @@
     methods: {
       showDatePicker () {
         this.$refs.datepicker.open()
+      },
+      jumpToProj () {
+        this.$router.push({name: 'project', params: { id: this.task.projectId }})
       },
       toggleStar () {
         let newTask = this.task
