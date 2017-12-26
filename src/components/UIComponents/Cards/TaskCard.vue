@@ -1,5 +1,5 @@
 <template>
-  <div class="row-card flex-row" :class="{ completed: task.completed }">
+  <div class="row-card flex-row pointer" :class="{ completed: task.completed }">
 
     <div class="star">
       <span v-show="!task.starred">
@@ -71,5 +71,8 @@
   .due {
     width: 50px;
     text-align: right;
+  }
+  .pointer {
+    cursor: pointer;
   }
 </style>

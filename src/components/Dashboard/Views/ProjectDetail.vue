@@ -62,7 +62,7 @@
             notes: '',
             starred: false,
             poms_completed: 0,
-            poms_total: 3,
+            poms_total: 0,
             dueAt: '',
             completed: false,
             completedAt: ''

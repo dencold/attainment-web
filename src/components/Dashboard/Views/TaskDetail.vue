@@ -3,14 +3,14 @@
     <div class="card">
 
       <div class="flex-row title">
-        <div class="icon" @click="toggleComplete">
+        <div class="icon pointer" @click="toggleComplete">
           <i v-show="task.completed" class="fa fa-check-square-o"></i>
           <i v-show="!task.completed" class="fa fa-square-o"></i>
         </div>
 
         <input class="name" :value="task.name" @input="updateName" type="text" />
 
-        <div class="icon" @click="toggleStar">
+        <div class="icon pointer" @click="toggleStar">
           <i v-show="task.starred" class="fa fa-star"></i>
           <i v-show="!task.starred" class="fa fa-star-o"></i>
         </div>
@@ -18,7 +18,7 @@
 
       <hr/>
 
-      <div class="flex-row highlight" @click="jumpToProj">
+      <div class="flex-row highlight pointer" @click="jumpToProj">
         <div class="icon">
           <i class="ti-folder"></i>
         </div>
@@ -26,14 +26,17 @@
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon" @click="startPom">
+        <div class="icon pointer" @click="incrementPom('completed')">
           <i class="ti-bolt"></i>
         </div>
-        <span class="name">{{task.poms_completed}} / {{task.poms_total}}</span>
+        <span class="name">
+          <span class="pointer" @click="incrementPom('completed')">{{task.poms_completed}} /</span>
+          <span class="pointer" @click="incrementPom('total')">{{task.poms_total}}</span>
+        </span>
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon" @click="showDatePicker">
+        <div class="icon pointer" @click="showDatePicker">
           <i class="ti-calendar"></i>
         </div>
         <datetime
@@ -138,9 +141,15 @@
           {id: this.id, newTask: newTask}
         )
       },
-      startPom () {
+      incrementPom (type) {
         let newTask = this.task
-        newTask.poms_completed += 1
+
+        if (type === 'completed') {
+          newTask.poms_completed += 1
+        } else if (type === 'total') {
+          newTask.poms_total += 1
+        }
+
         this.updateTask(newTask)
       }
     }
@@ -154,6 +163,9 @@
     padding: 10px;
     background-color: #F5F5F5;
     border: none;
+  }
+  .pointer {
+    cursor: pointer;
   }
   .content {
     font-size: 16px;

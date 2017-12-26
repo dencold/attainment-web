@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card pointer">
     <div class="header">
       <h4 class="title">{{project.name}}</h4>
       <p class="category">
@@ -34,6 +34,8 @@
   }
 
 </script>
-<style>
-
+<style scoped>
+  .pointer {
+    cursor: pointer;
+  }
 </style>
