@@ -10,38 +10,13 @@ const SidebarStore = {
     },
     {
       name: 'Projects',
-      icon: 'ti-light-bulb',
+      icon: 'ti-folder',
       path: '/projects'
     },
     {
-      name: 'User Profile',
-      icon: 'ti-user',
-      path: '/stats'
-    },
-    {
-      name: 'Table List',
-      icon: 'ti-view-list-alt',
-      path: '/table-list'
-    },
-    {
-      name: 'Typography',
-      icon: 'ti-text',
-      path: '/typography'
-    },
-    {
-      name: 'Icons',
-      icon: 'ti-pencil-alt2',
-      path: '/icons'
-    },
-    {
-      name: 'Maps',
-      icon: 'ti-map',
-      path: '/maps'
-    },
-    {
-      name: 'Notifications',
-      icon: 'ti-bell',
-      path: '/notifications'
+      name: 'Settings',
+      icon: 'ti-settings',
+      path: '/settings'
     }
   ],
   displaySidebar (value) {

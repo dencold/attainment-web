@@ -22,14 +22,6 @@
             <li><a href="#">Notification 4</a></li>
             <li><a href="#">Another notification</a></li>
           </drop-down>
-          <li>
-            <a href="#" class="btn-rotate">
-              <i class="ti-settings"></i>
-              <p>
-                Settings
-              </p>
-            </a>
-          </li>
         </ul>
       </div>
     </div>

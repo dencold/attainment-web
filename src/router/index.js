@@ -34,8 +34,8 @@ const routes = [
         component: Overview
       },
       {
-        path: '/stats',
-        name: 'stats',
+        path: '/settings',
+        name: 'settings',
         component: UserProfile
       },
       {
