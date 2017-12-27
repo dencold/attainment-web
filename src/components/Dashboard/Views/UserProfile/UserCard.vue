@@ -1,23 +1,18 @@
 <template>
   <div class="card card-user">
     <div class="image">
-      <img src="/static/img/background.jpg" alt="...">
+      <img src="/static/img/background.jpg" alt="background">
     </div>
     <div class="content">
       <div class="author">
-        <img class="avatar border-white" src="/static/img/faces/face-2.jpg" alt="...">
-        <h4 class="title">Chet Faker
+        <img class="avatar border-white" :src="user.photoURL" alt="avatar">
+        <h4 class="title">{{user.displayName}}
           <br>
           <a href="#">
-            <small>@chetfaker</small>
+            <small>@dencold</small>
           </a>
         </h4>
       </div>
-      <p class="description text-center">
-        "I like the way you work it
-        <br> No diggity
-        <br> I wanna bag it up"
-      </p>
     </div>
     <hr>
     <div class="text-center">
@@ -50,6 +45,11 @@
             subTitle: 'Spent'
           }
         ]
+      }
+    },
+    computed: {
+      user () {
+        return this.$store.state.user
       }
     },
     methods: {
