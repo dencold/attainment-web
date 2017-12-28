@@ -14,6 +14,17 @@ export default {
 
     collection.add(newProject)
   },
+  updateProject: (context, projectDetails) => {
+    let newProj = projectDetails['newProj']
+    newProj['updatedAt'] = Date.now()
+
+    // setup firebase connections
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .collection('projects')
+      .doc(projectDetails['id'])
+      .update(newProj)
+  },
   syncProjects: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
 

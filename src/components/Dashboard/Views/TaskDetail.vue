@@ -169,6 +169,7 @@
   }
   .content {
     font-size: 16px;
+    max-width: 750px;
   }
   .card {
     padding: 15px;
@@ -205,9 +206,6 @@
   .flex-col{
     display: flex;
     flex-direction: column;
-  }
-  .content {
-    max-width: 750px;
   }
   input {
     padding: 0 10px;
