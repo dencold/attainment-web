@@ -6,6 +6,7 @@ import NotFound from 'src/components/Dashboard/Views/NotFoundPage.vue'
 import Login from 'src/components/Dashboard/Views/Login.vue'
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
+import Tasks from 'src/components/Dashboard/Views/Tasks.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
 import TaskDetail from 'src/components/Dashboard/Views/TaskDetail.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
@@ -42,6 +43,11 @@ const routes = [
         path: '/projects',
         name: 'projects',
         component: Projects
+      },
+      {
+        path: '/tasks',
+        name: 'tasks',
+        component: Tasks
       },
       {
         path: '/project/:id',

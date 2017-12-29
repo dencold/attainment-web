@@ -14,6 +14,11 @@ const SidebarStore = {
       path: '/projects'
     },
     {
+      name: 'Tasks',
+      icon: 'ti-angle-double-right',
+      path: '/tasks'
+    },
+    {
       name: 'Settings',
       icon: 'ti-settings',
       path: '/settings'

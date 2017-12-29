@@ -24,6 +24,27 @@ export default {
     return matchingTasks
   },
 
+  tasksActive: state => {
+    let retTasks = {}
+
+    for (let key in state.tasks) {
+      if (state.tasks.hasOwnProperty(key) &&
+          state.tasks[key].completed === false) {
+        // if a task is part of a project, only include its next action
+        if (state.tasks[key].hasOwnProperty('projectId') &&
+            state.tasks[key].starred === false) {
+          continue
+        }
+
+        // otherwise it's either not in a project or it is a next action,
+        // add it to our return tasks...
+        retTasks[key] = state.tasks[key]
+      }
+    }
+
+    return retTasks
+  },
+
   projectTasksCompleted: state => projId => {
     var matchingTasks = {}
 
