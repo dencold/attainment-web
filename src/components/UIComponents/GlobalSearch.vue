@@ -74,6 +74,9 @@
         if (this.filtered && this.filtered.length > 0) {
           this.select(this.filtered[0])
         }
+      },
+      focus () {
+        this.$refs.searchinput.focus()
       }
     }
   }

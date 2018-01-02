@@ -5,7 +5,11 @@
     </div>
     <span class="name" @click="clickAction">{{name}}</span>
     <button class="btn btn-fill btn-info inpBtn" @click="openSearch">+</button>
-    <global-search v-show="showSearch" @search-result="moveProject" search-category="projects">
+    <global-search
+      ref="globalsearch"
+      v-show="showSearch"
+      @search-result="moveProject"
+      search-category="projects">
     </global-search>
   </div>
 </template>
@@ -60,6 +64,7 @@
       },
       openSearch () {
         this.showSearch = true
+        this.$nextTick(() => this.$refs.globalsearch.focus())
       },
       closeSearch () {
         this.showSearch = false
