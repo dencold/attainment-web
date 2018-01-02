@@ -48,6 +48,12 @@ export default {
     window.addEventListener('keyup', e => {
       if (e.key === 'p') {
         this.$router.replace({name: 'projects'})
+      } else if (e.key === 't') {
+        this.$router.replace({name: 'tasks'})
+      } else if (e.key === 'd') {
+        this.$router.replace({name: 'dashboard'})
+      } else if (e.key === '/') {
+        this.$bus.$emit('open-global-search')
       }
     })
 

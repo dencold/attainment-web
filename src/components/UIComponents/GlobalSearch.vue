@@ -65,6 +65,7 @@
       resetSearch () {
         this.searchQry = ''
         this.filtered = []
+        this.$refs.searchinput.blur()
       },
       select (item) {
         this.$emit('search-result', item)

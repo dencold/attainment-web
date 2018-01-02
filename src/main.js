@@ -32,6 +32,15 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
+const EventBus = new Vue()
+Object.defineProperties(Vue.prototype, {
+  $bus: {
+    get () {
+      return EventBus
+    }
+  }
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

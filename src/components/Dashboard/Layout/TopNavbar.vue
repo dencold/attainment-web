@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="search">
-            <global-search @search-result="jumpTo"></global-search>
+            <global-search ref="globalsearch" @search-result="jumpTo"></global-search>
           </li>
           <drop-down title="5 Notifications" icon="ti-bell">
             <li><a href="#">Notification 1</a></li>
@@ -33,6 +33,11 @@
   export default {
     components: {
       'global-search': GlobalSearch
+    },
+    created () {
+      this.$bus.$on('open-global-search', () => {
+        this.$refs.globalsearch.focus()
+      })
     },
     computed: {
       routeName () {
