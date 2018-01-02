@@ -27,11 +27,11 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/overview',
+    redirect: '/dashboard',
     children: [
       {
-        path: '/overview',
-        name: 'overview',
+        path: '/dashboard',
+        name: 'dashboard',
         component: Overview
       },
       {

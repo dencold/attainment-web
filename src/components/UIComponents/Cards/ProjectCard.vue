@@ -3,7 +3,6 @@
     <div class="header">
       <h4 class="title">{{project.name}}</h4>
       <p class="category">
-        <span>{{id}}</span>
         <span>{{project.description}}</span>
       </p>
     </div>
@@ -11,6 +10,7 @@
       <div class="footer">
         <hr>
         <div class="stats">
+          <i class="ti-angle-double-right"></i>
           <span>{{numTasks}}</span>
         </div>
         <div class="pull-right"></div>
