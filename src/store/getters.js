@@ -32,6 +32,7 @@ export default {
           state.tasks[key].completed === false) {
         // if a task is part of a project, only include its next action
         if (state.tasks[key].hasOwnProperty('projectId') &&
+            state.tasks[key].projectId !== '' &&
             state.tasks[key].starred === false) {
           continue
         }
@@ -61,27 +62,31 @@ export default {
 
   // note there is probably a much better way to do this, its mostly used
   // for fuse.js which needs to operate on an array and not an array-like object
-  searchItems: state => {
+  searchItems: state => searchCategory => {
     let retArray = []
 
     // first add our projects in
-    for (let key in state.projects) {
-      // we only search active projects
-      if (state.projects[key].completed === false) {
-        let proj = state.projects[key]
-        proj['id'] = key
-        proj['type'] = 'project'
-        retArray.push(proj)
+    if (searchCategory === 'all' || searchCategory === 'projects') {
+      for (let key in state.projects) {
+        // we only search active projects
+        if (state.projects[key].completed === false) {
+          let proj = state.projects[key]
+          proj['id'] = key
+          proj['type'] = 'project'
+          retArray.push(proj)
+        }
       }
     }
 
-    // and now our tasks
-    for (let key in state.tasks) {
-      if (state.tasks[key].completed === false) {
-        let task = state.tasks[key]
-        task['id'] = key
-        task['type'] = 'task'
-        retArray.push(task)
+    if (searchCategory === 'all' || searchCategory === 'tasks') {
+      // and now our tasks
+      for (let key in state.tasks) {
+        if (state.tasks[key].completed === false) {
+          let task = state.tasks[key]
+          task['id'] = key
+          task['type'] = 'task'
+          retArray.push(task)
+        }
       }
     }
 

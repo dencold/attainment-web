@@ -6,7 +6,7 @@
       :value="searchQry"
       @input="filter" 
       placeholder="Search"
-      @keyup.enter="jumpToTopHit"
+      @keyup.enter="selectTopHit"
       @keyup.esc="$refs.searchinput.blur()"
       @keyup.stop
     >
@@ -23,7 +23,7 @@
     </datalist>
     -->
     <ul>
-      <li v-for="item in filtered" @click="jumpTo(item)">
+      <li v-for="item in filtered" @click="select(item)">
         {{item.name}}
       </li>
     </ul>
@@ -34,21 +34,27 @@
 
   export default{
     computed: {
-      projects () {
-        return this.$store.getters.searchItems
+      items () {
+        return this.$store.getters.searchItems(this.searchCategory)
       },
       fuse () {
         var options = {
           keys: ['name']
         }
 
-        return new Fuse(this.projects, options)
+        return new Fuse(this.items, options)
       }
     },
     data () {
       return {
         searchQry: '',
         filtered: []
+      }
+    },
+    props: {
+      searchCategory: {
+        default: 'all',
+        type: String
       }
     },
     methods: {
@@ -60,20 +66,13 @@
         this.searchQry = ''
         this.filtered = []
       },
-      jumpTo (item) {
-        if (item && item.type === 'project') {
-          this.$router.push({name: 'project', params: { id: item.id }})
-          this.resetSearch()
-        } else if (item && item.type === 'task') {
-          this.$router.push({name: 'task', params: { id: item.id }})
-          this.resetSearch()
-        } else {
-          console.log('ERROR: Could not determine type')
-        }
+      select (item) {
+        this.$emit('search-result', item)
+        this.resetSearch()
       },
-      jumpToTopHit () {
+      selectTopHit () {
         if (this.filtered && this.filtered.length > 0) {
-          this.jumpTo(this.filtered[0])
+          this.select(this.filtered[0])
         }
       }
     }

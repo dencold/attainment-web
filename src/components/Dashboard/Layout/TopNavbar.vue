@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="search">
-            <global-search></global-search>
+            <global-search @search-result="jumpTo"></global-search>
           </li>
           <drop-down title="5 Notifications" icon="ti-bell">
             <li><a href="#">Notification 1</a></li>
@@ -60,6 +60,15 @@
       },
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
+      },
+      jumpTo (item) {
+        if (item && item.type === 'project') {
+          this.$router.push({name: 'project', params: { id: item.id }})
+        } else if (item && item.type === 'task') {
+          this.$router.push({name: 'task', params: { id: item.id }})
+        } else {
+          console.log('ERROR: Could not determine type')
+        }
       }
     }
   }

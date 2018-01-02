@@ -115,6 +115,9 @@
           {id: this.id, newProj: newProj}
         )
       },
+      toggleComplete () {
+        console.log('NOT IMPLEMENTED')
+      },
       toggleShowCompleted () {
         this.showCompleted = !this.showCompleted
       }

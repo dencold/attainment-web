@@ -33,8 +33,14 @@
         } else {
           const newTask = {
             name: taskName,
+            projectId: '',
             notes: '',
-            completed: false
+            starred: false,
+            poms_completed: 0,
+            poms_total: 0,
+            dueAt: '',
+            completed: false,
+            completedAt: ''
           }
           this.$store.dispatch('addTask', newTask)
         }

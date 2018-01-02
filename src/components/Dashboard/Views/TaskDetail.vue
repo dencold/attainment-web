@@ -18,12 +18,7 @@
 
       <hr/>
 
-      <div class="flex-row highlight pointer" @click="jumpToProj">
-        <div class="icon">
-          <i class="ti-folder"></i>
-        </div>
-        <span class="name">{{project.name}}</span>
-      </div>
+      <project-selector :project-id="task.projectId" @change-project="changeProject"></project-selector>
 
       <div class="flex-row highlight">
         <div class="icon pointer" @click="incrementPom('completed')">
@@ -67,11 +62,13 @@
 
 <script>
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
   import { Datetime } from 'vue-datetime'
 
   export default {
     components: {
       'text-input': TextInput,
+      'project-selector': ProjectSelector,
       'datetime': Datetime
     },
 
@@ -150,6 +147,11 @@
           newTask.poms_total += 1
         }
 
+        this.updateTask(newTask)
+      },
+      changeProject (project) {
+        let newTask = this.task
+        newTask.projectId = project.id
         this.updateTask(newTask)
       }
     }
