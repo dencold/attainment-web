@@ -10,8 +10,11 @@
       </span>
     </div>
 
-    <div v-if="project" class="project">{{project.name}}</div>
     <div class="task">{{task.name}}</div>
+    <div v-if="project" class="project">
+      <i class="ti-folder"></i>
+      {{project.name}}
+    </div>
     <div class="poms">
       <span v-if="task.poms_total">
         <i class="ti-bolt"></i>
@@ -34,7 +37,17 @@
     props: {
       task: Object,
       id: String,
-      project: Object // optional, pass if you want project info in card
+      projectId: String // optional, pass if you want project info in card
+    },
+
+    computed: {
+      project () {
+        if (this.projectId) {
+          return this.$store.state.projects[this.projectId]
+        }
+
+        return null
+      }
     }
   }
 

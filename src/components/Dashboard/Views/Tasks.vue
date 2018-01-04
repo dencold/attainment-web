@@ -3,7 +3,7 @@
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
     <div class="flex-col" v-for="(task, id) in tasksActive">
-      <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" :task="task" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
     </div>
 
   </div>
