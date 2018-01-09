@@ -8,7 +8,15 @@
           <i v-show="!task.completed" class="fa fa-square-o"></i>
         </div>
 
-        <input class="name" :value="task.name" @input="updateName" type="text" />
+        <input
+          ref="nameInput"
+          class="name"
+          :value="task.name"
+          @input="updateName"
+          type="text"
+          @keyup.esc="$refs.nameInput.blur()"
+          @keyup.stop
+        />
 
         <div class="icon pointer" @click="toggleStar">
           <i v-show="task.starred" class="fa fa-star"></i>

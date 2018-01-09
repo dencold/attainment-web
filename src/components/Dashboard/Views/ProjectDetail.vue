@@ -8,7 +8,15 @@
           <i v-show="!project.completed" class="fa fa-square-o"></i>
         </div>
 
-        <input class="name" :value="project.name" @input="updateName" type="text" />
+        <input
+          ref="nameInput"
+          class="name"
+          :value="project.name"
+          @input="updateName"
+          type="text"
+          @keyup.esc="$refs.nameInput.blur()"
+          @keyup.stop
+        />
       </div>
 
       <div class="flex-row">
