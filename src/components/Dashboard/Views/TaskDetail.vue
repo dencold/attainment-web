@@ -52,7 +52,8 @@
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <textarea placeholder="Notes" :value="task.notes" @change="updateNotes"/>
+          <text-area placeholder="Notes" :value="task.notes" @updated="updateNotes"/>
+          </text-area>
         </div>
       </div>
 
@@ -62,12 +63,14 @@
 
 <script>
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
   import { Datetime } from 'vue-datetime'
 
   export default {
     components: {
       'text-input': TextInput,
+      'text-area': TextArea,
       'project-selector': ProjectSelector,
       'datetime': Datetime
     },
@@ -118,11 +121,10 @@
           this.updateTask(newTask)
         }
       },
-      updateNotes (e) {
-        let notes = e.target.value
-        if (notes !== this.task.notes) {
+      updateNotes (newNotes) {
+        if (newNotes !== this.task.notes) {
           let newTask = this.task
-          newTask.notes = notes
+          newTask.notes = newNotes
           this.updateTask(newTask)
         }
       },
@@ -159,13 +161,6 @@
 </script>
 
 <style scoped>
-  textarea {
-    width: 100%;
-    height: 200px;
-    padding: 10px;
-    background-color: #F5F5F5;
-    border: none;
-  }
   .pointer {
     cursor: pointer;
   }

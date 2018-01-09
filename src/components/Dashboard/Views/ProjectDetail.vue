@@ -16,7 +16,8 @@
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <textarea placeholder="Notes" :value="project.notes" @change="updateNotes"/>
+          <text-area placeholder="Notes" :value="project.notes" @updated="updateNotes"/>
+          </text-area>
         </div>
       </div>
 
@@ -40,11 +41,13 @@
 <script>
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
-      'text-input': TextInput
+      'text-input': TextInput,
+      'text-area': TextArea
     },
 
     data () {
@@ -101,11 +104,10 @@
           this.updateProject(newProj)
         }
       },
-      updateNotes (e) {
-        let notes = e.target.value
-        if (notes !== this.project.notes) {
+      updateNotes (newNotes) {
+        if (newNotes !== this.project.notes) {
           let newProj = this.project
-          newProj.notes = notes
+          newProj.notes = newNotes
           this.updateProject(newProj)
         }
       },
@@ -126,13 +128,6 @@
 </script>
 
 <style scoped>
-  textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    background-color: #F5F5F5;
-    border: none;
-  }
   .pointer {
     cursor: pointer;
   }
