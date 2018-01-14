@@ -25,12 +25,12 @@ export default {
       .doc(projectDetails['id'])
       .update(newProj)
   },
-  toggleProjectComplete: (context, projectDetails) => {
+  toggleProjectCompleted: (context, projectDetails) => {
     let newProj = projectDetails['proj']
     newProj.completed = !newProj.completed
 
     // if we've uncompleted the project, we need to reset the completedAt date
-    if (!newProj.complete) {
+    if (!newProj.completed) {
       newProj.completedAt = ''
     } else {
       newProj.completedAt = Date.now()
@@ -39,16 +39,25 @@ export default {
       let projTasks = context.getters.projectTasksActive(projectDetails['id'])
       for (var key in projTasks) {
         if (projTasks.hasOwnProperty(key)) {
-          let task = projTasks[key]
-          task['completed'] = true
-          task['completedAt'] = Date.now()
-
-          context.dispatch('updateTask', {id: key, newTask: task})
+          context.dispatch('toggleTaskCompleted', {id: key, task: projTasks[key]})
         }
       }
     }
 
     context.dispatch('updateProject', {id: projectDetails['id'], newProj: newProj})
+  },
+  toggleTaskCompleted: (context, taskDetails) => {
+    let newTask = taskDetails['task']
+    newTask.completed = !newTask.completed
+
+    // if we've uncompleted the task, we need to reset the completedAt date
+    if (!newTask.completed) {
+      newTask.completedAt = ''
+    } else {
+      newTask.completedAt = Date.now()
+    }
+
+    context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
   },
   syncProjects: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')

@@ -3,7 +3,7 @@
     <div class="card">
 
       <div class="flex-row title">
-        <div class="icon pointer" @click="toggleComplete">
+        <div class="icon pointer" @click="toggleCompleted">
           <i v-show="task.completed" class="fa fa-check-square-o"></i>
           <i v-show="!task.completed" class="fa fa-square-o"></i>
         </div>
@@ -136,11 +136,11 @@
           this.updateTask(newTask)
         }
       },
-      toggleComplete () {
-        let newTask = this.task
-        newTask.completed = !this.task.completed
-        newTask.completedAt = Date.now()
-        this.updateTask(newTask)
+      toggleCompleted () {
+        this.$store.dispatch(
+          'toggleTaskCompleted',
+          {id: this.id, task: this.task}
+        )
       },
       updateTask (newTask) {
         this.$store.dispatch(

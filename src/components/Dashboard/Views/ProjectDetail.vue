@@ -3,7 +3,7 @@
     <div class="card">
 
       <div class="flex-row title">
-        <div class="icon pointer" @click="toggleComplete">
+        <div class="icon pointer" @click="toggleCompleted">
           <i v-show="project.completed" class="fa fa-check-square-o"></i>
           <i v-show="!project.completed" class="fa fa-square-o"></i>
         </div>
@@ -125,9 +125,9 @@
           {id: this.id, newProj: newProj}
         )
       },
-      toggleComplete () {
+      toggleCompleted () {
         this.$store.dispatch(
-          'toggleProjectComplete',
+          'toggleProjectCompleted',
           {id: this.id, proj: this.project}
         )
       },
