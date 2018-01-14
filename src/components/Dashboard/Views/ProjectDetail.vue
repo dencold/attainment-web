@@ -126,7 +126,10 @@
         )
       },
       toggleComplete () {
-        console.log('NOT IMPLEMENTED')
+        this.$store.dispatch(
+          'toggleProjectComplete',
+          {id: this.id, proj: this.project}
+        )
       },
       toggleShowCompleted () {
         this.showCompleted = !this.showCompleted
