@@ -46,6 +46,43 @@ export default {
     return retTasks
   },
 
+  tasksStarred: state => {
+    let retTasks = {}
+
+    for (let key in state.tasks) {
+      if (state.tasks.hasOwnProperty(key) &&
+          state.tasks[key].completed === false &&
+          state.tasks[key].starred === true) {
+        retTasks[key] = state.tasks[key]
+      }
+    }
+
+    return retTasks
+  },
+
+  tasksDue: state => {
+    let retTasks = {}
+    let compareDate = new Date(new Date().setHours(48, 0, 0))
+
+    // return only tasks that are overdue, due today, or due tomorrow
+    for (let key in state.tasks) {
+      if (state.tasks[key].dueAt !== '') {
+        console.log(state.tasks[key].dueAt)
+        console.log(key + ' ' + Date(state.tasks[key].dueAt))
+      }
+      if (state.tasks.hasOwnProperty(key) &&
+          state.tasks[key].completed === false &&
+          state.tasks[key].dueAt !== '') {
+        let dueAt = new Date(state.tasks[key].dueAt)
+        if (dueAt < compareDate) {
+          retTasks[key] = state.tasks[key]
+        }
+      }
+    }
+
+    return retTasks
+  },
+
   projectTasksCompleted: state => projId => {
     var matchingTasks = {}
 

@@ -7,6 +7,7 @@ import Login from 'src/components/Dashboard/Views/Login.vue'
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
 import Tasks from 'src/components/Dashboard/Views/Tasks.vue'
+import Dashboard from 'src/components/Dashboard/Views/Dashboard.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
 import TaskDetail from 'src/components/Dashboard/Views/TaskDetail.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
@@ -32,7 +33,7 @@ const routes = [
       {
         path: '/dashboard',
         name: 'dashboard',
-        component: Overview
+        component: Dashboard
       },
       {
         path: '/settings',
@@ -48,6 +49,11 @@ const routes = [
         path: '/tasks',
         name: 'tasks',
         component: Tasks
+      },
+      {
+        path: '/metrics',
+        name: 'metrics',
+        component: Overview
       },
       {
         path: '/project/:id',
