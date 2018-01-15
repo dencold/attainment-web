@@ -43,30 +43,35 @@ export default {
     'login': Login
   },
 
-  beforeCreate () {
-    // setup app-wide keyboard shortcuts
-    window.addEventListener('keyup', e => {
-      if (e.key === 'p') {
-        this.$router.replace({name: 'projects'})
-      } else if (e.key === 't') {
-        this.$router.replace({name: 'tasks'})
-      } else if (e.key === 'd') {
-        this.$router.replace({name: 'dashboard'})
-      } else if (e.key === '/') {
-        this.$bus.$emit('open-global-search')
-      }
-    })
+  created () {
+    window.addEventListener('keyup', this.handleGlobalShortcuts)
+  },
 
+  beforeCreate () {
     // check if we already have a user logged in
     const user = fireApp.auth().currentUser
     if (user) {
       console.log('Setting User!')
       this.$store.commit('SET_USER', user)
-      // this.$store.dispatch('fetchTasks')
       this.$store.dispatch('syncProjects')
       this.$store.dispatch('syncTasks')
     }
+  },
+
+  methods: {
+    handleGlobalShortcuts (e) {
+      if (e.key === 'P') {
+        this.$router.replace({name: 'projects'})
+      } else if (e.key === 'T') {
+        this.$router.replace({name: 'tasks'})
+      } else if (e.key === 'D') {
+        this.$router.replace({name: 'dashboard'})
+      } else if (e.key === '/') {
+        this.$bus.$emit('open-global-search')
+      }
+    }
   }
+
 }
 </script>
 

@@ -66,13 +66,11 @@ export default {
 
     // return only tasks that are overdue, due today, or due tomorrow
     for (let key in state.tasks) {
-      if (state.tasks[key].dueAt !== '') {
-        console.log(state.tasks[key].dueAt)
-        console.log(key + ' ' + Date(state.tasks[key].dueAt))
-      }
       if (state.tasks.hasOwnProperty(key) &&
           state.tasks[key].completed === false &&
           state.tasks[key].dueAt !== '') {
+        // dueAt is stored as a string due to vue-datetime, we need to
+        // convert to a js Date for comparison here
         let dueAt = new Date(state.tasks[key].dueAt)
         if (dueAt < compareDate) {
           retTasks[key] = state.tasks[key]

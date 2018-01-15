@@ -26,7 +26,7 @@
 
       <hr/>
 
-      <project-selector :project-id="task.projectId" @change-project="changeProject"></project-selector>
+      <project-selector ref="projsel" :project-id="task.projectId" @change-project="changeProject"></project-selector>
 
       <div class="flex-row highlight">
         <div class="icon pointer" @click="incrementPom('completed')">
@@ -60,7 +60,7 @@
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <text-area placeholder="Notes" :value="task.notes" @updated="updateNotes"/>
+          <text-area ref="notes" placeholder="Notes" :value="task.notes" @updated="updateNotes"/>
           </text-area>
         </div>
       </div>
@@ -96,7 +96,35 @@
       }
     },
 
+    created () {
+      document.addEventListener('keyup', this.handleKeyUp)
+    },
+
+    destroyed () {
+      document.removeEventListener('keyup', this.handleKeyUp)
+    },
+
     methods: {
+      handleKeyUp (e) {
+        console.log(e)
+        if (e.key === 's') {
+          this.toggleStar()
+        } else if (e.key === 'c') {
+          this.toggleCompleted()
+        } else if (e.key === 'd') {
+          this.showDatePicker()
+        } else if (e.key === 'e') {
+          this.$refs.nameInput.focus()
+        } else if (e.key === 'n') {
+          this.$refs.notes.focus()
+        } else if (e.key === 'p') {
+          this.$refs.projsel.openSearch()
+        } else if (e.key === 'b') {
+          this.incrementPom('completed')
+        } else if (e.key === 'B') {
+          this.incrementPom('total')
+        }
+      },
       showDatePicker () {
         this.$refs.datepicker.open()
       },

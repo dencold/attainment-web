@@ -19,6 +19,9 @@
     methods: {
       update (newVal) {
         this.$emit('updated', newVal)
+      },
+      focus () {
+        this.$refs.textarea.focus()
       }
     }
   }
