@@ -122,6 +122,9 @@
     watch: {
       $route: function (newRoute, oldRoute) {
         this.findActiveLink()
+
+        // we also want to auto-close the sidebar if we've clicked a nav
+        this.$sidebar.displaySidebar(false)
       }
     }
   }
