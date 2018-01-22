@@ -1,8 +1,78 @@
+function excludeCompleted (entry) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty('completed') && val.completed === true) {
+    // if the task is completed we want to exclude, so return false
+    return false
+  }
+
+  // we default to include if there is no completed property
+  return true
+}
+
+function excludeUncompleted (entry) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty('completed') && val.completed === true) {
+    return true
+  }
+
+  // we only return explicitly completed tasks, if we don't have the completed
+  // property, defualt to exclude
+  return false
+}
+
+function excludeUnstarred (entry) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty('starred') && val.starred === true) {
+    return true
+  }
+
+  return false
+}
+
+function excludeUnstarredProjectTasks (entry) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty('projectId') && val.projectId !== '') {
+    return excludeUnstarred(entry)
+  }
+
+  return true
+}
+
+function excludeNonMatchingProject (entry, projectId) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty('projectId') && val.projectId === projectId) {
+    return true
+  }
+
+  return false
+}
+
+function excludeOlderThanDate (entry, dateProperty, compareDate) {
+  const val = entry[1]
+
+  if (val.hasOwnProperty(dateProperty) && val[dateProperty] !== '') {
+    const entryDate = new Date(val[dateProperty])
+
+    if (entryDate <= compareDate) {
+      return true
+    }
+  }
+
+  // we have to have a dateProperty, if not, default to inclusion
+  return false
+}
+
 export default {
   isLoggedIn: state => {
     // yep, it's 2017 & this is how we check that an Object is empty
     // javascript, you are an amazing language
-    if (Object.keys(state.user).length === 0 && state.user.constructor === Object) {
+    if (Object.keys(state.user).length === 0 &&
+      state.user.constructor === Object) {
       // we have an empty user, return false
       return false
     }
@@ -11,37 +81,25 @@ export default {
   },
 
   projectTasksActive: state => projId => {
-    var matchingTasks = {}
+    var retTasks = {}
 
-    for (var key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) &&
-          state.tasks[key].projectId === projId &&
-          state.tasks[key].completed === false) {
-        matchingTasks[key] = state.tasks[key]
-      }
-    }
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => excludeCompleted(entry))
+      .filter((entry) => excludeNonMatchingProject(entry, projId))
 
-    return matchingTasks
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+
+    return retTasks
   },
 
   tasksActive: state => {
     let retTasks = {}
 
-    for (let key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) &&
-          state.tasks[key].completed === false) {
-        // if a task is part of a project, only include its next action
-        if (state.tasks[key].hasOwnProperty('projectId') &&
-            state.tasks[key].projectId !== '' &&
-            state.tasks[key].starred === false) {
-          continue
-        }
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => excludeCompleted(entry))
+      .filter((entry) => excludeUnstarredProjectTasks(entry))
 
-        // otherwise it's either not in a project or it is a next action,
-        // add it to our return tasks...
-        retTasks[key] = state.tasks[key]
-      }
-    }
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
     return retTasks
   },
@@ -49,50 +107,40 @@ export default {
   tasksStarred: state => {
     let retTasks = {}
 
-    for (let key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) &&
-          state.tasks[key].completed === false &&
-          state.tasks[key].starred === true) {
-        retTasks[key] = state.tasks[key]
-      }
-    }
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => excludeCompleted(entry))
+      .filter((entry) => excludeUnstarred(entry))
+
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
     return retTasks
   },
 
   tasksDue: state => {
     let retTasks = {}
+
+    // we want to include any tasks that are due within two days
     let compareDate = new Date(new Date().setHours(48, 0, 0))
 
-    // return only tasks that are overdue, due today, or due tomorrow
-    for (let key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) &&
-          state.tasks[key].completed === false &&
-          state.tasks[key].dueAt !== '') {
-        // dueAt is stored as a string due to vue-datetime, we need to
-        // convert to a js Date for comparison here
-        let dueAt = new Date(state.tasks[key].dueAt)
-        if (dueAt < compareDate) {
-          retTasks[key] = state.tasks[key]
-        }
-      }
-    }
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => excludeCompleted(entry))
+      .filter((entry) => excludeOlderThanDate(entry, 'dueAt', compareDate))
+
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
     return retTasks
   },
 
   projectTasksCompleted: state => projId => {
-    var matchingTasks = {}
+    var retTasks = {}
 
-    for (var key in state.tasks) {
-      if (state.tasks.hasOwnProperty(key) &&
-          state.tasks[key].projectId === projId &&
-          state.tasks[key].completed === true) {
-        matchingTasks[key] = state.tasks[key]
-      }
-    }
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => excludeUncompleted(entry))
+      .filter((entry) => excludeNonMatchingProject(entry, projId))
 
-    return matchingTasks
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+
+    return retTasks
   },
 
   // note there is probably a much better way to do this, its mostly used
