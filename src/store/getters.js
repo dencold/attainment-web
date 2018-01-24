@@ -1,55 +1,55 @@
-function excludeCompleted (entry) {
+function isCompleted (entry) {
   const val = entry[1]
 
-  if (val.hasOwnProperty('completed') && val.completed === true) {
-    // if the task is completed we want to exclude, so return false
+  // if the entry doesn't have completed property it isn't completed
+  if (!val.hasOwnProperty('completed')) {
     return false
   }
 
-  // we default to include if there is no completed property
-  return true
+  return val.completed
 }
 
-function excludeUncompleted (entry) {
+function isStarred (entry) {
   const val = entry[1]
 
-  if (val.hasOwnProperty('completed') && val.completed === true) {
-    return true
+  if (!val.hasOwnProperty('starred')) {
+    return false
   }
 
-  // we only return explicitly completed tasks, if we don't have the completed
-  // property, defualt to exclude
-  return false
+  return val.starred
 }
 
-function excludeUnstarred (entry) {
+function isProjectTask (entry) {
   const val = entry[1]
 
-  if (val.hasOwnProperty('starred') && val.starred === true) {
-    return true
+  if (!val.hasOwnProperty('projectId')) {
+    return false
   }
 
-  return false
-}
-
-function excludeUnstarredProjectTasks (entry) {
-  const val = entry[1]
-
-  if (val.hasOwnProperty('projectId') && val.projectId !== '') {
-    return excludeUnstarred(entry)
+  if (val.projectId === '') {
+    return false
   }
 
   return true
 }
 
-function excludeNonMatchingProject (entry, projectId) {
+function isMatchingProject (entry, projectId) {
   const val = entry[1]
 
-  if (val.hasOwnProperty('projectId') && val.projectId === projectId) {
-    return true
+  if (!val.hasOwnProperty('projectId')) {
+    return false
   }
 
-  return false
+  return (val.projectId === projectId)
+}
+
+function isNextAction (entry) {
+  if (isProjectTask(entry)) {
+    return isStarred(entry)
+  }
+
+  // all non-project tasks are next actions
+  return true
 }
 
 function excludeOlderThanDate (entry, dateProperty, compareDate) {
@@ -65,6 +65,11 @@ function excludeOlderThanDate (entry, dateProperty, compareDate) {
 
   // we have to have a dateProperty, if not, default to inclusion
   return false
+}
+
+function excludeSnoozed (entry) {
+  const compareDate = new Date()
+  return excludeOlderThanDate(entry, 'snoozedUntil', compareDate)
 }
 
 export default {
@@ -84,8 +89,8 @@ export default {
     var retTasks = {}
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => excludeCompleted(entry))
-      .filter((entry) => excludeNonMatchingProject(entry, projId))
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingProject(entry, projId))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -96,8 +101,8 @@ export default {
     let retTasks = {}
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => excludeCompleted(entry))
-      .filter((entry) => excludeUnstarredProjectTasks(entry))
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isNextAction(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -108,8 +113,8 @@ export default {
     let retTasks = {}
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => excludeCompleted(entry))
-      .filter((entry) => excludeUnstarred(entry))
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isStarred(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -123,7 +128,7 @@ export default {
     let compareDate = new Date(new Date().setHours(48, 0, 0))
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => excludeCompleted(entry))
+      .filter((entry) => !isCompleted(entry))
       .filter((entry) => excludeOlderThanDate(entry, 'dueAt', compareDate))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
@@ -135,8 +140,8 @@ export default {
     var retTasks = {}
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => excludeUncompleted(entry))
-      .filter((entry) => excludeNonMatchingProject(entry, projId))
+      .filter((entry) => isCompleted(entry))
+      .filter((entry) => isMatchingProject(entry, projId))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
