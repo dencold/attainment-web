@@ -1,46 +1,42 @@
-function isCompleted (entry) {
-  const val = entry[1]
-
-  // if the entry doesn't have completed property it isn't completed
-  if (!val.hasOwnProperty('completed')) {
+// -- Filter Functions
+// The following functions are helpers to make our filtering logic more clear.
+// They all take an entry which is a 2 element array representing a key/value
+// pair from a js Object
+function isPropertySet (entry, propName) {
+  if (typeof entry === 'undefined' || entry.length !== 2) {
     return false
   }
 
-  return val.completed
+  return entry[1].hasOwnProperty(propName) && entry[1][propName] !== ''
+}
+
+function isCompleted (entry) {
+  if (isPropertySet(entry, 'completed')) {
+    return entry[1].completed
+  }
+
+  // if the entry doesn't have completed property it isn't completed
+  return false
 }
 
 function isStarred (entry) {
-  const val = entry[1]
-
-  if (!val.hasOwnProperty('starred')) {
-    return false
+  if (isPropertySet(entry, 'starred')) {
+    return entry[1].starred
   }
 
-  return val.starred
+  return false
 }
 
 function isProjectTask (entry) {
-  const val = entry[1]
-
-  if (!val.hasOwnProperty('projectId')) {
-    return false
-  }
-
-  if (val.projectId === '') {
-    return false
-  }
-
-  return true
+  return isPropertySet(entry, 'projectId')
 }
 
 function isMatchingProject (entry, projectId) {
-  const val = entry[1]
-
-  if (!val.hasOwnProperty('projectId')) {
-    return false
+  if (isProjectTask(entry)) {
+    return entry[1].projectId === projectId
   }
 
-  return (val.projectId === projectId)
+  return false
 }
 
 function isNextAction (entry) {
@@ -52,24 +48,25 @@ function isNextAction (entry) {
   return true
 }
 
-function excludeOlderThanDate (entry, dateProperty, compareDate) {
-  const val = entry[1]
+function isEntryTminus (entry, dateProperty, compareDate) {
+  if (isPropertySet(entry, dateProperty)) {
+    const entryDate = new Date(entry[1][dateProperty])
 
-  if (val.hasOwnProperty(dateProperty) && val[dateProperty] !== '') {
-    const entryDate = new Date(val[dateProperty])
-
+    console.log(dateProperty + ' entry: ' + entryDate + ' comp: ' + compareDate)
     if (entryDate <= compareDate) {
       return true
     }
   }
 
-  // we have to have a dateProperty, if not, default to inclusion
   return false
 }
 
-function excludeSnoozed (entry) {
-  const compareDate = new Date()
-  return excludeOlderThanDate(entry, 'snoozedUntil', compareDate)
+function isSnoozed (entry) {
+  if (!isPropertySet(entry, 'snoozedUntil')) {
+    return false
+  }
+
+  return !isEntryTminus(entry, 'snoozedUntil', (new Date()))
 }
 
 export default {
@@ -91,6 +88,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
+      .filter((entry) => !isSnoozed(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -103,6 +101,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isNextAction(entry))
+      .filter((entry) => !isSnoozed(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -115,6 +114,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isStarred(entry))
+      .filter((entry) => !isSnoozed(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
@@ -125,11 +125,11 @@ export default {
     let retTasks = {}
 
     // we want to include any tasks that are due within two days
-    let compareDate = new Date(new Date().setHours(48, 0, 0))
+    let compareDate = new Date(new Date().setHours(24, 0, 0))
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
-      .filter((entry) => excludeOlderThanDate(entry, 'dueAt', compareDate))
+      .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 

@@ -22,8 +22,14 @@
       </span>
     </div>
     <div class="due">
+      <span v-if="task.snoozedUntil">
+        <i class="ti-alarm-clock"></i>
+        {{ task.snoozedUntil | moment("diff", Date.now(), "days") }}
+      </span>
+    </div>
+    <div class="due">
       <span v-if="task.dueAt">
-        <i class="fa fa-calendar-check-o"></i>
+        <i class="ti-calendar"></i>
         {{ task.dueAt | moment("diff", Date.now(), "days") }}
       </span>
     </div>

@@ -39,6 +39,7 @@
             poms_completed: 0,
             poms_total: 0,
             dueAt: '',
+            snoozedUntil: '',
             completed: false,
             completedAt: ''
           }

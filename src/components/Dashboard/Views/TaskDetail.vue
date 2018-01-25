@@ -39,11 +39,27 @@
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon pointer" @click="showDatePicker">
+        <div class="icon pointer" @click="showDatePicker('snooze')">
+          <i class="ti-alarm-clock"></i>
+        </div>
+        <datetime
+          ref="snoozepicker"
+          :value="task.snoozedUntil"
+          @input="updateSnooze"
+          placeholder="Set snooze"
+          class="name"
+          type="date"
+          input-format="YYYY-MM-DD"
+          input-class="datetime-input"
+          auto-close>
+        </datetime>
+      </div>
+      <div class="flex-row highlight">
+        <div class="icon pointer" @click="showDatePicker('due')">
           <i class="ti-calendar"></i>
         </div>
         <datetime
-          ref="datepicker"
+          ref="duepicker"
           :value="task.dueAt"
           @input="updateDue"
           placeholder="Set due date"
@@ -106,7 +122,6 @@
 
     methods: {
       handleKeyUp (e) {
-        console.log(e)
         if (e.key === 's') {
           this.toggleStar()
         } else if (e.key === 'c') {
@@ -123,10 +138,18 @@
           this.incrementPom('completed')
         } else if (e.key === 'B') {
           this.incrementPom('total')
+        } else if (e.key === 'z') {
+          this.randomSnooze()
+        } else if (e.key === 'Z') {
+          this.showDatePicker('snooze')
         }
       },
-      showDatePicker () {
-        this.$refs.datepicker.open()
+      showDatePicker (pickerType) {
+        if (pickerType === 'due') {
+          this.$refs.duepicker.open()
+        } else if (pickerType === 'snooze') {
+          this.$refs.snoozepicker.open()
+        }
       },
       jumpToProj () {
         this.$router.push({name: 'project', params: { id: this.task.projectId }})
@@ -147,6 +170,16 @@
         if (name !== this.task.name) {
           let newTask = this.task
           newTask.name = name
+          this.updateTask(newTask)
+        }
+      },
+      randomSnooze () {
+        console.log('RANDOM')
+      },
+      updateSnooze (snooze) {
+        if (snooze !== this.task.snoozedUntil) {
+          let newTask = this.task
+          newTask.snoozedUntil = snooze
           this.updateTask(newTask)
         }
       },
