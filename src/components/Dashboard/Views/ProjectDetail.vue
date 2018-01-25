@@ -37,9 +37,15 @@
         <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
       </div>
 
-      <h6 v-if="projectTasksCompleted.length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
+      <h6 class="pointer" v-if="Object.keys(projectTasksCompleted).length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
 
       <div class="flex-col" v-show="showCompleted" v-for="(task, id) in projectTasksCompleted">
+        <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+      </div>
+
+      <h6 class="pointer" v-if="Object.keys(projectTasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
+
+      <div class="flex-col" v-show="showSnoozed" v-for="(task, id) in projectTasksSnoozed">
         <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
       </div>
     </div>
@@ -60,7 +66,8 @@
 
     data () {
       return {
-        showCompleted: false
+        showCompleted: false,
+        showSnoozed: false
       }
     },
 
@@ -77,6 +84,9 @@
       },
       projectTasksCompleted () {
         return this.$store.getters.projectTasksCompleted(this.id)
+      },
+      projectTasksSnoozed () {
+        return this.$store.getters.projectTasksSnoozed(this.id)
       }
     },
 
@@ -134,12 +144,18 @@
       },
       toggleShowCompleted () {
         this.showCompleted = !this.showCompleted
+      },
+      toggleShowSnoozed () {
+        this.showSnoozed = !this.showSnoozed
       }
     }
   }
 </script>
 
 <style scoped>
+  h6 {
+    padding: 10px 0;
+  }
   .pointer {
     cursor: pointer;
   }

@@ -148,6 +148,19 @@ export default {
     return retTasks
   },
 
+  projectTasksSnoozed: state => projId => {
+    var retTasks = {}
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingProject(entry, projId))
+      .filter((entry) => isSnoozed(entry))
+
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+
+    return retTasks
+  },
+
   // note there is probably a much better way to do this, its mostly used
   // for fuse.js which needs to operate on an array and not an array-like object
   searchItems: state => searchCategory => {
