@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env ENABLE_ESLINT=true node build/dev-server.js",
-    "build": "cross-env ENABLE_ESLINT=true node build/build.js",
+    "build": "cross-env ENABLE_ESLINT=true node build/build.js"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
