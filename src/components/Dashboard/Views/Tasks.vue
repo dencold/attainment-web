@@ -6,6 +6,12 @@
       <task-card :id="id" :task="task" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
     </div>
 
+    <h6 class="pointer" v-if="Object.keys(tasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
+
+    <div class="flex-col" v-show="showSnoozed" v-for="(task, id) in tasksSnoozed">
+      <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+    </div>
+
   </div>
 </template>
 <script>
@@ -18,9 +24,18 @@
       'text-input': TextInput
     },
 
+    data () {
+      return {
+        showSnoozed: false
+      }
+    },
+
     computed: {
       tasksActive () {
         return this.$store.getters.tasksActive
+      },
+      tasksSnoozed () {
+        return this.$store.getters.tasksSnoozed
       }
     },
 
@@ -48,11 +63,16 @@
       },
       toTask: function (taskId) {
         this.$router.push({name: 'task', params: { id: taskId }})
+      },
+      toggleShowSnoozed () {
+        this.showSnoozed = !this.showSnoozed
       }
     }
   }
 
 </script>
 <style>
-
+  .pointer {
+    cursor: pointer;
+  }
 </style>

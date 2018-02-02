@@ -16,7 +16,7 @@ import fireApp from './modules/firebase'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/sass/paper-dashboard.scss'
-import 'es6-promise/auto'
+// import 'es6-promise/auto' -- don't think this is required
 
 // plugin setup
 Vue.use(GlobalComponents)
@@ -57,12 +57,3 @@ const vueApp = fireApp.auth().onAuthStateChanged(() => {
 
   vueApp()
 })
-
-          /*
-window.addEventListener('keyup', function (e) {
-  if (e.key === 'p') {
-    router.replace({name: 'projects'})
-    console.log(e)
-  }
-})
-*/

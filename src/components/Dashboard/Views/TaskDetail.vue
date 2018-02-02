@@ -90,6 +90,7 @@
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
   import { Datetime } from 'vue-datetime'
+  import moment from 'moment'
 
   export default {
     components: {
@@ -139,7 +140,7 @@
         } else if (e.key === 'B') {
           this.incrementPom('total')
         } else if (e.key === 'z') {
-          this.randomSnooze()
+          this.defaultSnooze()
         } else if (e.key === 'Z') {
           this.showDatePicker('snooze')
         }
@@ -173,8 +174,9 @@
           this.updateTask(newTask)
         }
       },
-      randomSnooze () {
-        console.log('RANDOM')
+      defaultSnooze () {
+        let dt = moment().add(7, 'days').utc()
+        this.updateSnooze(dt.format())
       },
       updateSnooze (snooze) {
         if (snooze !== this.task.snoozedUntil) {

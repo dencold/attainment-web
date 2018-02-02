@@ -52,7 +52,6 @@ function isEntryTminus (entry, dateProperty, compareDate) {
   if (isPropertySet(entry, dateProperty)) {
     const entryDate = new Date(entry[1][dateProperty])
 
-    console.log(dateProperty + ' entry: ' + entryDate + ' comp: ' + compareDate)
     if (entryDate <= compareDate) {
       return true
     }
@@ -130,6 +129,18 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
+
+    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+
+    return retTasks
+  },
+
+  tasksSnoozed: state => {
+    let retTasks = {}
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isSnoozed(entry))
 
     filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
 
