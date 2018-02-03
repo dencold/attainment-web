@@ -2,11 +2,14 @@
   <div>
     <text-input placeholder="Add a project" @submitted="addProject"></text-input>
 
-    <!--Stats cards-->
-    <div class="row">
-      <div class="col-lg-3 col-sm-6" v-for="(project, id) in $store.state.projects">
-        <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
-      </div>
+    <div class="flex-col" v-for="(project, id) in projectsActive">
+      <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
+    </div>
+
+    <h6 class="pointer" v-if="Object.keys(projectsCompleted).length > 0" @click="toggleShowCompleted">Completed Projects</h6>
+
+    <div class="flex-col" v-show="showCompleted" v-for="(project, id) in projectsCompleted">
+      <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
     </div>
 
   </div>
@@ -19,6 +22,21 @@
     components: {
       'project-card': ProjectCard,
       'text-input': TextInput
+    },
+
+    data () {
+      return {
+        showCompleted: false
+      }
+    },
+
+    computed: {
+      projectsActive () {
+        return this.$store.getters.projectsActive
+      },
+      projectsCompleted () {
+        return this.$store.getters.projectsCompleted
+      }
     },
 
     methods: {
@@ -38,6 +56,9 @@
       },
       toProject: function (projectId) {
         this.$router.push({name: 'project', params: { id: projectId }})
+      },
+      toggleShowCompleted () {
+        this.showCompleted = !this.showCompleted
       }
     }
   }

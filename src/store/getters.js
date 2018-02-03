@@ -107,6 +107,28 @@ export default {
     return retTasks
   },
 
+  projectsActive: state => {
+    let ret = {}
+
+    let filtered = Object.entries(state.projects)
+      .filter((entry) => !isCompleted(entry))
+
+    filtered.forEach((entry) => { ret[entry[0]] = entry[1] })
+
+    return ret
+  },
+
+  projectsCompleted: state => {
+    var ret = {}
+
+    let filtered = Object.entries(state.projects)
+      .filter((entry) => isCompleted(entry))
+
+    filtered.forEach((entry) => { ret[entry[0]] = entry[1] })
+
+    return ret
+  },
+
   tasksStarred: state => {
     let retTasks = {}
 

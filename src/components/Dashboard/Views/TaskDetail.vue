@@ -133,7 +133,7 @@
           this.$refs.nameInput.focus()
         } else if (e.key === 'n') {
           this.$refs.notes.focus()
-        } else if (e.key === 'p') {
+        } else if (e.key === 'm') {
           this.$refs.projsel.openSearch()
         } else if (e.key === 'b') {
           this.incrementPom('completed')
