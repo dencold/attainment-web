@@ -61,13 +61,17 @@ export default {
   methods: {
     handleGlobalShortcuts (e) {
       if (e.key === 'P') {
-        this.$router.replace({name: 'projects'})
+        this.$router.push({name: 'projects'})
       } else if (e.key === 'T') {
-        this.$router.replace({name: 'tasks'})
+        this.$router.push({name: 'tasks'})
       } else if (e.key === 'D') {
-        this.$router.replace({name: 'dashboard'})
+        this.$router.push({name: 'dashboard'})
       } else if (e.key === '/') {
         this.$bus.$emit('open-global-search')
+      } else if (e.key === '<') {
+        this.$router.back()
+      } else if (e.key === '>') {
+        this.$router.forward()
       }
     }
   }

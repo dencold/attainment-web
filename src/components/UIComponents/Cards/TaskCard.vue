@@ -1,5 +1,5 @@
 <template>
-  <div class="row-card flex-row pointer" :class="{ completed: task.completed }">
+  <div class="row-card flex-row pointer" :class="{ completed: task.completed, focused: isFocused }">
 
     <div class="star">
       <span v-show="!task.starred">
@@ -43,7 +43,8 @@
     props: {
       task: Object,
       id: String,
-      projectId: String // optional, pass if you want project info in card
+      projectId: String, // optional, pass if you want project info in card
+      isFocused: Boolean
     },
 
     computed: {
@@ -55,6 +56,7 @@
         return null
       }
     }
+
   }
 
 </script>
@@ -63,8 +65,15 @@
     height: 50px;
     background-color: #FFF;
     border-radius: 6px;
+    border: 3px solid #FFF;
     margin-bottom: 3px;
     padding: 0 15px 0 15px;
+  }
+  .focused {
+    border: 3px solid #c2d4de;
+  }
+  .row-card:hover {
+    border: 3px solid #c2d4de;
   }
   .completed {
     background-color: #DDD;
