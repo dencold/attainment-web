@@ -1,5 +1,6 @@
 <template>
   <div>
+    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
     <div class="flex-col" v-for="(task, id) in tasksActive">
@@ -23,17 +24,18 @@
 <script>
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
-      'text-input': TextInput
+      'text-input': TextInput,
+      'vim-movement': VimMovement
     },
 
     data () {
       return {
         showSnoozed: false,
-        currFocusIndex: null,
         currFocusId: null
       }
     },
@@ -47,24 +49,14 @@
       }
     },
 
-    created () {
-      document.addEventListener('keyup', this.handleKeyUp)
-    },
-
-    destroyed () {
-      document.removeEventListener('keyup', this.handleKeyUp)
-      this.focused = null
-    },
-
     methods: {
       handleKeyUp (e) {
-        if (e.key === 'j') {
-          this.moveDown()
-        } else if (e.key === 'k') {
-          this.moveUp()
-        } else if (e.key === 'o') {
+        if (e.key === 'o') {
           this.toTask(this.currFocusId)
         }
+      },
+      updateFocus (e) {
+        this.currFocusId = e.id
       },
       addTask (e) {
         const taskName = e.trim()
@@ -92,32 +84,6 @@
       },
       toggleShowSnoozed () {
         this.showSnoozed = !this.showSnoozed
-      },
-      moveDown () {
-        if (this.currFocusIndex === null) {
-          this.initFocus()
-        } else {
-          let keys = Object.keys(this.tasksActive)
-          if (this.currFocusIndex < keys.length - 1) {
-            this.currFocusIndex += 1
-            this.currFocusId = keys[this.currFocusIndex]
-          }
-        }
-      },
-      moveUp () {
-        if (this.currFocusIndex === null) {
-          this.initFocus()
-        } else {
-          let keys = Object.keys(this.tasksActive)
-          if (this.currFocusIndex > 0) {
-            this.currFocusIndex -= 1
-            this.currFocusId = keys[this.currFocusIndex]
-          }
-        }
-      },
-      initFocus () {
-        this.currFocusIndex = 0
-        this.currFocusId = Object.keys(this.tasksActive)[0]
       }
     }
   }
