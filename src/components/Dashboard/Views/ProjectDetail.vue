@@ -32,9 +32,15 @@
       <hr />
 
       <text-input placeholder="Add a task" @submitted="addTask"></text-input>
+      <vim-movement :items="projectTasksActive" @focusChange="updateFocus"></vim-movement>
 
       <div class="flex-col" v-for="(task, id) in projectTasksActive">
-        <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+        <task-card
+          :id="id"
+          :task="task"
+          :isFocused="id === currFocusId"
+          @click.native="toTask(id)">
+        </task-card>
       </div>
 
       <h6 class="pointer" v-if="Object.keys(projectTasksCompleted).length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
@@ -56,18 +62,21 @@
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
+  import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
       'text-input': TextInput,
-      'text-area': TextArea
+      'text-area': TextArea,
+      'vim-movement': VimMovement
     },
 
     data () {
       return {
         showCompleted: false,
-        showSnoozed: false
+        showSnoozed: false,
+        currFocusId: null
       }
     },
 
@@ -111,6 +120,9 @@
           }
           this.$store.dispatch('addTask', newTask)
         }
+      },
+      updateFocus (e) {
+        this.currFocusId = e.id
       },
       toTask (taskId) {
         this.$router.push({name: 'task', params: { id: taskId }})

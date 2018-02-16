@@ -14,7 +14,6 @@
     },
 
     created () {
-      console.log(this.items)
       document.addEventListener('keyup', this.handleKeyUp)
     },
 
