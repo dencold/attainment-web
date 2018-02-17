@@ -58,6 +58,7 @@
       initFocus () {
         this.currFocusIndex = 0
         this.currFocusId = Object.keys(this.items)[0]
+        this.emitId()
       },
       emitId () {
         this.$emit('focusChange', {id: this.currFocusId})
