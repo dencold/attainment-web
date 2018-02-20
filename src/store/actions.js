@@ -58,7 +58,33 @@ export default {
     }
 
     context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
+    context.dispatch('completeNowTask', taskDetails['id'])
   },
+
+  completeNowTask: (context, taskId) => {
+    if (context.state.now === taskId) {
+      context.dispatch('setNowTask', '')
+    }
+  },
+
+  setNowTask: (context, taskId) => {
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .set({now: taskId}, {merge: true})
+
+    context.commit('SET_NOW_TASK', taskId)
+  },
+
+  syncNow: (context) => {
+    const collection = db.collection('users').doc(context.state.user.uid)
+
+    collection.onSnapshot(doc => {
+      if (doc.data().hasOwnProperty('now')) {
+        context.commit('SET_NOW_TASK', doc.data()['now'])
+      }
+    })
+  },
+
   syncProjects: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
 

@@ -7,6 +7,7 @@ import Login from 'src/components/Dashboard/Views/Login.vue'
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
 import Tasks from 'src/components/Dashboard/Views/Tasks.vue'
+import Now from 'src/components/Dashboard/Views/Now.vue'
 import Dashboard from 'src/components/Dashboard/Views/Dashboard.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
 import TaskDetail from 'src/components/Dashboard/Views/TaskDetail.vue'
@@ -31,8 +32,8 @@ const routes = [
     redirect: '/dashboard',
     children: [
       {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: '/plan',
+        name: 'plan',
         component: Dashboard
       },
       {
@@ -66,6 +67,11 @@ const routes = [
         name: 'task',
         props: true,
         component: TaskDetail
+      },
+      {
+        path: '/now',
+        name: 'now',
+        component: Now
       },
       {
         path: '/notifications',

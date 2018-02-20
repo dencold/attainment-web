@@ -4,9 +4,14 @@ const SidebarStore = {
   showSidebar: false,
   sidebarLinks: [
     {
-      name: 'Dashboard',
-      icon: 'ti-panel',
-      path: '/dashboard'
+      name: 'Now',
+      icon: 'ti-pin-alt',
+      path: '/now'
+    },
+    {
+      name: 'Plan',
+      icon: 'ti-book',
+      path: '/plan'
     },
     {
       name: 'Projects',

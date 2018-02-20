@@ -143,6 +143,8 @@
           this.defaultSnooze()
         } else if (e.key === 'Z') {
           this.showDatePicker('snooze')
+        } else if (e.key === '!') {
+          this.setNow()
         }
       },
       showDatePicker (pickerType) {
@@ -226,6 +228,9 @@
         let newTask = this.task
         newTask.projectId = project.id
         this.updateTask(newTask)
+      },
+      setNow () {
+        this.$store.dispatch('setNowTask', this.id)
       }
     }
   }
