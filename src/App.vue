@@ -67,6 +67,10 @@ export default {
         this.$router.push({name: 'tasks'})
       } else if (e.key === 'D') {
         this.$router.push({name: 'dashboard'})
+      } else if (e.key === '1') {
+        this.$router.push({name: 'now'})
+      } else if (e.key === '2') {
+        this.$router.push({name: 'plan'})
       } else if (e.key === '/') {
         this.$bus.$emit('open-global-search')
       } else if (e.key === '<') {
