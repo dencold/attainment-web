@@ -58,13 +58,15 @@ export default {
     }
 
     context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
-    context.dispatch('completeNowTask', taskDetails['id'])
+    context.dispatch('cleanup', taskDetails['id'])
   },
 
-  completeNowTask: (context, taskId) => {
+  cleanup: (context, taskId) => {
     if (context.state.now === taskId) {
       context.dispatch('setNowTask', '')
     }
+
+    context.dispatch('removeToday', taskId)
   },
 
   setNowTask: (context, taskId) => {
@@ -75,12 +77,47 @@ export default {
     context.commit('SET_NOW_TASK', taskId)
   },
 
-  syncNow: (context) => {
+  toggleToday: (context, taskId) => {
+    let newToday = context.state.today
+    let index = newToday.indexOf(taskId)
+
+    if (index === -1) {
+      newToday.push(taskId)
+    } else {
+      newToday.splice(index, 1)
+    }
+
+    context.dispatch('setToday', newToday)
+  },
+
+  removeToday: (context, taskId) => {
+    let newToday = context.state.today
+    let index = newToday.indexOf(taskId)
+
+    if (index > -1) {
+      newToday.splice(index, 1)
+      context.dispatch('setToday', newToday)
+    }
+  },
+
+  setToday: (context, newToday) => {
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .set({today: newToday}, {merge: true})
+
+    context.commit('SET_TODAY', newToday)
+  },
+
+  syncRoot: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid)
 
     collection.onSnapshot(doc => {
       if (doc.data().hasOwnProperty('now')) {
         context.commit('SET_NOW_TASK', doc.data()['now'])
+      }
+
+      if (doc.data().hasOwnProperty('today')) {
+        context.commit('SET_TODAY', doc.data()['today'])
       }
     })
   },

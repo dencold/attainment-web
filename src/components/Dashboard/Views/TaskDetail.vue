@@ -145,6 +145,8 @@
           this.showDatePicker('snooze')
         } else if (e.key === '!') {
           this.setNow()
+        } else if (e.key === 't') {
+          this.toggleToday()
         }
       },
       showDatePicker (pickerType) {
@@ -231,6 +233,9 @@
       },
       setNow () {
         this.$store.dispatch('setNowTask', this.id)
+      },
+      toggleToday () {
+        this.$store.dispatch('toggleToday', this.id)
       }
     }
   }

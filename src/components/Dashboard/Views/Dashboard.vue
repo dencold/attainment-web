@@ -2,14 +2,19 @@
   <div>
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
+    <h6>Today</h6>
+    <div class="flex-col" v-for="id in tasksToday">
+      <task-card :id="id" @click.native="toTask(id)"></task-card>
+    </div>
+
     <h6>Starred Tasks</h6>
     <div class="flex-col" v-for="(task, id) in tasksStarred">
-      <task-card :id="id" :task="task" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
     </div>
 
     <h6>Due Tasks</h6>
     <div class="flex-col" v-for="(task, id) in tasksDue">
-      <task-card :id="id" :task="task" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
     </div>
   </div>
 </template>
@@ -24,6 +29,9 @@
     },
 
     computed: {
+      tasksToday () {
+        return this.$store.state.today
+      },
       tasksStarred () {
         return this.$store.getters.tasksStarred
       },

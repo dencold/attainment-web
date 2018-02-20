@@ -41,7 +41,6 @@
     name: 'task-card',
 
     props: {
-      task: Object,
       id: String,
       projectId: String, // optional, pass if you want project info in card
       isFocused: Boolean
@@ -54,6 +53,13 @@
         }
 
         return null
+      },
+      task () {
+        if (this.id) {
+          return this.$store.state.tasks[this.id]
+        }
+
+        return {}
       }
     }
 
