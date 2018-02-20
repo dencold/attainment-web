@@ -29,7 +29,7 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/dashboard',
+    redirect: '/plan',
     children: [
       {
         path: '/plan',
