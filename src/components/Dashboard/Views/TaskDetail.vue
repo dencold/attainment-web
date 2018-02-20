@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="card">
+    <div v-if="task" class="card">
 
       <div class="flex-row title">
         <div class="icon pointer" @click="toggleCompleted">
@@ -82,6 +82,7 @@
       </div>
 
     </div>
+    <div v-if="!task">TASK NOT FOUND</div>
   </div>    
 </template>
 
