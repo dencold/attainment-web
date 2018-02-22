@@ -129,7 +129,7 @@
         } else if (e.key === 'c') {
           this.toggleCompleted()
         } else if (e.key === 'd') {
-          this.showDatePicker()
+          this.showDatePicker('due')
         } else if (e.key === 'e') {
           this.$refs.nameInput.focus()
         } else if (e.key === 'n') {
