@@ -1,6 +1,8 @@
 <template>
   <div>
     <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
+    <task-shortcuts :id="currFocusId"></task-shortcuts>
+
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
     <div class="flex-col" v-for="(task, id) in tasksActive">
@@ -25,12 +27,14 @@
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
+  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
       'text-input': TextInput,
-      'vim-movement': VimMovement
+      'vim-movement': VimMovement,
+      'task-shortcuts': TaskShortcuts
     },
 
     data () {
