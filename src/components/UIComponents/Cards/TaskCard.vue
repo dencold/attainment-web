@@ -1,39 +1,44 @@
 <template>
-  <div class="row-card flex-row pointer" :class="{ completed: task.completed, focused: isFocused }">
+  <div>
+    <div v-if="task" class="flex-row row-card pointer" :class="{ completed: task.completed, focused: isFocused }">
 
-    <div class="star">
-      <span v-show="!task.starred">
-        <i class="fa fa-star-o"></i>
-      </span>
-      <span v-show="task.starred">
-        <i class="fa fa-star"></i>
-      </span>
-    </div>
+      <div class="star">
+        <span v-show="!task.starred">
+          <i class="fa fa-star-o"></i>
+        </span>
+        <span v-show="task.starred">
+          <i class="fa fa-star"></i>
+        </span>
+      </div>
 
-    <div class="task">{{task.name}}</div>
-    <div v-if="project" class="project">
-      <i class="ti-folder"></i>
-      {{project.name}}
-    </div>
-    <div class="poms">
-      <span v-if="task.poms_total">
-        <i class="ti-bolt"></i>
-        {{task.poms_total - task.poms_completed}}
-      </span>
-    </div>
-    <div class="due">
-      <span v-if="task.snoozedUntil">
-        <i class="ti-alarm-clock"></i>
-        {{ task.snoozedUntil | moment("diff", Date.now(), "days") }}
-      </span>
-    </div>
-    <div class="due">
-      <span v-if="task.dueAt">
-        <i class="ti-calendar"></i>
-        {{ task.dueAt | moment("diff", Date.now(), "days") }}
-      </span>
-    </div>
+      <div class="task">{{task.name}}</div>
+      <div v-if="project" class="project">
+        <i class="ti-folder"></i>
+        {{project.name}}
+      </div>
+      <div class="poms">
+        <span v-if="task.poms_total">
+          <i class="ti-bolt"></i>
+          {{task.poms_total - task.poms_completed}}
+        </span>
+      </div>
+      <div class="due">
+        <span v-if="task.snoozedUntil">
+          <i class="ti-alarm-clock"></i>
+          {{ task.snoozedUntil | moment("diff", Date.now(), "days") }}
+        </span>
+      </div>
+      <div class="due">
+        <span v-if="task.dueAt">
+          <i class="ti-calendar"></i>
+          {{ task.dueAt | moment("diff", Date.now(), "days") }}
+        </span>
+      </div>
 
+    </div>
+    <div v-if="!task" class="flex-row row-card">
+      TASK NOT FOUND
+    </div>
   </div>
 </template>
 <script>
@@ -59,7 +64,7 @@
           return this.$store.state.tasks[this.id]
         }
 
-        return {}
+        return null
       }
     }
 

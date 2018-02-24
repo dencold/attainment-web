@@ -2,6 +2,11 @@
   <div>
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
+    <h6>Now</h6>
+    <div class="flex-col">
+      <task-card :id="nowId" @click.native="toTask(nowId)"></task-card>
+    </div>
+
     <h6>Today</h6>
     <div class="flex-col" v-for="id in tasksToday">
       <task-card :id="id" @click.native="toTask(id)"></task-card>
@@ -29,6 +34,9 @@
     },
 
     computed: {
+      nowId () {
+        return this.$store.state.now
+      },
       tasksToday () {
         return this.$store.state.today
       },
@@ -63,7 +71,9 @@
         }
       },
       toTask: function (taskId) {
-        this.$router.push({name: 'task', params: { id: taskId }})
+        if (taskId) {
+          this.$router.push({name: 'task', params: { id: taskId }})
+        }
       }
     }
   }
