@@ -1,15 +1,13 @@
 <template>
   <div>
-    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
-    <task-shortcuts :id="currFocusId"></task-shortcuts>
+    <!--    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
+      <task-shortcuts :id="currFocusId"></task-shortcuts> -->
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
-    <div class="flex-col" v-for="(task, id) in tasksActive">
+    <div class="flex-col" v-for="id in tasksActive">
       <task-card
         :id="id"
-        :task="task"
-        :projectId="task.projectId"
         :isFocused="id === currFocusId"
         @click.native="toTask(id)">
       </task-card>

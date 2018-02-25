@@ -51,7 +51,6 @@ export default {
     // check if we already have a user logged in
     const user = fireApp.auth().currentUser
     if (user) {
-      console.log('Setting User!')
       this.$store.commit('SET_USER', user)
       this.$store.dispatch('syncProjects')
       this.$store.dispatch('syncTasks')

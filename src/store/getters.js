@@ -95,14 +95,15 @@ export default {
   },
 
   tasksActive: state => {
-    let retTasks = {}
+    let retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isNextAction(entry))
       .filter((entry) => !isSnoozed(entry))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },

@@ -123,7 +123,10 @@ export default {
   },
 
   syncProjects: (context) => {
-    const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
+    const collection = db.collection('users')
+                    .doc(context.state.user.uid)
+                    .collection('projects')
+                    .orderBy('name')
 
     collection.onSnapshot(snapshot => {
       snapshot.docChanges.forEach(change => {
@@ -158,7 +161,10 @@ export default {
       .update(newTask)
   },
   syncTasks: (context) => {
-    const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
+    const collection = db.collection('users')
+                    .doc(context.state.user.uid)
+                    .collection('tasks')
+                    .orderBy('createdAt', 'desc')
 
     collection.onSnapshot(snapshot => {
       snapshot.docChanges.forEach(change => {
