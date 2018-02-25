@@ -1,7 +1,7 @@
 <template>
   <div>
     <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
-    <!--  <task-shortcuts :id="currFocusId"></task-shortcuts> -->
+    <task-shortcuts :id="currFocusId"></task-shortcuts>
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
