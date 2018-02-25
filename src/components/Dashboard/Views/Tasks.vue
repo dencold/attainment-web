@@ -52,11 +52,6 @@
     },
 
     methods: {
-      handleKeyUp (e) {
-        if (e.key === 'o') {
-          this.toTask(this.currFocusId)
-        }
-      },
       updateFocus (e) {
         this.currFocusId = this.tasksActive[e.index]
       },

@@ -63,6 +63,8 @@
       handleKeyUp (e) {
         if (e.key === 's') {
           this.toggleStar()
+        } else if (e.key === 'o') {
+          this.toTask(this.id)
         } else if (e.key === 'c') {
           this.toggleCompleted()
         } else if (e.key === 'd') {
@@ -86,6 +88,9 @@
         } else if (e.key === 't') {
           this.toggleToday()
         }
+      },
+      toTask (taskId) {
+        this.$router.push({name: 'task', params: { id: taskId }})
       },
       showDatePicker (pickerType) {
         if (pickerType === 'due') {
