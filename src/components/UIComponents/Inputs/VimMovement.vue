@@ -3,13 +3,12 @@
 <script>
   export default {
     props: {
-      'items': Object
+      'items': Array
     },
 
     data () {
       return {
-        currFocusIndex: null,
-        currFocusId: null
+        currFocusIndex: null
       }
     },
 
@@ -19,7 +18,6 @@
 
     destroyed () {
       document.removeEventListener('keyup', this.handleKeyUp)
-      this.currFocusId = null
       this.currFocusIndex = null
     },
 
@@ -35,11 +33,9 @@
         if (this.currFocusIndex === null) {
           this.initFocus()
         } else {
-          let keys = Object.keys(this.items)
-          if (this.currFocusIndex < keys.length - 1) {
+          if (this.currFocusIndex < this.items.length - 1) {
             this.currFocusIndex += 1
-            this.currFocusId = keys[this.currFocusIndex]
-            this.emitId()
+            this.emitChange()
           }
         }
       },
@@ -47,21 +43,18 @@
         if (this.currFocusIndex === null) {
           this.initFocus()
         } else {
-          let keys = Object.keys(this.items)
           if (this.currFocusIndex > 0) {
             this.currFocusIndex -= 1
-            this.currFocusId = keys[this.currFocusIndex]
-            this.emitId()
+            this.emitChange()
           }
         }
       },
       initFocus () {
         this.currFocusIndex = 0
-        this.currFocusId = Object.keys(this.items)[0]
-        this.emitId()
+        this.emitChange()
       },
-      emitId () {
-        this.$emit('focusChange', {id: this.currFocusId})
+      emitChange () {
+        this.$emit('focusChange', {index: this.currFocusIndex})
       }
     }
   }

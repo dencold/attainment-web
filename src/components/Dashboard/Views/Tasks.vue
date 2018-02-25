@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!--    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
-      <task-shortcuts :id="currFocusId"></task-shortcuts> -->
+    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
+    <!--  <task-shortcuts :id="currFocusId"></task-shortcuts> -->
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
@@ -58,7 +58,7 @@
         }
       },
       updateFocus (e) {
-        this.currFocusId = e.id
+        this.currFocusId = this.tasksActive[e.index]
       },
       addTask (e) {
         const taskName = e.trim()
