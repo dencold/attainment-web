@@ -33,11 +33,11 @@
 
       <text-input placeholder="Add a task" @submitted="addTask"></text-input>
       <vim-movement :items="projectTasksActive" @focusChange="updateFocus"></vim-movement>
+      <task-shortcuts :id="currFocusId"></task-shortcuts>
 
-      <div class="flex-col" v-for="(task, id) in projectTasksActive">
+      <div class="flex-col" v-for="id in projectTasksActive">
         <task-card
           :id="id"
-          :task="task"
           :isFocused="id === currFocusId"
           @click.native="toTask(id)">
         </task-card>
@@ -45,8 +45,12 @@
 
       <h6 class="pointer" v-if="Object.keys(projectTasksCompleted).length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
 
-      <div class="flex-col" v-show="showCompleted" v-for="(task, id) in projectTasksCompleted">
-        <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+      <div class="flex-col" v-for="id in projectTasksCompleted">
+        <task-card
+          :id="id"
+          :isFocused="id === currFocusId"
+          @click.native="toTask(id)">
+        </task-card>
       </div>
 
       <h6 class="pointer" v-if="Object.keys(projectTasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
@@ -63,13 +67,15 @@
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
+  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
       'text-input': TextInput,
       'text-area': TextArea,
-      'vim-movement': VimMovement
+      'vim-movement': VimMovement,
+      'task-shortcuts': TaskShortcuts
     },
 
     data () {
@@ -122,7 +128,7 @@
         }
       },
       updateFocus (e) {
-        this.currFocusId = e.id
+        this.currFocusId = this.projectTasksActive[e.index]
       },
       toTask (taskId) {
         this.$router.push({name: 'task', params: { id: taskId }})

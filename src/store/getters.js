@@ -82,14 +82,15 @@ export default {
   },
 
   projectTasksActive: state => projId => {
-    var retTasks = {}
+    var retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
       .filter((entry) => !isSnoozed(entry))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
@@ -171,13 +172,14 @@ export default {
   },
 
   projectTasksCompleted: state => projId => {
-    var retTasks = {}
+    var retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => b[1].completedAt - a[1].completedAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
