@@ -4,22 +4,22 @@
 
     <h6>Now</h6>
     <div class="flex-col">
-      <task-card :id="nowId" @click.native="toTask(nowId)"></task-card>
+      <task-card :id="nowId" showProject @click.native="toTask(nowId)"></task-card>
     </div>
 
     <h6>Today</h6>
     <div class="flex-col" v-for="id in tasksToday">
-      <task-card :id="id" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" showProject @click.native="toTask(id)"></task-card>
     </div>
 
     <h6>Starred Tasks</h6>
     <div class="flex-col" v-for="(task, id) in tasksStarred">
-      <task-card :id="id" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" showProject @click.native="toTask(id)"></task-card>
     </div>
 
     <h6>Due Tasks</h6>
     <div class="flex-col" v-for="(task, id) in tasksDue">
-      <task-card :id="id" :projectId="task.projectId" @click.native="toTask(id)"></task-card>
+      <task-card :id="id" showProject @click.native="toTask(id)"></task-card>
     </div>
   </div>
 </template>

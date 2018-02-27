@@ -47,14 +47,14 @@
 
     props: {
       id: String,
-      projectId: String, // optional, pass if you want project info in card
+      showProject: Boolean,
       isFocused: Boolean
     },
 
     computed: {
       project () {
-        if (this.projectId) {
-          return this.$store.state.projects[this.projectId]
+        if (this.showProject && this.task && this.task.projectId) {
+          return this.$store.state.projects[this.task.projectId]
         }
 
         return null

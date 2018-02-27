@@ -9,6 +9,7 @@
       <task-card
         :id="id"
         :isFocused="id === currFocusId"
+        showProject
         @click.native="toTask(id)">
       </task-card>
     </div>
@@ -16,7 +17,11 @@
     <h6 class="pointer" v-if="Object.keys(tasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
 
     <div class="flex-col" v-show="showSnoozed" v-for="(task, id) in tasksSnoozed">
-      <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+      <task-card
+        :id="id"
+        showProject
+        @click.native="toTask(id)">
+      </task-card>
     </div>
 
   </div>
