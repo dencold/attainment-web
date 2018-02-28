@@ -68,6 +68,20 @@ function isSnoozed (entry) {
   return !isEntryTminus(entry, 'snoozedUntil', (new Date()))
 }
 
+function sortDate (a, b, datefield, direction) {
+  if (isPropertySet(a, datefield) && isPropertySet(b, datefield)) {
+    const aDate = new Date(a[1][datefield])
+    const bDate = new Date(b[1][datefield])
+    if (direction === 'desc') {
+      return bDate.getTime() - aDate.getTime()
+    } else {
+      return aDate.getTime() - bDate.getTime()
+    }
+  }
+
+  return 0
+}
+
 export default {
   isLoggedIn: state => {
     // yep, it's 2017 & this is how we check that an Object is empty
@@ -132,20 +146,21 @@ export default {
   },
 
   tasksStarred: state => {
-    let retTasks = {}
+    let retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isStarred(entry))
       .filter((entry) => !isSnoozed(entry))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
 
   tasksDue: state => {
-    let retTasks = {}
+    let retTasks = []
 
     // we want to include any tasks that are due within two days
     let compareDate = new Date(new Date().setHours(24, 0, 0))
@@ -154,7 +169,8 @@ export default {
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => sortDate(a, b, 'dueAt', 'desc'))
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
@@ -183,7 +199,6 @@ export default {
 
     return retTasks
   },
-
   projectTasksSnoozed: state => projId => {
     var retTasks = {}
 

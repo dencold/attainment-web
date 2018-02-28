@@ -13,12 +13,12 @@
     </div>
 
     <h6>Starred Tasks</h6>
-    <div class="flex-col" v-for="(task, id) in tasksStarred">
+    <div class="flex-col" v-for="id in tasksStarred">
       <task-card :id="id" showProject @click.native="toTask(id)"></task-card>
     </div>
 
     <h6>Due Tasks</h6>
-    <div class="flex-col" v-for="(task, id) in tasksDue">
+    <div class="flex-col" v-for="id in tasksDue">
       <task-card :id="id" showProject @click.native="toTask(id)"></task-card>
     </div>
   </div>
