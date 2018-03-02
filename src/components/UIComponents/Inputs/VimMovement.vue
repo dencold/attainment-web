@@ -3,13 +3,8 @@
 <script>
   export default {
     props: {
-      'items': Array
-    },
-
-    data () {
-      return {
-        currFocusIndex: null
-      }
+      'items': Array,
+      'currIndex': Number
     },
 
     created () {
@@ -18,7 +13,6 @@
 
     destroyed () {
       document.removeEventListener('keyup', this.handleKeyUp)
-      this.currFocusIndex = null
     },
 
     methods: {
@@ -30,31 +24,28 @@
         }
       },
       moveDown () {
-        if (this.currFocusIndex === null) {
+        if (this.currIndex === null) {
           this.initFocus()
         } else {
-          if (this.currFocusIndex < this.items.length - 1) {
-            this.currFocusIndex += 1
-            this.emitChange()
+          if (this.currIndex < this.items.length - 1) {
+            this.emitChange(this.currIndex + 1)
           }
         }
       },
       moveUp () {
-        if (this.currFocusIndex === null) {
+        if (this.currIndex === null) {
           this.initFocus()
         } else {
-          if (this.currFocusIndex > 0) {
-            this.currFocusIndex -= 1
-            this.emitChange()
+          if (this.currIndex > 0) {
+            this.emitChange(this.currIndex - 1)
           }
         }
       },
       initFocus () {
-        this.currFocusIndex = 0
-        this.emitChange()
+        this.emitChange(0)
       },
-      emitChange () {
-        this.$emit('focusChange', {index: this.currFocusIndex})
+      emitChange (index) {
+        this.$emit('focusChange', {index: index})
       }
     }
   }

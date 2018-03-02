@@ -1,15 +1,16 @@
 <template>
   <div>
-    <vim-movement :items="tasksActive" @focusChange="updateFocus"></vim-movement>
+    <vim-movement :items="tasksActive" :currIndex="currFocusIndex" @focusChange="handleMovement"></vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
-    <div class="flex-col" v-for="id in tasksActive">
+    <div class="flex-col" v-for="(id, index) in tasksActive">
       <task-card
         :id="id"
         :isFocused="id === currFocusId"
         showProject
+        @mouseover.native="updateFocus(index)"
         @click.native="toTask(id)">
       </task-card>
     </div>
@@ -43,7 +44,8 @@
     data () {
       return {
         showSnoozed: false,
-        currFocusId: null
+        currFocusId: null,
+        currFocusIndex: null
       }
     },
 
@@ -57,8 +59,12 @@
     },
 
     methods: {
-      updateFocus (e) {
-        this.currFocusId = this.tasksActive[e.index]
+      handleMovement (e) {
+        this.updateFocus(e.index)
+      },
+      updateFocus (index) {
+        this.currFocusIndex = index
+        this.currFocusId = this.tasksActive[index]
       },
       addTask (e) {
         const taskName = e.trim()
