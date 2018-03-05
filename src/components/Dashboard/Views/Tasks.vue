@@ -88,7 +88,6 @@
         this.updateFocus(e.section, e.index)
       },
       updateFocus (section, index) {
-        console.log(section + ', ' + index)
         this.currFocusSection = section
         this.currFocusIndex = index
       },

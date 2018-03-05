@@ -32,31 +32,46 @@
       <hr />
 
       <text-input placeholder="Add a task" @submitted="addTask"></text-input>
-      <vim-movement :items="projectTasksActive" @focusChange="updateFocus"></vim-movement>
+      <vim-movement
+        :sectionLens="sectionLens"
+        :currSection="currFocusSection"
+        :currIndex="currFocusIndex"
+        @focusChange="handleMovement">
+      </vim-movement>
       <task-shortcuts :id="currFocusId"></task-shortcuts>
 
-      <div class="flex-col" v-for="id in projectTasksActive">
+      <div class="flex-col" v-for="(id, index) in projectTasksActive">
         <task-card
           :id="id"
-          :isFocused="id === currFocusId"
+          :isFocused="isFocused(0, index)"
+          showProject
+          @mouseover.native="updateFocus(0, index)"
           @click.native="toTask(id)">
         </task-card>
       </div>
 
-      <h6 class="pointer" v-if="Object.keys(projectTasksCompleted).length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
+      <h6 class="pointer" v-if="projectTasksCompleted.length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
 
-      <div class="flex-col" v-for="id in projectTasksCompleted">
+      <div class="flex-col" v-show="showCompleted" v-for="(id, index) in projectTasksCompleted">
         <task-card
           :id="id"
-          :isFocused="id === currFocusId"
+          :isFocused="isFocused(1, index)"
+          showProject
+          @mouseover.native="updateFocus(1, index)"
           @click.native="toTask(id)">
         </task-card>
       </div>
 
-      <h6 class="pointer" v-if="Object.keys(projectTasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
+      <h6 class="pointer" v-if="projectTasksSnoozed.length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
 
-      <div class="flex-col" v-show="showSnoozed" v-for="(task, id) in projectTasksSnoozed">
-        <task-card :id="id" :task="task" @click.native="toTask(id)"></task-card>
+      <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in projectTasksSnoozed">
+        <task-card
+          :id="id"
+          :isFocused="isFocused(2, index)"
+          showProject
+          @mouseover.native="updateFocus(2, index)"
+          @click.native="toTask(id)">
+        </task-card>
       </div>
     </div>
   </div>
@@ -82,7 +97,8 @@
       return {
         showCompleted: false,
         showSnoozed: false,
-        currFocusId: null
+        currFocusSection: null,
+        currFocusIndex: null
       }
     },
 
@@ -102,6 +118,26 @@
       },
       projectTasksSnoozed () {
         return this.$store.getters.projectTasksSnoozed(this.id)
+      },
+      sectionLens () {
+        let active = this.projectTasksActive.length
+        let completed = this.showCompleted ? this.projectTasksCompleted.length : 0
+        let snoozed = this.showSnoozed ? this.projectTasksSnoozed.length : 0
+
+        return [active, completed, snoozed]
+      },
+      currFocusId () {
+        if (this.currFocusSection === null || this.currFocusIndex === null) {
+          return null
+        }
+
+        if (this.currFocusSection === 0) {
+          return this.projectTasksActive[this.currFocusIndex]
+        } else if (this.currFocusSection === 1) {
+          return this.projectTasksCompleted[this.currFocusIndex]
+        } else if (this.currFocusSection === 2) {
+          return this.projectTasksSnoozed[this.currFocusIndex]
+        }
       }
     },
 
@@ -127,8 +163,15 @@
           this.$store.dispatch('addTask', newTask)
         }
       },
-      updateFocus (e) {
-        this.currFocusId = this.projectTasksActive[e.index]
+      updateFocus (section, index) {
+        this.currFocusSection = section
+        this.currFocusIndex = index
+      },
+      isFocused (section, index) {
+        return (this.currFocusSection === section && this.currFocusIndex === index)
+      },
+      handleMovement (e) {
+        this.updateFocus(e.section, e.index)
       },
       toTask (taskId) {
         this.$router.push({name: 'task', params: { id: taskId }})
