@@ -66,7 +66,7 @@
         if (direction === 'down') {
           this.emitChange(sectionIndex, 0)
         } else if (direction === 'up') {
-          this.emitChange(sectionIndex, this.sectionLens[sectionIndex].length - 1)
+          this.emitChange(sectionIndex, this.sectionLens[sectionIndex] - 1)
         }
       },
 
