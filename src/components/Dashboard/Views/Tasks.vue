@@ -1,6 +1,11 @@
 <template>
   <div>
-    <vim-movement :items="tasksActive" :currIndex="currFocusIndex" @focusChange="handleMovement"></vim-movement>
+    <vim-movement
+      :sectionLens="sectionLens"
+      :currSection="currFocusSection"
+      :currIndex="currFocusIndex"
+      @focusChange="handleMovement">
+    </vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
@@ -8,9 +13,9 @@
     <div class="flex-col" v-for="(id, index) in tasksActive">
       <task-card
         :id="id"
-        :isFocused="id === currFocusId"
+        :isFocused="isFocused(0, index)"
         showProject
-        @mouseover.native="updateFocus(index)"
+        @mouseover.native="updateFocus(0, index)"
         @click.native="toTask(id)">
       </task-card>
     </div>
@@ -44,7 +49,7 @@
     data () {
       return {
         showSnoozed: false,
-        currFocusId: null,
+        currFocusSection: null,
         currFocusIndex: null
       }
     },
@@ -55,16 +60,38 @@
       },
       tasksSnoozed () {
         return this.$store.getters.tasksSnoozed
+      },
+      sectionLens () {
+        if (this.showSnoozed) {
+          return [this.tasksActive.length, this.tasksSnoozed.length]
+        } else {
+          return [this.tasksActive.length, 0]
+        }
+      },
+      currFocusId () {
+        if (this.currFocusSection === null || this.currFocusIndex === null) {
+          return null
+        }
+
+        if (this.currFocusSection === 0) {
+          return this.tasksActive[this.currFocusIndex]
+        } else if (this.currFocusSection === 1) {
+          return this.tasksSnoozed[this.currFocusIndex]
+        }
       }
     },
 
     methods: {
       handleMovement (e) {
-        this.updateFocus(e.index)
+        this.updateFocus(e.section, e.index)
       },
-      updateFocus (index) {
+      updateFocus (section, index) {
+        console.log(section + ', ' + index)
+        this.currFocusSection = section
         this.currFocusIndex = index
-        this.currFocusId = this.tasksActive[index]
+      },
+      isFocused (section, index) {
+        return (this.currFocusSection === section && this.currFocusIndex === index)
       },
       addTask (e) {
         const taskName = e.trim()

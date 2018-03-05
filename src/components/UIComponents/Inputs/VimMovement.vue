@@ -3,8 +3,15 @@
 <script>
   export default {
     props: {
-      'items': Array,
+      'sectionLens': Array,
+      'currSection': Number,
       'currIndex': Number
+    },
+
+    computed: {
+      currSectionLen () {
+        return this.sectionLens[this.currSection]
+      }
     },
 
     created () {
@@ -27,8 +34,10 @@
         if (this.currIndex === null) {
           this.initFocus()
         } else {
-          if (this.currIndex < this.items.length - 1) {
-            this.emitChange(this.currIndex + 1)
+          if (this.currIndex < this.currSectionLen - 1) {
+            this.emitChange(this.currSection, this.currIndex + 1)
+          } else {
+            this.moveToSection(this.currSection + 1, 'down')
           }
         }
       },
@@ -37,15 +46,35 @@
           this.initFocus()
         } else {
           if (this.currIndex > 0) {
-            this.emitChange(this.currIndex - 1)
+            this.emitChange(this.currSection, this.currIndex - 1)
+          } else {
+            this.moveToSection(this.currSection - 1, 'up')
           }
         }
       },
-      initFocus () {
-        this.emitChange(0)
+      moveToSection (sectionIndex, direction) {
+        // noop if the section is out of range
+        if (sectionIndex < 0 || sectionIndex >= this.sectionLens.length) {
+          return
+        }
+
+        // noop if the section moved to doesn't have any items
+        if (this.sectionLens[sectionIndex] === 0) {
+          return
+        }
+
+        if (direction === 'down') {
+          this.emitChange(sectionIndex, 0)
+        } else if (direction === 'up') {
+          this.emitChange(sectionIndex, this.sectionLens[sectionIndex].length - 1)
+        }
       },
-      emitChange (index) {
-        this.$emit('focusChange', {index: index})
+
+      initFocus () {
+        this.emitChange(0, 0)
+      },
+      emitChange (section, index) {
+        this.$emit('focusChange', {section: section, index: index})
       }
     }
   }
