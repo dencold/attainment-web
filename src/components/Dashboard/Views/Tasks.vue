@@ -20,12 +20,14 @@
       </task-card>
     </div>
 
-    <h6 class="pointer" v-if="Object.keys(tasksSnoozed).length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
+    <h6 class="pointer" v-if="tasksSnoozed.length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
 
-    <div class="flex-col" v-show="showSnoozed" v-for="(task, id) in tasksSnoozed">
+    <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in tasksSnoozed">
       <task-card
         :id="id"
+        :isFocused="isFocused(1, index)"
         showProject
+        @mouseover.native="updateFocus(1, index)"
         @click.native="toTask(id)">
       </task-card>
     </div>

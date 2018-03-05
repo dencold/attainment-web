@@ -176,13 +176,14 @@ export default {
   },
 
   tasksSnoozed: state => {
-    let retTasks = {}
+    let retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isSnoozed(entry))
 
-    filtered.forEach((entry) => { retTasks[entry[0]] = entry[1] })
+    filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
+    filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
