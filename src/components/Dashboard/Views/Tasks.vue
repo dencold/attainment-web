@@ -15,8 +15,7 @@
         :id="id"
         :isFocused="isFocused(0, index)"
         showProject
-        @mouseover.native="updateFocus(0, index)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(0, index)">
       </task-card>
     </div>
 
@@ -27,8 +26,7 @@
         :id="id"
         :isFocused="isFocused(1, index)"
         showProject
-        @mouseover.native="updateFocus(1, index)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(1, index)">
       </task-card>
     </div>
 
@@ -114,9 +112,6 @@
           }
           this.$store.dispatch('addTask', newTask)
         }
-      },
-      toTask: function (taskId) {
-        this.$router.push({name: 'task', params: { id: taskId }})
       },
       toggleShowSnoozed () {
         this.showSnoozed = !this.showSnoozed

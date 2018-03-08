@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="task" class="flex-row row-card pointer" :class="{ completed: task.completed, focused: isFocused }">
+    <div @click="toTaskDetail"
+      v-if="task"
+      class="flex-row row-card pointer"
+      :class="{ completed: task.completed, focused: isFocused }">
 
       <div class="star">
         <span v-show="!task.starred">
@@ -65,6 +68,15 @@
         }
 
         return null
+      }
+    },
+
+    methods: {
+      toTaskDetail () {
+        console.log('in detail')
+        if (this.id) {
+          this.$router.push({name: 'task', params: { id: this.id }})
+        }
       }
     }
 
