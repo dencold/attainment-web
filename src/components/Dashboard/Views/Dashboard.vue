@@ -15,8 +15,7 @@
         :id="nowId"
         :isFocused="isFocused(0, 0)"
         showProject
-        @mouseover.native="updateFocus(0, 0)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(0, 0)">
       </task-card>
     </div>
 
@@ -26,8 +25,7 @@
         :id="id"
         :isFocused="isFocused(1, index)"
         showProject
-        @mouseover.native="updateFocus(1, index)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(1, index)">
       </task-card>
     </div>
 
@@ -37,8 +35,7 @@
         :id="id"
         :isFocused="isFocused(2, index)"
         showProject
-        @mouseover.native="updateFocus(2, index)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(2, index)">
       </task-card>
     </div>
 
@@ -48,8 +45,7 @@
         :id="id"
         :isFocused="isFocused(3, index)"
         showProject
-        @mouseover.native="updateFocus(3, index)"
-        @click.native="toTask(id)">
+        @mouseover.native="updateFocus(3, index)">
       </task-card>
     </div>
   </div>
@@ -144,11 +140,6 @@
       },
       handleMovement (e) {
         this.updateFocus(e.section, e.index)
-      },
-      toTask: function (taskId) {
-        if (taskId) {
-          this.$router.push({name: 'task', params: { id: taskId }})
-        }
       }
     }
   }
