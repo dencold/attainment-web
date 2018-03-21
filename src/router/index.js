@@ -17,6 +17,7 @@ import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Typography from 'src/components/Dashboard/Views/Typography.vue'
 import TableList from 'src/components/Dashboard/Views/TableList.vue'
+import Shortcuts from 'src/components/Dashboard/Views/Shortcuts.vue'
 
 Vue.use(VueRouter)
 
@@ -97,6 +98,11 @@ const routes = [
         path: '/table-list',
         name: 'table-list',
         component: TableList
+      },
+      {
+        path: '/shortcuts',
+        name: 'shortcuts',
+        component: Shortcuts
       }
     ]
   },

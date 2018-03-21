@@ -15,6 +15,7 @@
           <li><router-link to="/icons">Icons</router-link></li>
           <li><router-link to="/maps">Maps</router-link></li>
           <li><router-link to="/notifications">Notifications</router-link></li>
+          <li><router-link to="/shortcuts">Shortcuts</router-link></li>
         </ul>
       </div>
     </div>

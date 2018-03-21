@@ -76,6 +76,8 @@ export default {
         this.$router.back()
       } else if (e.key === '>') {
         this.$router.forward()
+      } else if (e.key === '?') {
+        this.$router.push({name: 'shortcuts'})
       }
     }
   }
