@@ -10,11 +10,11 @@
     <div class="row">
       <div class="col-lg-8 col-md-7">
         <ul>
-          <li><a href="/table-list">Table List</a></li>
-          <li><a href="/typography">Typography</a></li>
-          <li><a href="/icons">Icons</a></li>
-          <li><a href="/maps">Maps</a></li>
-          <li><a href="/notifications">Notifications</a></li>
+          <li><router-link to="/table-list">Table List</router-link></li>
+          <li><router-link to="/typography">Typography</router-link></li>
+          <li><router-link to="/icons">Icons</router-link></li>
+          <li><router-link to="/maps">Maps</router-link></li>
+          <li><router-link to="/notifications">Notifications</router-link></li>
         </ul>
       </div>
     </div>
