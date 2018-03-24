@@ -140,14 +140,33 @@ export default {
     })
   },
   addTask: (context, newTask) => {
-    // add any default properties on our object
-    newTask['createdAt'] = Date.now()
-    newTask['updatedAt'] = Date.now()
+    let task = {
+      name: '',
+      projectId: '',
+      notes: '',
+      starred: false,
+      poms_completed: 0,
+      poms_total: 0,
+      dueAt: '',
+      snoozedUntil: '',
+      completed: false,
+      completedAt: '',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    }
 
-    // setup firebase connections
+    if (!newTask.hasOwnProperty('name') || newTask.name.length === 0) {
+      // noop, just return if we don't have a task name set
+      return
+    }
+
+    // merge the newTask properties into our default task
+    Object.assign(task, newTask)
+    task.name.trim()
+
+    // add into firebase
     const collection = db.collection('users').doc(context.state.user.uid).collection('tasks')
-
-    collection.add(newTask)
+    collection.add(task)
   },
   updateTask: (context, taskDetails) => {
     let newTask = taskDetails['newTask']
