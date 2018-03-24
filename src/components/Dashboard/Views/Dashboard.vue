@@ -110,26 +110,8 @@
     },
 
     methods: {
-      addTask (e) {
-        const taskName = e.trim()
-
-        if (taskName.length === 0) {
-          console.log('ERROR! Please specify a task name')
-        } else {
-          const newTask = {
-            name: taskName,
-            projectId: '',
-            notes: '',
-            starred: false,
-            poms_completed: 0,
-            poms_total: 0,
-            dueAt: '',
-            snoozedUntil: '',
-            completed: false,
-            completedAt: ''
-          }
-          this.$store.dispatch('addTask', newTask)
-        }
+      addTask (taskName) {
+        this.$store.dispatch('addTask', {name: taskName})
       },
       updateFocus (section, index) {
         this.currFocusSection = section
