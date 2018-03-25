@@ -39,6 +39,10 @@ function isMatchingProject (entry, projectId) {
   return false
 }
 
+function isMatchingState (entry, state) {
+  return (isPropertySet(entry, 'state') && entry[1].state === state)
+}
+
 function isNextAction (entry) {
   if (isProjectTask(entry)) {
     return isStarred(entry)

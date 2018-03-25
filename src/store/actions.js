@@ -144,6 +144,7 @@ export default {
       name: '',
       projectId: '',
       notes: '',
+      state: 'inbox',
       starred: false,
       poms_completed: 0,
       poms_total: 0,
