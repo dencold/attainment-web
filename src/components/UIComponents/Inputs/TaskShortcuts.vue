@@ -75,9 +75,9 @@
           this.$refs.notes.focus()
         } else if (e.key === 'm') {
           this.$refs.projsel.openSearch()
-        } else if (e.key === 'b') {
+        } else if (e.key === 'a') {
           this.incrementPom('completed')
-        } else if (e.key === 'B') {
+        } else if (e.key === 'A') {
           this.incrementPom('total')
         } else if (e.key === 'z') {
           this.defaultSnooze()
@@ -85,6 +85,8 @@
           this.showDatePicker('snooze')
         } else if (e.key === '!') {
           this.setNow()
+        } else if (e.key === 'b') {
+          this.backlog()
         } else if (e.key === 't') {
           this.toggleToday()
         }
@@ -172,6 +174,11 @@
       changeProject (project) {
         let newTask = this.task
         newTask.projectId = project.id
+        this.updateTask(newTask)
+      },
+      backlog () {
+        let newTask = this.task
+        newTask.state = 'backlog'
         this.updateTask(newTask)
       },
       setNow () {
