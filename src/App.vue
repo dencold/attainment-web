@@ -70,6 +70,8 @@ export default {
         this.$router.push({name: 'now'})
       } else if (e.key === '2') {
         this.$router.push({name: 'plan'})
+      } else if (e.key === '3') {
+        this.$router.push({name: 'inbox'})
       } else if (e.key === '/') {
         this.$bus.$emit('open-global-search')
       } else if (e.key === '<') {

@@ -8,8 +8,6 @@
     </vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
 
-    <text-input placeholder="Add a task" @submitted="addTask"></text-input>
-
     <div class="flex-col" v-for="(id, index) in tasksActive">
       <task-card
         :id="id"
@@ -91,9 +89,6 @@
       },
       isFocused (section, index) {
         return (this.currFocusSection === section && this.currFocusIndex === index)
-      },
-      addTask (taskName) {
-        this.$store.dispatch('addTask', {name: taskName})
       },
       toggleShowSnoozed () {
         this.showSnoozed = !this.showSnoozed

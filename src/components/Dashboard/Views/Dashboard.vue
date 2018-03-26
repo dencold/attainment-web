@@ -7,7 +7,6 @@
       @focusChange="handleMovement">
     </vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
-    <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
     <h6>Now</h6>
     <div class="flex-col">
@@ -110,9 +109,6 @@
     },
 
     methods: {
-      addTask (taskName) {
-        this.$store.dispatch('addTask', {name: taskName})
-      },
       updateFocus (section, index) {
         this.currFocusSection = section
         this.currFocusIndex = index

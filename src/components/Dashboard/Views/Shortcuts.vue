@@ -2,18 +2,17 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <paper-table type="hover" :title="globalTable.title" :data="globalTable.data" :columns="globalTable.columns">
+          <paper-table type="hover" :title="taskTable.title" :data="taskTable.data" :columns="taskTable.columns">
           </paper-table>
         </div>
       </div>
 
       <div class="col-md-12">
         <div class="card">
-          <paper-table type="hover" :title="taskTable.title" :data="taskTable.data" :columns="taskTable.columns">
+          <paper-table type="hover" :title="globalTable.title" :data="globalTable.data" :columns="globalTable.columns">
           </paper-table>
         </div>
       </div>
-
     </div>
 </template>
 <script>
@@ -25,6 +24,7 @@
     { key: 'D', description: 'Jump to dashboard' },
     { key: '1', description: 'Jump to now' },
     { key: '2', description: 'Jump to plan' },
+    { key: '3', description: 'Jump to inbox' },
     { key: '/', description: 'Open global search' },
     { key: '<', description: 'Jump back' },
     { key: '>', description: 'Jump forward' },
