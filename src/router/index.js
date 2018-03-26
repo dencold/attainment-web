@@ -8,6 +8,7 @@ import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import Projects from 'src/components/Dashboard/Views/Projects.vue'
 import Tasks from 'src/components/Dashboard/Views/Tasks.vue'
 import Now from 'src/components/Dashboard/Views/Now.vue'
+import Inbox from 'src/components/Dashboard/Views/Inbox.vue'
 import Dashboard from 'src/components/Dashboard/Views/Dashboard.vue'
 import ProjectDetail from 'src/components/Dashboard/Views/ProjectDetail.vue'
 import TaskDetail from 'src/components/Dashboard/Views/TaskDetail.vue'
@@ -73,6 +74,11 @@ const routes = [
         path: '/now',
         name: 'now',
         component: Now
+      },
+      {
+        path: '/inbox',
+        name: 'inbox',
+        component: Inbox
       },
       {
         path: '/notifications',

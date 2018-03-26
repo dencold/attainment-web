@@ -14,6 +14,11 @@ const SidebarStore = {
       path: '/plan'
     },
     {
+      name: 'Inbox',
+      icon: 'ti-angle-double-down',
+      path: '/inbox'
+    },
+    {
       name: 'Projects',
       icon: 'ti-folder',
       path: '/projects'

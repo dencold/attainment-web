@@ -127,6 +127,18 @@ export default {
     return retTasks
   },
 
+  inboxTasks: state => {
+    let retTasks = []
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'inbox'))
+
+    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
   projectsActive: state => {
     let ret = {}
 
