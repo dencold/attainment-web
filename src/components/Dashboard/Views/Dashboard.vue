@@ -75,7 +75,7 @@
         return this.$store.state.now
       },
       tasksToday () {
-        return this.$store.state.today
+        return this.$store.getters.todayTasks
       },
       tasksStarred () {
         return this.$store.getters.tasksStarred

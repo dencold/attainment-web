@@ -24,8 +24,5 @@ export default {
   },
   SET_NOW_TASK (state, taskId) {
     state.now = taskId
-  },
-  SET_TODAY (state, today) {
-    state.today = today
   }
 }

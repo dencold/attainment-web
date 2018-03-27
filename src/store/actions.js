@@ -77,37 +77,6 @@ export default {
     context.commit('SET_NOW_TASK', taskId)
   },
 
-  toggleToday: (context, taskId) => {
-    let newToday = context.state.today
-    let index = newToday.indexOf(taskId)
-
-    if (index === -1) {
-      newToday.push(taskId)
-    } else {
-      newToday.splice(index, 1)
-    }
-
-    context.dispatch('setToday', newToday)
-  },
-
-  removeToday: (context, taskId) => {
-    let newToday = context.state.today
-    let index = newToday.indexOf(taskId)
-
-    if (index > -1) {
-      newToday.splice(index, 1)
-      context.dispatch('setToday', newToday)
-    }
-  },
-
-  setToday: (context, newToday) => {
-    db.collection('users')
-      .doc(context.state.user.uid)
-      .set({today: newToday}, {merge: true})
-
-    context.commit('SET_TODAY', newToday)
-  },
-
   syncRoot: (context) => {
     const collection = db.collection('users').doc(context.state.user.uid)
 

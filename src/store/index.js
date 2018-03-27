@@ -11,8 +11,7 @@ const state = {
   user: {},
   projects: {},
   tasks: {},
-  now: '',
-  today: []
+  now: ''
 }
 
 const vx = new Vuex.Store({

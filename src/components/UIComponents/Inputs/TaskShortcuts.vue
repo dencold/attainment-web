@@ -88,7 +88,7 @@
         } else if (e.key === 'b') {
           this.backlog()
         } else if (e.key === 't') {
-          this.toggleToday()
+          this.today()
         }
       },
       toTask (taskId) {
@@ -184,8 +184,10 @@
       setNow () {
         this.$store.dispatch('setNowTask', this.id)
       },
-      toggleToday () {
-        this.$store.dispatch('toggleToday', this.id)
+      today () {
+        let newTask = this.task
+        newTask.state = 'today'
+        this.updateTask(newTask)
       }
     }
   }
