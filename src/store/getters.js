@@ -27,6 +27,14 @@ function isStarred (entry) {
   return false
 }
 
+function isSnoozeSet (entry) {
+  return isPropertySet(entry, 'snoozedUntil')
+}
+
+function isDueSet (entry) {
+  return isPropertySet(entry, 'dueAt')
+}
+
 function isProjectTask (entry) {
   return isPropertySet(entry, 'projectId')
 }
@@ -64,14 +72,6 @@ function isEntryTminus (entry, dateProperty, compareDate) {
   return false
 }
 
-function isSnoozed (entry) {
-  if (!isPropertySet(entry, 'snoozedUntil')) {
-    return false
-  }
-
-  return !isEntryTminus(entry, 'snoozedUntil', (new Date()))
-}
-
 function sortDate (a, b, datefield, direction) {
   if (isPropertySet(a, datefield) && isPropertySet(b, datefield)) {
     const aDate = new Date(a[1][datefield])
@@ -105,7 +105,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
-      .filter((entry) => !isSnoozed(entry))
+      .filter((entry) => !isSnoozeSet(entry))
 
     filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
     filtered.forEach(entry => retTasks.push(entry[0]))
@@ -119,7 +119,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isNextAction(entry))
-      .filter((entry) => !isSnoozed(entry))
+      .filter((entry) => !isSnoozeSet(entry))
 
     filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
     filtered.forEach(entry => retTasks.push(entry[0]))
@@ -179,7 +179,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isStarred(entry))
-      .filter((entry) => !isSnoozed(entry))
+      .filter((entry) => !isSnoozeSet(entry))
 
     filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
     filtered.forEach(entry => retTasks.push(entry[0]))
@@ -190,11 +190,25 @@ export default {
   tasksDue: state => {
     let retTasks = []
 
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isDueSet(entry))
+
+    filtered.sort((a, b) => sortDate(a, b, 'dueAt', 'desc'))
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
+  tasksDueWithin: state => days => {
+    let retTasks = []
+
     // we want to include any tasks that are due within two days
-    let compareDate = new Date(new Date().setHours(24, 0, 0))
+    let compareDate = new Date(new Date().setHours(24 * days, 0, 0))
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isDueSet(entry))
       .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
 
     filtered.sort((a, b) => sortDate(a, b, 'dueAt', 'desc'))
@@ -208,7 +222,21 @@ export default {
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
-      .filter((entry) => isSnoozed(entry))
+      .filter((entry) => isSnoozeSet(entry))
+
+    filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
+  tasksSnoozeTriggered: state => {
+    let retTasks = []
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isSnoozeSet(entry))
+      .filter((entry) => !isEntryTminus(entry, 'snoozedUntil', (new Date())))
 
     filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
@@ -228,13 +256,26 @@ export default {
 
     return retTasks
   },
+
+  tasksCompleted: state => {
+    var retTasks = []
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => isCompleted(entry))
+
+    filtered.sort((a, b) => b[1].completedAt - a[1].completedAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
   projectTasksSnoozed: state => projId => {
     var retTasks = []
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
-      .filter((entry) => isSnoozed(entry))
+      .filter((entry) => isSnoozeSet(entry))
 
     filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))

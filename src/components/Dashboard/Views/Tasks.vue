@@ -8,24 +8,45 @@
     </vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
 
-    <div class="flex-col" v-for="(id, index) in tasksActive">
-      <task-card
-        :id="id"
-        :isFocused="isFocused(0, index)"
-        showProject
-        @mouseover.native="updateFocus(0, index)">
-      </task-card>
-    </div>
+    <ul id="tabs" class="nav nav-tabs">
+      <li :class="{active: tab == tabSelected}" v-for="tab in tabData">
+        <a :href="'#' + tab">{{tab}}</a>
+      </li>
+    </ul>
 
-    <h6 class="pointer" v-if="tasksSnoozed.length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
-
-    <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in tasksSnoozed">
-      <task-card
-        :id="id"
-        :isFocused="isFocused(1, index)"
-        showProject
-        @mouseover.native="updateFocus(1, index)">
-      </task-card>
+    <div class="tab-content">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive">
+        <task-card
+          :id="id"
+          :isFocused="isFocused(0, index)"
+          showProject
+          @mouseover.native="updateFocus(0, index)">
+        </task-card>
+      </div>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'snoozed'}" v-for="(id, index) in tasksSnoozed">
+        <task-card
+          :id="id"
+          :isFocused="isFocused(1, index)"
+          showProject
+          @mouseover.native="updateFocus(1, index)">
+        </task-card>
+      </div>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'due'}" v-for="(id, index) in tasksDue">
+        <task-card
+          :id="id"
+          :isFocused="isFocused(2, index)"
+          showProject
+          @mouseover.native="updateFocus(2, index)">
+        </task-card>
+      </div>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'completed'}" v-for="(id, index) in tasksCompleted">
+        <task-card
+          :id="id"
+          :isFocused="isFocused(3, index)"
+          showProject
+          @mouseover.native="updateFocus(3, index)">
+        </task-card>
+      </div>
     </div>
 
   </div>
@@ -48,7 +69,8 @@
       return {
         showSnoozed: false,
         currFocusSection: null,
-        currFocusIndex: null
+        currFocusIndex: null,
+        tabData: [ 'backlog', 'snoozed', 'due', 'completed' ]
       }
     },
 
@@ -58,6 +80,12 @@
       },
       tasksSnoozed () {
         return this.$store.getters.tasksSnoozed
+      },
+      tasksDue () {
+        return this.$store.getters.tasksDue
+      },
+      tasksCompleted () {
+        return this.$store.getters.tasksCompleted
       },
       sectionLens () {
         if (this.showSnoozed) {
@@ -76,6 +104,14 @@
         } else if (this.currFocusSection === 1) {
           return this.tasksSnoozed[this.currFocusIndex]
         }
+      },
+      tabSelected () {
+        if (this.$route.hash) {
+          return this.$route.hash.substring(1)
+        }
+
+        // default to backlog if user hasn't selected a tab
+        return 'backlog'
       }
     },
 
@@ -89,9 +125,6 @@
       },
       isFocused (section, index) {
         return (this.currFocusSection === section && this.currFocusIndex === index)
-      },
-      toggleShowSnoozed () {
-        this.showSnoozed = !this.showSnoozed
       }
     }
   }
