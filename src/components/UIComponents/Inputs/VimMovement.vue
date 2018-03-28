@@ -3,9 +3,13 @@
 <script>
   export default {
     props: {
-      'sectionLens': Array,
-      'currSection': Number,
-      'currIndex': Number
+      sectionLens: Array,
+      currSection: Number,
+      currIndex: Number,
+      jumpEnabled: {
+        type: Boolean,
+        default: true
+      }
     },
 
     computed: {
@@ -53,6 +57,11 @@
         }
       },
       moveToSection (sectionIndex, direction) {
+        // noop if jumping isn't enabled
+        if (!this.jumpingEnabled) {
+          return
+        }
+
         // noop if the section is out of range
         if (sectionIndex < 0 || sectionIndex >= this.sectionLens.length) {
           return

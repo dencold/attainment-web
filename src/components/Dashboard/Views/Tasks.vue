@@ -4,6 +4,7 @@
       :sectionLens="sectionLens"
       :currSection="currFocusSection"
       :currIndex="currFocusIndex"
+      :jumpingEnabled="false"
       @focusChange="handleMovement">
     </vim-movement>
     <task-shortcuts :id="currFocusId"></task-shortcuts>
@@ -74,6 +75,17 @@
       }
     },
 
+    watch: {
+      '$route.hash' (to, from) {
+        let tabIndex = this.tabData.indexOf(this.tabSelected)
+
+        if (tabIndex !== -1) {
+          this.currFocusSection = tabIndex
+          this.currFocusIndex = 0
+        }
+      }
+    },
+
     computed: {
       tasksActive () {
         return this.$store.getters.tasksActive
@@ -88,11 +100,12 @@
         return this.$store.getters.tasksCompleted
       },
       sectionLens () {
-        if (this.showSnoozed) {
-          return [this.tasksActive.length, this.tasksSnoozed.length]
-        } else {
-          return [this.tasksActive.length, 0]
-        }
+        return [
+          this.tasksActive.length,
+          this.tasksSnoozed.length,
+          this.tasksDue.length,
+          this.tasksCompleted.length
+        ]
       },
       currFocusId () {
         if (this.currFocusSection === null || this.currFocusIndex === null) {
@@ -103,6 +116,10 @@
           return this.tasksActive[this.currFocusIndex]
         } else if (this.currFocusSection === 1) {
           return this.tasksSnoozed[this.currFocusIndex]
+        } else if (this.currFocusSection === 2) {
+          return this.tasksDue[this.currFocusIndex]
+        } else if (this.currFocusSection === 3) {
+          return this.tasksCompleted[this.currFocusIndex]
         }
       },
       tabSelected () {
