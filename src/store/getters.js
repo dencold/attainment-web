@@ -11,12 +11,7 @@ function isPropertySet (entry, propName) {
 }
 
 function isCompleted (entry) {
-  if (isPropertySet(entry, 'completed')) {
-    return entry[1].completed
-  }
-
-  // if the entry doesn't have completed property it isn't completed
-  return false
+  return isMatchingState(entry, 'completed')
 }
 
 function isStarred (entry) {

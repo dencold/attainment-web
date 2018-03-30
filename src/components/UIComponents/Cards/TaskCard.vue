@@ -3,7 +3,7 @@
     <div @click="toTaskDetail"
       v-if="task"
       class="flex-row row-card pointer"
-      :class="{ completed: task.completed, focused: isFocused }">
+      :class="{ completed: task.state === 'completed', focused: isFocused }">
 
       <div class="star">
         <span v-show="!task.starred">
@@ -73,7 +73,6 @@
 
     methods: {
       toTaskDetail () {
-        console.log('in detail')
         if (this.id) {
           this.$router.push({name: 'task', params: { id: this.id }})
         }

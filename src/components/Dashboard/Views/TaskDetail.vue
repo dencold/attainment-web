@@ -4,8 +4,8 @@
 
       <div class="flex-row title">
         <div class="icon pointer" @click="toggleCompleted">
-          <i v-show="task.completed" class="fa fa-check-square-o"></i>
-          <i v-show="!task.completed" class="fa fa-square-o"></i>
+          <i v-show="task.state === 'completed'" class="fa fa-check-square-o"></i>
+          <i v-show="task.state !== 'completed'" class="fa fa-square-o"></i>
         </div>
 
         <input
