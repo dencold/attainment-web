@@ -48,13 +48,13 @@ export default {
   },
   toggleTaskCompleted: (context, taskDetails) => {
     let newTask = taskDetails['task']
-    newTask.completed = !newTask.completed
 
-    // if we've uncompleted the task, we need to reset the completedAt date
-    if (!newTask.completed) {
-      newTask.completedAt = ''
-    } else {
+    if (newTask.state !== 'completed') {
+      newTask.state = 'completed'
       newTask.completedAt = Date.now()
+    } else {
+      newTask.state = 'backlog'
+      newTask.completedAt = ''
     }
 
     context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
@@ -65,8 +65,6 @@ export default {
     if (context.state.now === taskId) {
       context.dispatch('setNowTask', '')
     }
-
-    context.dispatch('removeToday', taskId)
   },
 
   setNowTask: (context, taskId) => {
@@ -83,10 +81,6 @@ export default {
     collection.onSnapshot(doc => {
       if (doc.data().hasOwnProperty('now')) {
         context.commit('SET_NOW_TASK', doc.data()['now'])
-      }
-
-      if (doc.data().hasOwnProperty('today')) {
-        context.commit('SET_TODAY', doc.data()['today'])
       }
     })
   },
@@ -119,7 +113,6 @@ export default {
       poms_total: 0,
       dueAt: '',
       snoozedUntil: '',
-      completed: false,
       completedAt: '',
       createdAt: Date.now(),
       updatedAt: Date.now()
