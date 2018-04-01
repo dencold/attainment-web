@@ -89,6 +89,8 @@
           this.backlog()
         } else if (e.key === 't') {
           this.today()
+        } else if (e.key === 'w') {
+          this.week()
         }
       },
       toTask (taskId) {
@@ -187,6 +189,11 @@
       today () {
         let newTask = this.task
         newTask.state = 'today'
+        this.updateTask(newTask)
+      },
+      week () {
+        let newTask = this.task
+        newTask.state = 'week'
         this.updateTask(newTask)
       }
     }
