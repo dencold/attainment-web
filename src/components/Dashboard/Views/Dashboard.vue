@@ -28,8 +28,8 @@
       </task-card>
     </div>
 
-    <h6>Starred Tasks</h6>
-    <div class="flex-col" v-for="(id, index) in tasksStarred">
+    <h6>Week</h6>
+    <div class="flex-col" v-for="(id, index) in tasksWeek">
       <task-card
         :id="id"
         :isFocused="isFocused(2, index)"
@@ -77,8 +77,8 @@
       tasksToday () {
         return this.$store.getters.todayTasks
       },
-      tasksStarred () {
-        return this.$store.getters.tasksStarred
+      tasksWeek () {
+        return this.$store.getters.weekView
       },
       tasksDue () {
         return this.$store.getters.tasksDue
@@ -86,10 +86,10 @@
       sectionLens () {
         let now = this.nowId ? 1 : 0
         let today = this.tasksToday.length
-        let starred = this.tasksStarred.length
+        let week = this.tasksWeek.length
         let due = this.tasksDue.length
 
-        return [now, today, starred, due]
+        return [now, today, week, due]
       },
       currFocusId () {
         if (this.currFocusSection === null || this.currFocusIndex === null) {
@@ -101,7 +101,7 @@
         } else if (this.currFocusSection === 1) {
           return this.tasksToday[this.currFocusIndex]
         } else if (this.currFocusSection === 2) {
-          return this.tasksStarred[this.currFocusIndex]
+          return this.tasksWeek[this.currFocusIndex]
         } else if (this.currFocusSection === 3) {
           return this.tasksDue[this.currFocusIndex]
         }

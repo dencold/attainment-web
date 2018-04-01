@@ -81,6 +81,13 @@ function sortDate (a, b, datefield, direction) {
   return 0
 }
 
+function uniq (entries) {
+  let seen = {}
+  return entries.filter((entry) => {
+    return seen.hasOwnProperty(entry[0]) ? false : (seen[entry[0]] = true)
+  })
+}
+
 export default {
   isLoggedIn: state => {
     // yep, it's 2017 & this is how we check that an Object is empty
@@ -142,6 +149,35 @@ export default {
 
     filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
     filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
+  weekView: state => {
+    // Task has status "weekly" (duh :)
+    // Task has a due date within this week
+    // Task snooze time has eclipsed (set to the current day or before)
+    let retTasks = []
+
+    let week = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'week'))
+
+    // we want to include any tasks that are due within the week
+    let compareDate = new Date(new Date().setHours(24 * 5, 0, 0))
+    let due = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
+
+    let snooze = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isEntryTminus(entry, 'snoozedUntil', (new Date())))
+
+    // combine all sets into one
+    let combined = week.concat(due, snooze)
+    combined = uniq(combined)
+
+    combined.sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+    combined.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },
