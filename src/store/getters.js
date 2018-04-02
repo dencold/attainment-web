@@ -182,6 +182,40 @@ export default {
     return retTasks
   },
 
+  backlogView: state => {
+    // INCLUDE:
+    // - Task has status "backlog" (duh :)
+    // - Task has an unset status (backward compatibility for old tasks without state)
+    // EXCLUDE:
+    // - Task is completed
+    // - Task has a due date within this week
+    // - Task snooze time has eclipsed (set to the current day or before)
+    // - Project tasks that aren't starred
+    let retTasks = []
+
+    let backlog = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'backlog'))
+
+    let unset = Object.entries(state.tasks)
+      .filter((entry) => !isPropertySet(entry, 'state'))
+
+    // combine the two
+    backlog = backlog.concat(unset)
+
+    // exclude tasks noted above using filters
+    let compareDate = new Date(new Date().setHours(24 * 5, 0, 0))
+    let filtered = backlog
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isNextAction(entry))
+      .filter((entry) => !isEntryTminus(entry, 'dueAt', compareDate))
+      .filter((entry) => !isEntryTminus(entry, 'snoozedUntil', (new Date())))
+
+    filtered.sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
   projectsActive: state => {
     let ret = {}
 
