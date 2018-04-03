@@ -75,9 +75,9 @@
           this.$refs.notes.focus()
         } else if (e.key === 'm') {
           this.$refs.projsel.openSearch()
-        } else if (e.key === 'a') {
-          this.incrementPom('completed')
         } else if (e.key === 'A') {
+          this.incrementPom('completed')
+        } else if (e.key === 'a') {
           this.incrementPom('total')
         } else if (e.key === 'z') {
           this.defaultSnooze()
