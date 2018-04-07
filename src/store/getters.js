@@ -153,6 +153,17 @@ export default {
     return retTasks
   },
 
+  nowTask: state => {
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'now'))
+
+    if (filtered.length === 0) {
+      return null
+    }
+
+    return filtered[0][0]
+  },
+
   weekView: state => {
     // Task has status "weekly" (duh :)
     // Task has a due date within this week

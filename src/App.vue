@@ -54,7 +54,6 @@ export default {
       this.$store.commit('SET_USER', user)
       this.$store.dispatch('syncProjects')
       this.$store.dispatch('syncTasks')
-      this.$store.dispatch('syncRoot')
     }
   },
 

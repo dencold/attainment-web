@@ -10,8 +10,7 @@ Vue.use(Vuex)
 const state = {
   user: {},
   projects: {},
-  tasks: {},
-  now: ''
+  tasks: {}
 }
 
 const vx = new Vuex.Store({

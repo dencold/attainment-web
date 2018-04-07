@@ -72,7 +72,7 @@
 
     computed: {
       nowId () {
-        return this.$store.state.now
+        return this.$store.getters.nowTask
       },
       tasksToday () {
         return this.$store.getters.todayTasks

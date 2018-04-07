@@ -58,31 +58,20 @@ export default {
     }
 
     context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
-    context.dispatch('cleanup', taskDetails['id'])
-  },
-
-  cleanup: (context, taskId) => {
-    if (context.state.now === taskId) {
-      context.dispatch('setNowTask', '')
-    }
   },
 
   setNowTask: (context, taskId) => {
-    db.collection('users')
-      .doc(context.state.user.uid)
-      .set({now: taskId}, {merge: true})
+    // see if we already have a now task set
+    let nowTaskId = context.getters.nowTask
+    if (nowTaskId && nowTaskId !== taskId) {
+      let nowTask = context.state.tasks[nowTaskId]
+      nowTask.state = 'today'
+      context.dispatch('updateTask', {id: nowTaskId, newTask: nowTask})
+    }
 
-    context.commit('SET_NOW_TASK', taskId)
-  },
-
-  syncRoot: (context) => {
-    const collection = db.collection('users').doc(context.state.user.uid)
-
-    collection.onSnapshot(doc => {
-      if (doc.data().hasOwnProperty('now')) {
-        context.commit('SET_NOW_TASK', doc.data()['now'])
-      }
-    })
+    let newNow = context.state.tasks[taskId]
+    newNow.state = 'now'
+    context.dispatch('updateTask', {id: taskId, newTask: newNow})
   },
 
   syncProjects: (context) => {

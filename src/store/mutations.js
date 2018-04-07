@@ -21,8 +21,5 @@ export default {
   },
   DELETE_TASK (state, id) {
     Vue.delete(state.tasks, id)
-  },
-  SET_NOW_TASK (state, taskId) {
-    state.now = taskId
   }
 }

@@ -12,7 +12,7 @@
 
     computed: {
       nowId () {
-        return this.$store.state.now
+        return this.$store.getters.nowTask
       }
     }
 
