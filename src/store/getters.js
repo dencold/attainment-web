@@ -109,7 +109,7 @@ export default {
       .filter((entry) => isMatchingProject(entry, projId))
       .filter((entry) => !isSnoozeSet(entry))
 
-    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -123,7 +123,7 @@ export default {
       .filter((entry) => isNextAction(entry))
       .filter((entry) => !isSnoozeSet(entry))
 
-    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -135,7 +135,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'inbox'))
 
-    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -147,7 +147,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'today'))
 
-    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -187,7 +187,7 @@ export default {
     let combined = week.concat(due, snooze)
     combined = uniq(combined)
 
-    combined.sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+    combined.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     combined.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -221,7 +221,7 @@ export default {
       .filter((entry) => !isEntryTminus(entry, 'dueAt', compareDate))
       .filter((entry) => !isEntryTminus(entry, 'snoozedUntil', (new Date())))
 
-    filtered.sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -257,7 +257,7 @@ export default {
       .filter((entry) => isStarred(entry))
       .filter((entry) => !isSnoozeSet(entry))
 
-    filtered.sort((a, b) => b[1].createdAt - a[1].createdAt)
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -327,7 +327,7 @@ export default {
       .filter((entry) => isCompleted(entry))
       .filter((entry) => isMatchingProject(entry, projId))
 
-    filtered.sort((a, b) => b[1].completedAt - a[1].completedAt)
+    filtered.sort((a, b) => sortDate(a, b, 'completedAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -339,7 +339,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isCompleted(entry))
 
-    filtered.sort((a, b) => b[1].completedAt - a[1].completedAt)
+    filtered.sort((a, b) => sortDate(a, b, 'completedAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
