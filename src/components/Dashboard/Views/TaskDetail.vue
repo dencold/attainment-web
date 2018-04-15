@@ -1,5 +1,7 @@
 <template>
   <div class="content">
+    <task-shortcuts :id="id"></task-shortcuts>
+
     <div v-if="task" class="card">
 
       <div class="flex-row title">
@@ -90,6 +92,7 @@
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
+  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
   import { Datetime } from 'vue-datetime'
   import moment from 'moment'
 
@@ -98,7 +101,8 @@
       'text-input': TextInput,
       'text-area': TextArea,
       'project-selector': ProjectSelector,
-      'datetime': Datetime
+      'datetime': Datetime,
+      'task-shortcuts': TaskShortcuts
     },
 
     props: {
@@ -114,51 +118,13 @@
       }
     },
 
-    created () {
-      document.addEventListener('keyup', this.handleKeyUp)
-    },
-
-    destroyed () {
-      document.removeEventListener('keyup', this.handleKeyUp)
-    },
-
     methods: {
-      handleKeyUp (e) {
-        if (e.key === 's') {
-          this.toggleStar()
-        } else if (e.key === 'c') {
-          this.toggleCompleted()
-        } else if (e.key === 'd') {
-          this.showDatePicker('due')
-        } else if (e.key === 'e') {
-          this.$refs.nameInput.focus()
-        } else if (e.key === 'n') {
-          this.$refs.notes.focus()
-        } else if (e.key === 'm') {
-          this.$refs.projsel.openSearch()
-        } else if (e.key === 'b') {
-          this.incrementPom('completed')
-        } else if (e.key === 'B') {
-          this.incrementPom('total')
-        } else if (e.key === 'z') {
-          this.defaultSnooze()
-        } else if (e.key === 'Z') {
-          this.showDatePicker('snooze')
-        } else if (e.key === '!') {
-          this.setNow()
-        } else if (e.key === 't') {
-          this.toggleToday()
-        }
-      },
       showDatePicker (pickerType) {
         if (pickerType === 'due') {
           this.$refs.duepicker.open()
         } else if (pickerType === 'snooze') {
           this.$refs.snoozepicker.open()
         }
-      },
-      jumpToProj () {
-        this.$router.push({name: 'project', params: { id: this.task.projectId }})
       },
       toggleStar () {
         let newTask = this.task
@@ -231,12 +197,6 @@
         let newTask = this.task
         newTask.projectId = project.id
         this.updateTask(newTask)
-      },
-      setNow () {
-        this.$store.dispatch('setNowTask', this.id)
-      },
-      toggleToday () {
-        this.$store.dispatch('toggleToday', this.id)
       }
     }
   }
