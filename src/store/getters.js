@@ -2,6 +2,11 @@
 // The following functions are helpers to make our filtering logic more clear.
 // They all take an entry which is a 2 element array representing a key/value
 // pair from a js Object
+//
+// Note that the way the .filter works is to EXCLUDE any false values
+// All of these filter functions return a boolean, so if we used .filter
+// on isStarred, it would filter out any tasks that don't have a "starred" field
+// or the starred field is false
 function isPropertySet (entry, propName) {
   if (typeof entry === 'undefined' || entry.length !== 2) {
     return false
@@ -55,16 +60,23 @@ function isNextAction (entry) {
   return true
 }
 
+// function that compares a given property's date value with the given "compareDate"
+// if the entry's date is after the comparison date, we return false (exclude)
+// if the entry doesn't have the date property set, we return true. So if you
+// want to exclude tasks that don't have the property set (e.g. you explicitly want
+// snoozed tasks) you should have a separate filter check to handle that directly.
+// We use this logic because once a filter returns false, you can't add tasks back in
+// whereas if you return true, you still have the ability to exclude if you want.
 function isEntryTminus (entry, dateProperty, compareDate) {
   if (isPropertySet(entry, dateProperty)) {
     const entryDate = new Date(entry[1][dateProperty])
 
-    if (entryDate <= compareDate) {
-      return true
+    if (entryDate > compareDate) {
+      return false
     }
   }
 
-  return false
+  return true
 }
 
 function sortDate (a, b, datefield, direction) {
@@ -177,10 +189,12 @@ export default {
     let compareDate = new Date(new Date().setHours(24 * 5, 0, 0))
     let due = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isDueSet(entry))
       .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
 
     let snooze = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isSnoozeSet(entry))
       .filter((entry) => isEntryTminus(entry, 'snoozedUntil', (new Date())))
 
     // combine all sets into one
@@ -218,8 +232,8 @@ export default {
     let filtered = backlog
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isNextAction(entry))
-      .filter((entry) => !isEntryTminus(entry, 'dueAt', compareDate))
-      .filter((entry) => !isEntryTminus(entry, 'snoozedUntil', (new Date())))
+      .filter((entry) => isEntryTminus(entry, 'dueAt', compareDate))
+      .filter((entry) => isEntryTminus(entry, 'snoozedUntil', (new Date())))
 
     filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
@@ -312,7 +326,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
       .filter((entry) => isSnoozeSet(entry))
-      .filter((entry) => !isEntryTminus(entry, 'snoozedUntil', (new Date())))
+      .filter((entry) => isEntryTminus(entry, 'snoozedUntil', (new Date())))
 
     filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
