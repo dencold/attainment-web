@@ -6,7 +6,7 @@
       sectionLens: Array,
       currSection: Number,
       currIndex: Number,
-      jumpEnabled: {
+      jumpingEnabled: {
         type: Boolean,
         default: true
       }
