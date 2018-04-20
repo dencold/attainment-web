@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div v-if="task" class="content">
     <project-selector ref="projsel" :project-id="task.projectId" @change-project="changeProject"></project-selector>
 
     <datetime
@@ -45,9 +45,6 @@
     computed: {
       task () {
         return this.$store.state.tasks[this.id]
-      },
-      project () {
-        return this.$store.state.projects[this.task.projectId]
       }
     },
 
