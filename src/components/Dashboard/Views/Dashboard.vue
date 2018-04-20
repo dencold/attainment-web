@@ -65,8 +65,8 @@
 
     data () {
       return {
-        currFocusSection: null,
-        currFocusIndex: null
+        currFocusSection: this.nowId ? 0 : 1,
+        currFocusIndex: 0
       }
     },
 

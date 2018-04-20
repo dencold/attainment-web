@@ -94,8 +94,8 @@
       return {
         showCompleted: false,
         showSnoozed: false,
-        currFocusSection: null,
-        currFocusIndex: null
+        currFocusSection: 0,
+        currFocusIndex: 0
       }
     },
 

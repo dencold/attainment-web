@@ -27,6 +27,10 @@
       }
     },
 
+    mounted () {
+      this.$refs.textinput.focus()
+    },
+
     methods: {
       submit () {
         this.$emit('submitted', this.value)

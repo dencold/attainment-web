@@ -69,8 +69,8 @@
     data () {
       return {
         showSnoozed: false,
-        currFocusSection: null,
-        currFocusIndex: null,
+        currFocusSection: 0,
+        currFocusIndex: 0,
         tabData: [ 'backlog', 'snoozed', 'due', 'completed' ]
       }
     },
