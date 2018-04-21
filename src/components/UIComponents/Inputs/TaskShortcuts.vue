@@ -88,6 +88,8 @@
           this.today()
         } else if (e.key === 'w') {
           this.week()
+        } else if (e.key === 'p') {
+          this.jumpToProj()
         }
       },
       toTask (taskId) {
@@ -101,7 +103,9 @@
         }
       },
       jumpToProj () {
-        this.$router.push({name: 'project', params: { id: this.task.projectId }})
+        if (this.task.projectId) {
+          this.$router.push({name: 'project', params: { id: this.task.projectId }})
+        }
       },
       toggleStar () {
         let newTask = this.task
