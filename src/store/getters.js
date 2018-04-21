@@ -307,7 +307,7 @@ export default {
     let retTasks = []
 
     // we want to include any tasks that are due within two days
-    let compareDate = new Date(new Date().setHours(24 * days, 0, 0))
+    let dueCompareDate = new Date(new Date().setHours(24 * days, 0, 0))
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => !isCompleted(entry))
