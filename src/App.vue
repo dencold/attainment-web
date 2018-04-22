@@ -1,6 +1,7 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
     <login v-if="!$store.getters.isLoggedIn"></login>
+    <add-task></add-task>
     <router-view v-if="$store.getters.isLoggedIn"></router-view>
     <!--This sidebar appears only for screens smaller than 992px-->
     <side-bar type="navbar" :sidebar-links="$sidebar.sidebarLinks">
@@ -35,12 +36,14 @@
 <script>
 import fireApp from './modules/firebase'
 import Login from 'components/Dashboard/Views/Login.vue'
+import AddTask from 'components/UIComponents/Inputs/AddTask.vue'
 
 export default {
   name: 'app',
 
   components: {
-    'login': Login
+    'login': Login,
+    'add-task': AddTask
   },
 
   created () {
@@ -65,6 +68,8 @@ export default {
         this.$router.push({name: 'tasks'})
       } else if (e.key === 'D') {
         this.$router.push({name: 'dashboard'})
+      } else if (e.key === 'A') {
+        this.$modal.show('add-task')
       } else if (e.key === '1') {
         this.$router.push({name: 'now'})
       } else if (e.key === '2') {
