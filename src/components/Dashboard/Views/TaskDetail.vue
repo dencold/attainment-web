@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <task-shortcuts :id="id"></task-shortcuts>
+    <general-task-shortcuts :id="id"></general-task-shortcuts>
 
     <div v-if="task" class="card">
 
@@ -92,9 +92,8 @@
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
-  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
+  import GeneralTaskShortcuts from 'components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
   import { Datetime } from 'vue-datetime'
-  import moment from 'moment'
 
   export default {
     components: {
@@ -102,7 +101,7 @@
       'text-area': TextArea,
       'project-selector': ProjectSelector,
       'datetime': Datetime,
-      'task-shortcuts': TaskShortcuts
+      'general-task-shortcuts': GeneralTaskShortcuts
     },
 
     props: {
@@ -118,6 +117,14 @@
       }
     },
 
+    created () {
+      document.addEventListener('keyup', this.handleKeyUp)
+    },
+
+    destroyed () {
+      document.removeEventListener('keyup', this.handleKeyUp)
+    },
+
     methods: {
       showDatePicker (pickerType) {
         if (pickerType === 'due') {
@@ -126,10 +133,19 @@
           this.$refs.snoozepicker.open()
         }
       },
-      toggleStar () {
-        let newTask = this.task
-        newTask.starred = !this.task.starred
-        this.updateTask(newTask)
+      handleKeyUp (e) {
+        if (e.key === 'd') {
+          this.showDatePicker('due')
+        } else if (e.key === 'r') {
+          this.$refs.nameInput.focus()
+        } else if (e.key === 'n') {
+          this.$refs.notes.focus()
+        } else if (e.key === 'm') {
+          this.$modal.show('proj-select')
+          // this.$refs.projsel.openSearch()
+        } else if (e.key === 'Z') {
+          this.showDatePicker('snooze')
+        }
       },
       // there's a lot of boilerplate repeated code that I'm really unhappy with
       // but this is what we're left with in the Vuex model. we need to use
@@ -145,9 +161,16 @@
           this.updateTask(newTask)
         }
       },
-      defaultSnooze () {
-        let dt = moment().add(7, 'days').utc()
-        this.updateSnooze(dt.format())
+      toggleStar () {
+        let newTask = this.task
+        newTask.starred = !this.task.starred
+        this.updateTask(newTask)
+      },
+      toggleCompleted () {
+        this.$store.dispatch(
+          'toggleTaskCompleted',
+          {id: this.id, task: this.task}
+        )
       },
       updateSnooze (snooze) {
         if (snooze !== this.task.snoozedUntil) {
@@ -170,28 +193,11 @@
           this.updateTask(newTask)
         }
       },
-      toggleCompleted () {
-        this.$store.dispatch(
-          'toggleTaskCompleted',
-          {id: this.id, task: this.task}
-        )
-      },
       updateTask (newTask) {
         this.$store.dispatch(
           'updateTask',
           {id: this.id, newTask: newTask}
         )
-      },
-      incrementPom (type) {
-        let newTask = this.task
-
-        if (type === 'completed') {
-          newTask.poms_completed += 1
-        } else if (type === 'total') {
-          newTask.poms_total += 1
-        }
-
-        this.updateTask(newTask)
       },
       changeProject (project) {
         let newTask = this.task
