@@ -38,7 +38,7 @@
         :currIndex="currFocusIndex"
         @focusChange="handleMovement">
       </vim-movement>
-      <task-shortcuts :id="currFocusId"></task-shortcuts>
+      <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
       <div class="flex-col" v-for="(id, index) in projectTasksActive">
         <task-card
@@ -79,7 +79,7 @@
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
   import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
-  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
+  import TaskCardShortcuts from 'components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
@@ -87,7 +87,7 @@
       'text-input': TextInput,
       'text-area': TextArea,
       'vim-movement': VimMovement,
-      'task-shortcuts': TaskShortcuts
+      'task-card-shortcuts': TaskCardShortcuts
     },
 
     data () {

@@ -6,7 +6,7 @@
       :currIndex="currFocusIndex"
       @focusChange="handleMovement">
     </vim-movement>
-    <task-shortcuts :id="currFocusId"></task-shortcuts>
+    <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
@@ -25,14 +25,14 @@
   import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
   import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
   import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
-  import TaskShortcuts from 'components/UIComponents/Inputs/TaskShortcuts.vue'
+  import TaskCardShortcuts from 'components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
       'text-input': TextInput,
       'vim-movement': VimMovement,
-      'task-shortcuts': TaskShortcuts
+      'task-card-shortcuts': TaskCardShortcuts
     },
 
     data () {
