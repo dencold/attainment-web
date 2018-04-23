@@ -3,7 +3,11 @@
     <general-task-shortcuts :id="id"></general-task-shortcuts>
 
     <div v-if="task" class="card">
-      <project-selector :project-id="task.projectId" @change-project="changeProject"></project-selector>
+      <project-selector
+        :project-id="task.projectId"
+        @change-project="changeProject"
+        @create-project="createProject">
+      </project-selector>
 
       <div class="flex-row title">
         <div class="icon pointer" @click="toggleCompleted">
@@ -211,6 +215,12 @@
         let newTask = this.task
         newTask.projectId = project.id
         this.updateTask(newTask)
+      },
+      createProject (projectName) {
+        this.$store.dispatch(
+          'addProjectAndSetTask',
+          {projectName: projectName, taskId: this.id, task: this.task}
+        )
       },
       clickAction () {
         if (this.task.projectId) {

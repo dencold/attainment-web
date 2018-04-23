@@ -55,17 +55,23 @@
       searchCategory: {
         default: 'all',
         type: String
+      },
+      queryText: {
+        default: 'all',
+        type: String
       }
     },
     methods: {
       filter (e) {
         this.searchQry = e.target.value
         this.filtered = this.fuse.search(e.target.value)
+        this.$emit('query-change', this.searchQry)
       },
       resetSearch () {
         this.searchQry = ''
         this.filtered = []
         this.$refs.searchinput.blur()
+        this.$emit('query-change', this.searchQry)
       },
       select (item) {
         this.$emit('search-result', item)

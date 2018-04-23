@@ -7,10 +7,11 @@
       <global-search
         ref="globalsearch"
         @search-result="moveProject"
+        @query-change="onQueryChange"
         search-category="projects">
       </global-search>
-      <button class="btn btn-fill btn-info inpBtn" @click="moveProject">Move</button>
-      <button class="btn btn-fill btn-info inpBtn" @click="moveProject">Create</button>
+      <button class="btn btn-fill btn-info inpBtn">Move</button>
+      <button class="btn btn-fill btn-info inpBtn" @click="createProject">Create</button>
     </div>
   </modal>
 </template>
@@ -27,20 +28,9 @@
       projectId: String
     },
 
-    computed: {
-      project () {
-        if (this.projectId) {
-          return this.$store.state.projects[this.projectId]
-        }
-
-        return null
-      },
-      name () {
-        if (this.project) {
-          return this.project.name
-        }
-
-        return 'Move to project'
+    data () {
+      return {
+        queryInput: ''
       }
     },
 
@@ -52,6 +42,13 @@
       onOpen () {
         // this.$nextTick(() => this.$refs.globalsearch.focus())
         this.$refs.globalsearch.focus()
+      },
+      onQueryChange (query) {
+        this.queryInput = query
+      },
+      createProject () {
+        this.$emit('create-project', this.queryInput)
+        this.$modal.hide('move-task')
       }
     }
   }

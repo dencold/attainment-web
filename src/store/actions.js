@@ -2,17 +2,48 @@ import fireApp from '../modules/firebase'
 
 const db = fireApp.firestore()
 
+function initProject (projectName) {
+  const name = projectName.trim()
+
+  if (projectName.length === 0) {
+    return null
+  }
+
+  return {
+    name: name,
+    notes: '',
+    completed: false,
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  }
+}
+
 export default {
   signOut: (context, payload) => {
     fireApp.auth().signOut()
       .then(context.commit('UNSET_USER'), () => console.log('Failed to sign out'))
   },
-  addProject: (context, newProject) => {
+  addProject: (context, projectName) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
-    newProject['createdAt'] = Date.now()
-    newProject['updatedAt'] = Date.now()
+    const project = initProject(projectName)
 
-    collection.add(newProject)
+    if (project) {
+      collection.add(project)
+    }
+  },
+  addProjectAndSetTask: (context, payload) => {
+    const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
+    const project = initProject(payload['projectName'])
+    let task = payload['task']
+
+    if (project) {
+      collection.add(project)
+        .then(docRef => {
+          task.projectId = docRef.id
+          task.starred = true
+          context.dispatch('updateTask', {id: payload['taskId'], newTask: task})
+        })
+    }
   },
   updateProject: (context, projectDetails) => {
     let newProj = projectDetails['newProj']
