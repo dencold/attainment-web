@@ -1,5 +1,5 @@
 <template>
-  <modal name="move-task" height="auto" :pivotY="0.15">
+  <modal name="move-task" height="auto" :pivotY="0.15" @opened="onOpen">
     <div class="content">
       <strong class="title">
         Move Task To Project
@@ -27,10 +27,6 @@
       projectId: String
     },
 
-    mounted () {
-      // this.$refs.globalsearch.focus()
-    },
-
     computed: {
       project () {
         if (this.projectId) {
@@ -52,6 +48,10 @@
       moveProject (project) {
         this.$emit('change-project', project)
         this.$modal.hide('move-task')
+      },
+      onOpen () {
+        // this.$nextTick(() => this.$refs.globalsearch.focus())
+        this.$refs.globalsearch.focus()
       }
     }
   }
