@@ -3,6 +3,7 @@
     <general-task-shortcuts :id="id"></general-task-shortcuts>
 
     <div v-if="task" class="card">
+      <project-selector :project-id="task.projectId" @change-project="changeProject"></project-selector>
 
       <div class="flex-row title">
         <div class="icon pointer" @click="toggleCompleted">
@@ -28,7 +29,12 @@
 
       <hr/>
 
-      <project-selector ref="projsel" :project-id="task.projectId" @change-project="changeProject"></project-selector>
+      <div class="flex-row highlight pointer" >
+        <div class="icon" @click="clickAction">
+          <i class="ti-folder"></i>
+        </div>
+        <span class="name" @click="clickAction">{{projectName}}</span>
+      </div>
 
       <div class="flex-row highlight">
         <div class="icon pointer" @click="incrementPom('completed')">
@@ -114,6 +120,9 @@
       },
       project () {
         return this.$store.state.projects[this.task.projectId]
+      },
+      projectName () {
+        return this.project ? this.project.name : 'Move To Project'
       }
     },
 
@@ -141,8 +150,7 @@
         } else if (e.key === 'n') {
           this.$refs.notes.focus()
         } else if (e.key === 'm') {
-          this.$modal.show('proj-select')
-          // this.$refs.projsel.openSearch()
+          this.$modal.show('move-task')
         } else if (e.key === 'Z') {
           this.showDatePicker('snooze')
         }
@@ -203,6 +211,18 @@
         let newTask = this.task
         newTask.projectId = project.id
         this.updateTask(newTask)
+      },
+      clickAction () {
+        if (this.task.projectId) {
+          this.jumpToProj()
+        } else {
+          this.$modal.show('move-task')
+        }
+      },
+      jumpToProj () {
+        if (this.task.projectId) {
+          this.$router.push({name: 'project', params: { id: this.task.projectId }})
+        }
       }
     }
   }

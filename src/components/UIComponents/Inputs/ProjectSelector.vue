@@ -1,17 +1,18 @@
 <template>
-  <div class="flex-row highlight pointer" >
-    <div class="icon" @click="clickAction">
-      <i class="ti-folder"></i>
+  <modal name="move-task" height="auto" :pivotY="0.15">
+    <div class="content">
+      <strong class="title">
+        Move Task To Project
+      </strong>
+      <global-search
+        ref="globalsearch"
+        @search-result="moveProject"
+        search-category="projects">
+      </global-search>
+      <button class="btn btn-fill btn-info inpBtn" @click="moveProject">Move</button>
+      <button class="btn btn-fill btn-info inpBtn" @click="moveProject">Create</button>
     </div>
-    <span class="name" @click="clickAction">{{name}}</span>
-    <button class="btn btn-fill btn-info inpBtn" @click="openSearch">+</button>
-    <global-search
-      ref="globalsearch"
-      v-show="showSearch"
-      @search-result="moveProject"
-      search-category="projects">
-    </global-search>
-  </div>
+  </modal>
 </template>
 
 <script>
@@ -26,10 +27,8 @@
       projectId: String
     },
 
-    data () {
-      return {
-        showSearch: false
-      }
+    mounted () {
+      // this.$refs.globalsearch.focus()
     },
 
     computed: {
@@ -50,28 +49,9 @@
     },
 
     methods: {
-      clickAction () {
-        if (this.projectId) {
-          this.jumpToProj()
-        }
-
-        this.openSearch()
-      },
-      jumpToProj () {
-        if (this.projectId) {
-          this.$router.push({name: 'project', params: { id: this.projectId }})
-        }
-      },
-      openSearch () {
-        this.showSearch = true
-        this.$nextTick(() => this.$refs.globalsearch.focus())
-      },
-      closeSearch () {
-        this.showSearch = false
-      },
       moveProject (project) {
         this.$emit('change-project', project)
-        this.closeSearch()
+        this.$modal.hide('move-task')
       }
     }
   }
