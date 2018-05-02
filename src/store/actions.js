@@ -12,7 +12,7 @@ function initProject (projectName) {
   return {
     name: name,
     notes: '',
-    completed: false,
+    state: 'active',
     createdAt: Date.now(),
     updatedAt: Date.now()
   }
@@ -58,12 +58,10 @@ export default {
   },
   toggleProjectCompleted: (context, projectDetails) => {
     let newProj = projectDetails['proj']
-    newProj.completed = !newProj.completed
 
     // if we've uncompleted the project, we need to reset the completedAt date
-    if (!newProj.completed) {
-      newProj.completedAt = ''
-    } else {
+    if (typeof newProj.state === 'undefined' || newProj.state !== 'completed') {
+      newProj.state = 'completed'
       newProj.completedAt = Date.now()
 
       // we also need to complete all of the underlying active tasks
@@ -71,6 +69,9 @@ export default {
       for (var index in projTasks) {
         context.dispatch('toggleTaskCompleted', {id: projTasks[index], task: context.state.tasks[projTasks[index]]})
       }
+    } else {
+      newProj.state = 'active'
+      newProj.completedAt = ''
     }
 
     context.dispatch('updateProject', {id: projectDetails['id'], newProj: newProj})
