@@ -68,10 +68,8 @@ export default {
 
       // we also need to complete all of the underlying active tasks
       let projTasks = context.getters.projectTasksActive(projectDetails['id'])
-      for (var key in projTasks) {
-        if (projTasks.hasOwnProperty(key)) {
-          context.dispatch('toggleTaskCompleted', {id: key, task: projTasks[key]})
-        }
+      for (var index in projTasks) {
+        context.dispatch('toggleTaskCompleted', {id: projTasks[index], task: context.state.tasks[projTasks[index]]})
       }
     }
 
