@@ -34,6 +34,13 @@
       <hr/>
 
       <div class="flex-row highlight pointer" >
+        <div class="icon">
+          <i class="ti-direction-alt"></i>
+        </div>
+        <span class="name">{{task.state}}</span>
+      </div>
+
+      <div class="flex-row highlight pointer" >
         <div class="icon" @click="clickAction">
           <i class="ti-folder"></i>
         </div>
