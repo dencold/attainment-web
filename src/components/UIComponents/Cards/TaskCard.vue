@@ -37,6 +37,11 @@
           {{ task.dueAt | moment("diff", Date.now(), "days") }}
         </span>
       </div>
+      <div class="poms">
+        <span v-if="task.notes">
+          <i class="ti-write"></i>
+        </span>
+      </div>
 
     </div>
     <div v-if="!task" class="flex-row row-card">
