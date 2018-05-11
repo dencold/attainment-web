@@ -9,6 +9,7 @@
       @keyup.enter="selectTopHit"
       @keyup.esc="$refs.searchinput.blur()"
       @keyup.stop
+      @blur="handleBlur"
     >
     <!--
       [dc] wow...autocomplete dropdown options really suck even in 2017 :*(
@@ -67,15 +68,9 @@
         this.filtered = this.fuse.search(e.target.value)
         this.$emit('query-change', this.searchQry)
       },
-      resetSearch () {
-        this.searchQry = ''
-        this.filtered = []
-        this.$refs.searchinput.blur()
-        this.$emit('query-change', this.searchQry)
-      },
       select (item) {
         this.$emit('search-result', item)
-        this.resetSearch()
+        this.$refs.searchinput.blur()
       },
       selectTopHit () {
         if (this.filtered && this.filtered.length > 0) {
@@ -84,6 +79,11 @@
       },
       focus () {
         this.$refs.searchinput.focus()
+      },
+      handleBlur () {
+        this.searchQry = ''
+        this.filtered = []
+        this.$emit('query-change', this.searchQry)
       }
     }
   }
