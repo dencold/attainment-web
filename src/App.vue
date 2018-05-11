@@ -48,6 +48,7 @@ export default {
 
   created () {
     window.addEventListener('keyup', this.handleGlobalShortcuts)
+    window.addEventListener('keydown', this.handleKeydown)
   },
 
   beforeCreate () {
@@ -84,6 +85,14 @@ export default {
         this.$router.forward()
       } else if (e.key === '?') {
         this.$router.push({name: 'shortcuts'})
+      }
+    },
+    handleKeydown (e) {
+      // we need to explicitly catch the "/" keypress because firefox binds
+      // to their "Quick Find" whenever a user presses it. Super annoying.
+      // https://stackoverflow.com/questions/7797937/how-to-bypass-quick-search-firefox-feature-and-capture-forward-slash-keypress
+      if (e.key === '/' && e.target.tagName === 'BODY') {
+        e.preventDefault()
       }
     }
   }
