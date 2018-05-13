@@ -82,12 +82,25 @@ export default {
     if (newTask.state !== 'completed') {
       newTask.state = 'completed'
       newTask.completedAt = Date.now()
+      if (newTask.projectId && newTask.starred) {
+        context.dispatch('setNextProjectAction', newTask.projectId)
+      }
     } else {
       newTask.state = 'backlog'
       newTask.completedAt = ''
     }
 
     context.dispatch('updateTask', {id: taskDetails['id'], newTask: newTask})
+  },
+  setNextProjectAction: (context, projectId) => {
+    const nextActionId = context.getters.projectOldestTask(projectId)
+
+    if (nextActionId) {
+      let nextAction = context.state.tasks[nextActionId]
+      nextAction.starred = true
+
+      context.dispatch('updateTask', {id: nextActionId, newTask: nextAction})
+    }
   },
 
   setNowTask: (context, taskId) => {

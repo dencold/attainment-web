@@ -132,6 +132,21 @@ export default {
     return retTasks
   },
 
+  projectOldestTask: state => projId => {
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingProject(entry, projId))
+      .filter((entry) => !includeSnoozed(entry))
+
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'asc'))
+
+    if (filtered.length === 0) {
+      return null
+    } else {
+      return filtered[0][0]
+    }
+  },
+
   tasksActive: state => {
     let retTasks = []
 
