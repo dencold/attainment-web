@@ -24,7 +24,7 @@
     </datalist>
     -->
     <ul>
-      <li v-for="item in filtered" @click="select(item)">
+      <li v-for="item in filtered" @click="select(item)" @mousedown="disable">
         {{item.name}}
       </li>
     </ul>
@@ -84,6 +84,12 @@
         this.searchQry = ''
         this.filtered = []
         this.$emit('query-change', this.searchQry)
+      },
+      disable (e) {
+        // we have to do this for mousedown because it leads to a blur
+        // event being emmitted which happens before the click event and
+        // we end up never getting to select the list element
+        e.preventDefault()
       }
     }
   }
