@@ -102,6 +102,25 @@ export default {
       context.dispatch('updateTask', {id: nextActionId, newTask: nextAction})
     }
   },
+  cycleTaskSize: (context, taskId) => {
+    let sizes = ['T', 'S', 'M', 'L', 'X']
+    let newTask = context.state.tasks[taskId]
+
+    // make sure we have a size set
+    if (!newTask.hasOwnProperty('size') || newTask.size === '') {
+      newTask.size = 'T'
+      context.dispatch('updateTask', {id: taskId, newTask: newTask})
+    } else {
+      let idx = sizes.indexOf(newTask.size)
+      idx += 1
+      if (idx >= sizes.length) {
+        idx = 0
+      }
+
+      newTask.size = sizes[idx]
+      context.dispatch('updateTask', {id: taskId, newTask: newTask})
+    }
+  },
 
   setNowTask: (context, taskId) => {
     // see if we already have a now task set

@@ -20,9 +20,8 @@
         {{project.name}}
       </div>
       <div class="poms">
-        <span v-if="task.poms_total">
-          <i class="ti-bolt"></i>
-          {{task.poms_total - task.poms_completed}}
+        <span v-if="task.size">
+          {{task.size}}
         </span>
       </div>
       <div class="due">

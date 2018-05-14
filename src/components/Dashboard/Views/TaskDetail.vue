@@ -48,12 +48,11 @@
       </div>
 
       <div class="flex-row highlight">
-        <div class="icon pointer" @click="incrementPom('completed')">
-          <i class="ti-bolt"></i>
+        <div class="icon pointer" @click="cycleSize">
+          <i class="ti-exchange-vertical"></i>
         </div>
         <span class="name">
-          <span class="pointer" @click="incrementPom('completed')">{{task.poms_completed}} /</span>
-          <span class="pointer" @click="incrementPom('total')">{{task.poms_total}}</span>
+          <span class="pointer" @click="cycleSize">{{task.size}}</span>
         </span>
       </div>
 
@@ -190,6 +189,9 @@
           'toggleTaskCompleted',
           {id: this.id, task: this.task}
         )
+      },
+      cycleSize () {
+        this.$store.dispatch('cycleTaskSize', this.id)
       },
       updateSnooze (snooze) {
         if (snooze !== this.task.snoozedUntil) {

@@ -29,10 +29,8 @@
           this.toggleStar()
         } else if (e.key === 'c') {
           this.toggleCompleted()
-        } else if (e.key === 'E') {
-          this.incrementPom('completed')
-        } else if (e.key === 'e') {
-          this.incrementPom('total')
+        } else if (e.key === 'i') {
+          this.cycleSize()
         } else if (e.key === 'z') {
           this.defaultSnooze()
         } else if (e.key === '!') {
@@ -83,16 +81,8 @@
           {id: this.id, newTask: newTask}
         )
       },
-      incrementPom (type) {
-        let newTask = this.task
-
-        if (type === 'completed') {
-          newTask.poms_completed += 1
-        } else if (type === 'total') {
-          newTask.poms_total += 1
-        }
-
-        this.updateTask(newTask)
+      cycleSize () {
+        this.$store.dispatch('cycleTaskSize', this.id)
       },
       backlog () {
         let newTask = this.task
