@@ -83,7 +83,6 @@
       handleBlur () {
         this.searchQry = ''
         this.filtered = []
-        this.$emit('query-change', this.searchQry)
       },
       disable (e) {
         // we have to do this for mousedown because it leads to a blur
