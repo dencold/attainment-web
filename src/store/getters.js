@@ -410,7 +410,7 @@ export default {
     if (searchCategory === 'all' || searchCategory === 'projects') {
       for (let key in state.projects) {
         // we only search active projects
-        if (state.projects[key].completed === false) {
+        if (state.projects[key].completed === false || state.projects[key].state !== 'completed') {
           let proj = state.projects[key]
           proj['id'] = key
           proj['type'] = 'project'
