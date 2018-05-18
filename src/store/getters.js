@@ -422,7 +422,7 @@ export default {
     if (searchCategory === 'all' || searchCategory === 'tasks') {
       // and now our tasks
       for (let key in state.tasks) {
-        if (state.tasks[key].completed === false) {
+        if (state.tasks[key].completed === false || state.tasks[key].state !== 'completed') {
           let task = state.tasks[key]
           task['id'] = key
           task['type'] = 'task'
