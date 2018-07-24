@@ -40,7 +40,7 @@
         } else if (e.key === 't') {
           this.today()
         } else if (e.key === 'w') {
-          this.week()
+          this.weekend()
         } else if (e.key === 'p') {
           this.jumpToProj()
         }
@@ -97,9 +97,9 @@
         newTask.state = 'today'
         this.updateTask(newTask)
       },
-      week () {
+      weekend () {
         let newTask = this.task
-        newTask.state = 'week'
+        newTask.state = 'weekend'
         this.updateTask(newTask)
       }
     }

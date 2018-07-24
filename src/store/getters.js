@@ -173,6 +173,18 @@ export default {
     return retTasks
   },
 
+  weekendTasks: state => {
+    let retTasks = []
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'weekend'))
+
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.forEach(entry => retTasks.push(entry[0]))
+
+    return retTasks
+  },
+
   todayTasks: state => {
     let retTasks = []
 

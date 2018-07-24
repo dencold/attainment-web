@@ -69,6 +69,8 @@ export default {
         this.$router.push({name: 'tasks'})
       } else if (e.key === 'D') {
         this.$router.push({name: 'dashboard'})
+      } else if (e.key === 'W') {
+        this.$router.push({name: 'weekend'})
       } else if (e.key === 'A') {
         this.$modal.show('add-task')
       } else if (e.key === '1') {

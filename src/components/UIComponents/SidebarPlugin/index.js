@@ -19,6 +19,11 @@ const SidebarStore = {
       path: '/inbox'
     },
     {
+      name: 'Weekend',
+      icon: 'ti-game',
+      path: '/weekend'
+    },
+    {
       name: 'Projects',
       icon: 'ti-folder',
       path: '/projects'
