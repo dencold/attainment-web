@@ -155,11 +155,11 @@
       handleKeyUp (e) {
         if (e.key === 'd') {
           this.showDatePicker('due')
-        } else if (e.key === 'r') {
-          this.$refs.nameInput.focus()
         } else if (e.key === 'n') {
           this.$refs.notes.focus()
-        } else if (e.key === 'm') {
+        } else if (e.key === 'r') {
+          this.$refs.nameInput.focus()
+        } else if (e.key === 'v') {
           this.$modal.show('move-task')
         } else if (e.key === 'Z') {
           this.showDatePicker('snooze')

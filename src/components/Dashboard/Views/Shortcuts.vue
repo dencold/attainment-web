@@ -16,12 +16,22 @@
     </div>
 </template>
 <script>
+  // note this is just the display of all shortcuts available to the user and is
+  // what is shown when the '?' key is pressed. the actual shortcuts are defined here:
+  // - global: App.vue
+  // - task specific:
+  //    - componenents/UIComponents/Inputs/GeneralTaskShortcuts.vue
+  //    - componenents/Dashboard/Views/TaskDetail.vue
+  // - task card specific: components/UIComponents/Inputs/TaskCardShortcuts.vue
+
   import PaperTable from 'components/UIComponents/PaperTable.vue'
   const columns = ['Key', 'Description']
   const globalShortcuts = [
+    { key: 'A', description: 'Jump to quick add task' },
+    { key: 'D', description: 'Jump to dashboard' },
     { key: 'P', description: 'Jump to projects' },
     { key: 'T', description: 'Jump to tasks' },
-    { key: 'D', description: 'Jump to dashboard' },
+    { key: 'W', description: 'Jump to weekend' },
     { key: '1', description: 'Jump to now' },
     { key: '2', description: 'Jump to plan' },
     { key: '3', description: 'Jump to inbox' },
@@ -32,20 +42,24 @@
   ]
 
   const taskShortcuts = [
-    { key: 's', description: 'Toggle star' },
-    { key: 'o', description: 'Open task' },
-    { key: 'c', description: 'Complete task' },
-    { key: 'd', description: 'Open due date picker' },
-    { key: 'e', description: 'Edit task name' },
-    { key: 'n', description: 'Edit notes' },
-    { key: 'm', description: 'Move task to project' },
-    { key: 'a', description: 'Add to the action count' },
-    { key: 'A', description: 'Add to the total actions required' },
-    { key: 'b', description: 'Move to backlog' },
-    { key: 'z', description: 'Set default snooze (5 days)' },
-    { key: 'Z', description: 'Open snooze date picker' },
+    // GeneralTaskShortcuts
     { key: '!', description: 'Set now task' },
-    { key: 't', description: 'Toggle as today task' }
+    { key: 'b', description: 'Move to backlog' },
+    { key: 'e', description: 'Complete task' },
+    { key: 'i', description: 'Cycle task size' },
+    { key: 'p', description: 'Jump to task\'s project' },
+    { key: 's', description: 'Toggle star' },
+    { key: 't', description: 'Toggle as today task' },
+    { key: 'w', description: 'Toggle as weekend task' },
+    { key: 'z', description: 'Set default snooze (7 days)' },
+    // TaskDetail
+    { key: 'd', description: 'Open due date picker' },
+    { key: 'n', description: 'Edit notes' },
+    { key: 'r', description: 'Rename task' },
+    { key: 'v', description: 'Move task to project' },
+    { key: 'Z', description: 'Open snooze date picker' },
+    // TaskCardShortcuts
+    { key: 'o', description: 'Open task' }
   ]
 
   export default {

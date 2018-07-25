@@ -25,24 +25,24 @@
 
     methods: {
       handleKeyUp (e) {
-        if (e.key === 's') {
-          this.toggleStar()
-        } else if (e.key === 'c') {
-          this.toggleCompleted()
-        } else if (e.key === 'i') {
-          this.cycleSize()
-        } else if (e.key === 'z') {
-          this.defaultSnooze()
-        } else if (e.key === '!') {
+        if (e.key === '!') {
           this.setNow()
         } else if (e.key === 'b') {
           this.backlog()
+        } else if (e.key === 'e') {
+          this.toggleCompleted()
+        } else if (e.key === 'i') {
+          this.cycleSize()
+        } else if (e.key === 'p') {
+          this.jumpToProj()
+        } else if (e.key === 's') {
+          this.toggleStar()
         } else if (e.key === 't') {
           this.today()
         } else if (e.key === 'w') {
           this.weekend()
-        } else if (e.key === 'p') {
-          this.jumpToProj()
+        } else if (e.key === 'z') {
+          this.defaultSnooze()
         }
       },
       toTask (taskId) {
