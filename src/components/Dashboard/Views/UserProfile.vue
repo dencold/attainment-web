@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-  import UserCard from './UserProfile/UserCard.vue'
+  import UserCard from '@/components/Dashboard/Views/UserProfile/UserCard.vue'
   export default {
     components: {
       UserCard

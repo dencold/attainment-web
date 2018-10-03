@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
 
   export default {
     components: {

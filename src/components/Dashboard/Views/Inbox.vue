@@ -10,7 +10,7 @@
 
     <text-input placeholder="Add a task" @submitted="addTask"></text-input>
 
-    <div class="flex-col" v-for="(id, index) in inboxTasks">
+    <div class="flex-col" v-for="(id, index) in inboxTasks" :key="index">
       <task-card
         :id="id"
         :isFocused="isFocused(index)"
@@ -22,10 +22,10 @@
   </div>
 </template>
 <script>
-  import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
-  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
-  import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
-  import TaskCardShortcuts from 'components/UIComponents/Inputs/TaskCardShortcuts.vue'
+  import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
+  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
+  import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
+  import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {

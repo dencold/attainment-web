@@ -35,8 +35,8 @@
 
 <script>
 import fireApp from './modules/firebase'
-import Login from 'components/Dashboard/Views/Login.vue'
-import AddTask from 'components/UIComponents/Inputs/AddTask.vue'
+import Login from './components/Dashboard/Views/Login.vue'
+import AddTask from './components/UIComponents/Inputs/AddTask.vue'
 
 export default {
   name: 'app',

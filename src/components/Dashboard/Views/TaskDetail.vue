@@ -105,10 +105,10 @@
 </template>
 
 <script>
-  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
-  import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
-  import ProjectSelector from 'components/UIComponents/Inputs/ProjectSelector.vue'
-  import GeneralTaskShortcuts from 'components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
+  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
+  import TextArea from '@/components/UIComponents/Inputs/TextArea.vue'
+  import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
+  import GeneralTaskShortcuts from '@/components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
   import { Datetime } from 'vue-datetime'
 
   export default {

@@ -15,8 +15,8 @@
   </div>
 </template>
 <script>
-  import ProjectCard from 'components/UIComponents/Cards/ProjectCard.vue'
-  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
+  import ProjectCard from '@/components/UIComponents/Cards/ProjectCard.vue'
+  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
 
   export default {
     components: {

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import TaskDetail from 'components/Dashboard/Views/TaskDetail.vue'
+  import TaskDetail from '@/components/Dashboard/Views/TaskDetail.vue'
 
   export default {
     components: {

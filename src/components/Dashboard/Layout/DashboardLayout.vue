@@ -21,9 +21,9 @@
 
 </style>
 <script>
-  import TopNavbar from './TopNavbar.vue'
-  import ContentFooter from './ContentFooter.vue'
-  import DashboardContent from './Content.vue'
+  import TopNavbar from '@/components/Dashboard/Layout/TopNavbar.vue'
+  import ContentFooter from '@/components/Dashboard/Layout/ContentFooter.vue'
+  import DashboardContent from '@/components/Dashboard/Layout/Content.vue'
   export default {
     components: {
       TopNavbar,

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import GeneralTaskShortcuts from 'components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
+  import GeneralTaskShortcuts from '@/components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
 
   export default {
     components: {

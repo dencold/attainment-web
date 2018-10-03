@@ -143,7 +143,7 @@ export default {
                     .orderBy('name')
 
     collection.onSnapshot(snapshot => {
-      snapshot.docChanges.forEach(change => {
+      snapshot.docChanges().forEach(change => {
         if (change.type === 'added' || change.type === 'modified') {
           context.commit('ADD_OR_UPDATE_PROJECT', {id: change.doc.id, newProj: change.doc.data()})
         }
@@ -200,7 +200,7 @@ export default {
                     .orderBy('createdAt', 'desc')
 
     collection.onSnapshot(snapshot => {
-      snapshot.docChanges.forEach(change => {
+      snapshot.docChanges().forEach(change => {
         if (change.type === 'added' || change.type === 'modified') {
           context.commit('ADD_OR_UPDATE_TASK', {id: change.doc.id, newTask: change.doc.data()})
         }

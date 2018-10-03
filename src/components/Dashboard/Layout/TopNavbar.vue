@@ -28,7 +28,7 @@
   </nav>
 </template>
 <script>
-  import GlobalSearch from 'components/UIComponents/GlobalSearch.vue'
+  import GlobalSearch from '@/components/UIComponents/GlobalSearch.vue'
 
   export default {
     components: {

@@ -24,7 +24,7 @@
   //    - componenents/Dashboard/Views/TaskDetail.vue
   // - task card specific: components/UIComponents/Inputs/TaskCardShortcuts.vue
 
-  import PaperTable from 'components/UIComponents/PaperTable.vue'
+  import PaperTable from '@/components/UIComponents/PaperTable.vue'
   const columns = ['Key', 'Description']
   const globalShortcuts = [
     { key: 'A', description: 'Jump to quick add task' },

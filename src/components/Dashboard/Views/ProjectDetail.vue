@@ -75,11 +75,11 @@
 </template>
 
 <script>
-  import TaskCard from 'components/UIComponents/Cards/TaskCard.vue'
-  import TextInput from 'components/UIComponents/Inputs/TextInput.vue'
-  import TextArea from 'components/UIComponents/Inputs/TextArea.vue'
-  import VimMovement from 'components/UIComponents/Inputs/VimMovement.vue'
-  import TaskCardShortcuts from 'components/UIComponents/Inputs/TaskCardShortcuts.vue'
+  import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
+  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
+  import TextArea from '@/components/UIComponents/Inputs/TextArea.vue'
+  import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
+  import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
