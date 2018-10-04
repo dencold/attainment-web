@@ -8,7 +8,11 @@
     </vim-movement>
     <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
-    <text-input placeholder="Add a task" @submitted="addTask"></text-input>
+    <text-input
+      placeholder="Add a task"
+      :focused.sync="isInputFocused"
+      @submitted="addTask">
+    </text-input>
 
     <div class="flex-col" v-for="(id, index) in inboxTasks" :key="index">
       <task-card
@@ -37,7 +41,8 @@
 
     data () {
       return {
-        currFocusIndex: null
+        currFocusIndex: null,
+        isInputFocused: true
       }
     },
 
@@ -62,6 +67,7 @@
         this.updateFocus(e.index)
       },
       updateFocus (index) {
+        this.isInputFocused = false
         this.currFocusIndex = index
       },
       isFocused (index) {

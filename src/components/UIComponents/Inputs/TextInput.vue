@@ -6,8 +6,10 @@
       ref="textinput"
       v-model.trim="value"
       :placeholder="placeholder"
+      @focus="updateFocus(true)"
+      @blur="updateFocus(false)"
       @keyup.enter="submit"
-      @keyup.esc="$refs.textinput.blur()"
+      @keyup.esc="updateFocus(false)"
       @keyup.stop
     />
     <button class="btn btn-fill btn-info inpBtn" @click="submit">+</button>
@@ -18,7 +20,8 @@
 <script>
   export default {
     props: {
-      placeholder: String
+      placeholder: String,
+      focused: Boolean
     },
 
     data () {
@@ -27,14 +30,28 @@
       }
     },
 
-    mounted () {
-      this.$refs.textinput.focus()
+    watch: {
+      focused (newVal, oldVal) {
+        // if newVal and oldVal are equal, it's a noop
+        if (newVal !== oldVal) {
+          this.updateFocus(newVal)
+        }
+      }
     },
 
     methods: {
       submit () {
         this.$emit('submitted', this.value)
         this.value = ''
+      },
+      updateFocus (newVal) {
+        if (newVal === false) {
+          this.$refs.textinput.blur()
+          this.$emit('update:focused', false)
+        } else {
+          this.$refs.textinput.focus()
+          this.$emit('update:focused', true)
+        }
       }
     }
   }
