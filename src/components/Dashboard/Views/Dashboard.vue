@@ -19,7 +19,7 @@
     </div>
 
     <h6>Today</h6>
-    <div class="flex-col" v-for="(id, index) in tasksToday">
+    <div class="flex-col" v-for="(id, index) in tasksToday" :key="index">
       <task-card
         :id="id"
         :isFocused="isFocused(1, index)"
@@ -29,7 +29,7 @@
     </div>
 
     <h6>Week</h6>
-    <div class="flex-col" v-for="(id, index) in tasksWeek">
+    <div class="flex-col" v-for="(id, index) in tasksWeek" :key="index">
       <task-card
         :id="id"
         :isFocused="isFocused(2, index)"
@@ -39,7 +39,7 @@
     </div>
 
     <h6>Backlog</h6>
-    <div class="flex-col" v-for="(id, index) in tasksBacklog">
+    <div class="flex-col" v-for="(id, index) in tasksBacklog" :key="index">
       <task-card
         :id="id"
         :isFocused="isFocused(3, index)"
@@ -51,14 +51,12 @@
 </template>
 <script>
   import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
-  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
   import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
   import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
-      'text-input': TextInput,
       'vim-movement': VimMovement,
       'task-card-shortcuts': TaskCardShortcuts
     },

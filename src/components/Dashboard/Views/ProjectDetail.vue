@@ -24,14 +24,18 @@
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <text-area placeholder="Notes" :value="project.notes" @updated="updateNotes"/>
+          <text-area placeholder="Notes" :value="project.notes" @updated="updateNotes">
           </text-area>
         </div>
       </div>
 
       <hr />
 
-      <text-input placeholder="Add a task" @submitted="addTask"></text-input>
+      <text-input
+        placeholder="Add a task"
+        :focused.sync="isInputFocused"
+        @submitted="addTask">
+      </text-input>
       <vim-movement
         :sectionLens="sectionLens"
         :currSection="currFocusSection"
@@ -40,7 +44,7 @@
       </vim-movement>
       <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
-      <div class="flex-col" v-for="(id, index) in projectTasksActive">
+      <div class="flex-col" v-for="(id, index) in projectTasksActive" :key="index">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -51,7 +55,7 @@
 
       <h6 class="pointer" v-if="projectTasksCompleted.length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
 
-      <div class="flex-col" v-show="showCompleted" v-for="(id, index) in projectTasksCompleted">
+      <div class="flex-col" v-show="showCompleted" v-for="(id, index) in projectTasksCompleted" :key="index">
         <task-card
           :id="id"
           :isFocused="isFocused(1, index)"
@@ -62,7 +66,7 @@
 
       <h6 class="pointer" v-if="projectTasksSnoozed.length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
 
-      <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in projectTasksSnoozed">
+      <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in projectTasksSnoozed" :key="index">
         <task-card
           :id="id"
           :isFocused="isFocused(2, index)"
@@ -95,7 +99,8 @@
         showCompleted: false,
         showSnoozed: false,
         currFocusSection: 0,
-        currFocusIndex: 0
+        currFocusIndex: 0,
+        isInputFocused: true
       }
     },
 
@@ -145,6 +150,7 @@
       updateFocus (section, index) {
         this.currFocusSection = section
         this.currFocusIndex = index
+        this.isInputFocused = false
       },
       isFocused (section, index) {
         return (this.currFocusSection === section && this.currFocusIndex === index)

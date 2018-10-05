@@ -39,6 +39,12 @@
       }
     },
 
+    mounted () {
+      if (this.focused) {
+        this.updateFocus(true)
+      }
+    },
+
     methods: {
       submit () {
         this.$emit('submitted', this.value)
