@@ -1,14 +1,18 @@
 <template>
   <div>
-    <text-input placeholder="Add a project" @submitted="addProject"></text-input>
+    <text-input
+      placeholder="Add a project"
+      @submitted="addProject"
+      :focused.sync="isInputFocused">
+    </text-input>
 
-    <div class="flex-col" v-for="(project, id) in projectsActive">
+    <div class="flex-col" v-for="(project, id) in projectsActive" :key="id">
       <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
     </div>
 
     <h6 class="pointer" v-if="Object.keys(projectsCompleted).length > 0" @click="toggleShowCompleted">Completed Projects</h6>
 
-    <div class="flex-col" v-show="showCompleted" v-for="(project, id) in projectsCompleted">
+    <div class="flex-col" v-show="showCompleted" v-for="(project, id) in projectsCompleted" :key="id">
       <project-card :id="id" :project="project" @click.native="toProject(id)"></project-card>
     </div>
 
@@ -26,7 +30,8 @@
 
     data () {
       return {
-        showCompleted: false
+        showCompleted: false,
+        isInputFocused: true
       }
     },
 

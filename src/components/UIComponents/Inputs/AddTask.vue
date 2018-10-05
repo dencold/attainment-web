@@ -4,7 +4,11 @@
       <strong class="title">
         Quick Add Task
       </strong>
-      <text-input class="input" @submitted="addTask"></text-input>
+      <text-input
+        class="input"
+        @submitted="addTask"
+        :focused="true">
+      </text-input>
     </div>
   </modal>
 </template>

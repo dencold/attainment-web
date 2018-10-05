@@ -94,7 +94,7 @@
           <i class="ti-pencil"></i>
         </div>
         <div class="name">
-          <text-area ref="notes" placeholder="Notes" :value="task.notes" @updated="updateNotes"/>
+          <text-area ref="notes" placeholder="Notes" :value="task.notes" @updated="updateNotes">
           </text-area>
         </div>
       </div>
@@ -105,7 +105,6 @@
 </template>
 
 <script>
-  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
   import TextArea from '@/components/UIComponents/Inputs/TextArea.vue'
   import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
   import GeneralTaskShortcuts from '@/components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
@@ -113,7 +112,6 @@
 
   export default {
     components: {
-      'text-input': TextInput,
       'text-area': TextArea,
       'project-selector': ProjectSelector,
       'datetime': Datetime,

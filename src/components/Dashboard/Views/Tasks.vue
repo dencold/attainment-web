@@ -10,13 +10,13 @@
     <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
     <ul id="tabs" class="nav nav-tabs">
-      <li :class="{active: tab == tabSelected}" v-for="tab in tabData">
+      <li :class="{active: tab == tabSelected}" v-for="tab in tabData" :key="tab">
         <a :href="'#' + tab">{{tab}}</a>
       </li>
     </ul>
 
     <div class="tab-content">
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive" :key="index">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -24,7 +24,7 @@
           @mouseover.native="updateFocus(0, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'snoozed'}" v-for="(id, index) in tasksSnoozed">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'snoozed'}" v-for="(id, index) in tasksSnoozed" :key="index">>
         <task-card
           :id="id"
           :isFocused="isFocused(1, index)"
@@ -32,7 +32,7 @@
           @mouseover.native="updateFocus(1, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'due'}" v-for="(id, index) in tasksDue">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'due'}" v-for="(id, index) in tasksDue" :key="index">>
         <task-card
           :id="id"
           :isFocused="isFocused(2, index)"
@@ -40,7 +40,7 @@
           @mouseover.native="updateFocus(2, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'completed'}" v-for="(id, index) in tasksCompleted">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'completed'}" v-for="(id, index) in tasksCompleted" :key="index">>
         <task-card
           :id="id"
           :isFocused="isFocused(3, index)"
@@ -54,14 +54,12 @@
 </template>
 <script>
   import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
-  import TextInput from '@/components/UIComponents/Inputs/TextInput.vue'
   import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
   import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
-      'text-input': TextInput,
       'vim-movement': VimMovement,
       'task-card-shortcuts': TaskCardShortcuts
     },
@@ -76,7 +74,7 @@
     },
 
     watch: {
-      '$route.hash' (to, from) {
+      '$route.hash' () {
         let tabIndex = this.tabData.indexOf(this.tabSelected)
 
         if (tabIndex !== -1) {
