@@ -19,7 +19,7 @@
     </div>
 
     <h6>Today</h6>
-    <div class="flex-col" v-for="(id, index) in tasksToday" :key="index">
+    <div class="flex-col" v-for="(id, index) in tasksToday" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(1, index)"
@@ -29,7 +29,7 @@
     </div>
 
     <h6>Week</h6>
-    <div class="flex-col" v-for="(id, index) in tasksWeek" :key="index">
+    <div class="flex-col" v-for="(id, index) in tasksWeek" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(2, index)"
@@ -39,7 +39,7 @@
     </div>
 
     <h6>Backlog</h6>
-    <div class="flex-col" v-for="(id, index) in tasksBacklog" :key="index">
+    <div class="flex-col" v-for="(id, index) in tasksBacklog" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(3, index)"

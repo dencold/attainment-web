@@ -16,7 +16,7 @@
     </ul>
 
     <div class="tab-content">
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive" :key="index">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -24,7 +24,7 @@
           @mouseover.native="updateFocus(0, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'snoozed'}" v-for="(id, index) in tasksSnoozed" :key="index">>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'snoozed'}" v-for="(id, index) in tasksSnoozed" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(1, index)"
@@ -32,7 +32,7 @@
           @mouseover.native="updateFocus(1, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'due'}" v-for="(id, index) in tasksDue" :key="index">>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'due'}" v-for="(id, index) in tasksDue" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(2, index)"
@@ -40,7 +40,7 @@
           @mouseover.native="updateFocus(2, index)">
         </task-card>
       </div>
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'completed'}" v-for="(id, index) in tasksCompleted" :key="index">>
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'completed'}" v-for="(id, index) in tasksCompleted" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(3, index)"

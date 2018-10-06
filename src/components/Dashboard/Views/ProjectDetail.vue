@@ -44,7 +44,7 @@
       </vim-movement>
       <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
-      <div class="flex-col" v-for="(id, index) in projectTasksActive" :key="index">
+      <div class="flex-col" v-for="(id, index) in projectTasksActive" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -55,7 +55,7 @@
 
       <h6 class="pointer" v-if="projectTasksCompleted.length > 0" @click="toggleShowCompleted">Completed Tasks</h6>
 
-      <div class="flex-col" v-show="showCompleted" v-for="(id, index) in projectTasksCompleted" :key="index">
+      <div class="flex-col" v-show="showCompleted" v-for="(id, index) in projectTasksCompleted" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(1, index)"
@@ -66,7 +66,7 @@
 
       <h6 class="pointer" v-if="projectTasksSnoozed.length > 0" @click="toggleShowSnoozed">Snoozed Tasks</h6>
 
-      <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in projectTasksSnoozed" :key="index">
+      <div class="flex-col" v-show="showSnoozed" v-for="(id, index) in projectTasksSnoozed" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(2, index)"

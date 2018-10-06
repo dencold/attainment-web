@@ -14,7 +14,7 @@
       :focused.sync="isInputFocused">
     </text-input>
 
-    <div class="flex-col" v-for="(id, index) in weekendTasks" :key="index">
+    <div class="flex-col" v-for="(id, index) in weekendTasks" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(index)"

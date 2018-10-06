@@ -14,7 +14,7 @@
       @submitted="addTask">
     </text-input>
 
-    <div class="flex-col" v-for="(id, index) in inboxTasks" :key="index">
+    <div class="flex-col" v-for="(id, index) in inboxTasks" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(index)"
