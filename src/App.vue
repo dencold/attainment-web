@@ -49,6 +49,9 @@ export default {
   created () {
     window.addEventListener('keyup', this.handleGlobalShortcuts)
     window.addEventListener('keydown', this.handleKeydown)
+    this.$bus.$on('empty-project', (payload) => {
+      this.$router.push({name: 'project', params: { id: payload.projectId }})
+    })
   },
 
   beforeCreate () {

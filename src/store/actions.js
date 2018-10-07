@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import fireApp from '../modules/firebase'
 
 const db = fireApp.firestore()
@@ -19,7 +20,7 @@ function initProject (projectName) {
 }
 
 export default {
-  signOut: (context, payload) => {
+  signOut: (context) => {
     fireApp.auth().signOut()
       .then(context.commit('UNSET_USER'), () => console.log('Failed to sign out'))
   },
@@ -84,6 +85,11 @@ export default {
       newTask.completedAt = Date.now()
       if (newTask.projectId && newTask.starred) {
         context.dispatch('setNextProjectAction', newTask.projectId)
+      }
+
+      // if this project has no more tasks, we want to send an event to let caller know and redirect
+      if (!context.getters.projectOldestTask(newTask.projectId)) {
+        Vue.prototype.$bus.$emit('empty-project', {projectId: newTask.projectId})
       }
     } else {
       newTask.state = 'backlog'
