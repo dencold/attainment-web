@@ -88,7 +88,7 @@ export default {
       }
 
       // if this project has no more tasks, we want to send an event to let caller know and redirect
-      if (!context.getters.projectOldestTask(newTask.projectId)) {
+      if (newTask.projectId && !context.getters.projectOldestTask(newTask.projectId)) {
         Vue.prototype.$bus.$emit('empty-project', {projectId: newTask.projectId})
       }
     } else {
