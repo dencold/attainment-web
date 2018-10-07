@@ -16,7 +16,7 @@
     </ul>
 
     <div class="tab-content">
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksActive" :key="id">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksBacklog" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -85,8 +85,8 @@
     },
 
     computed: {
-      tasksActive () {
-        return this.$store.getters.tasksActive
+      tasksBacklog () {
+        return this.$store.getters.backlogView
       },
       tasksSnoozed () {
         return this.$store.getters.tasksSnoozed
@@ -99,7 +99,7 @@
       },
       sectionLens () {
         return [
-          this.tasksActive.length,
+          this.tasksBacklog.length,
           this.tasksSnoozed.length,
           this.tasksDue.length,
           this.tasksCompleted.length
@@ -111,7 +111,7 @@
         }
 
         if (this.currFocusSection === 0) {
-          return this.tasksActive[this.currFocusIndex]
+          return this.tasksBacklog[this.currFocusIndex]
         } else if (this.currFocusSection === 1) {
           return this.tasksSnoozed[this.currFocusIndex]
         } else if (this.currFocusSection === 2) {
