@@ -13,6 +13,12 @@
           </paper-table>
         </div>
       </div>
+      <div class="col-md-12">
+        <div class="card">
+          <paper-table type="hover" :title="sizeTable.title" :data="sizeTable.data" :columns="sizeTable.columns">
+          </paper-table>
+        </div>
+      </div>
     </div>
 </template>
 <script>
@@ -62,6 +68,12 @@
     { key: 'o', description: 'Open task' }
   ]
 
+  const taskSizes = [
+    { key: 'T', description: 'Tiny: 10 mins or less' },
+    { key: 'S', description: 'Small: 30ish mins' },
+    { key: 'M', description: 'Medium: 1 hour' },
+    { key: 'L', description: 'Large: 2+ hours (break it up!)' },
+  ]
   export default {
     components: {
       PaperTable
@@ -77,6 +89,11 @@
           title: 'Task Shortcuts',
           columns: [...columns],
           data: [...taskShortcuts]
+        },
+        sizeTable: {
+          title: 'Task Sizes',
+          columns: [...columns],
+          data: [...taskSizes]
         }
       }
     }

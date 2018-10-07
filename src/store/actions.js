@@ -109,7 +109,7 @@ export default {
     }
   },
   cycleTaskSize: (context, taskId) => {
-    let sizes = ['T', 'S', 'M', 'L', 'X']
+    let sizes = ['T', 'S', 'M', 'L']
     let newTask = context.state.tasks[taskId]
 
     // make sure we have a size set
