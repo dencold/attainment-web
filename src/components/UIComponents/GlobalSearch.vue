@@ -1,15 +1,14 @@
 <template>
   <div>
-    <input 
+    <input
       type="text"
       ref="searchinput"
       :value="searchQry"
-      @input="filter" 
+      @input="filter"
       placeholder="Search"
       @keyup.enter="selectTopHit"
-      @keyup.esc="$refs.searchinput.blur()"
+      @keyup.esc="handleEsc"
       @keyup.stop
-      @blur="handleBlur"
     >
     <!--
       [dc] wow...autocomplete dropdown options really suck even in 2017 :*(
@@ -24,7 +23,7 @@
     </datalist>
     -->
     <ul>
-      <li v-for="item in filtered" @click="select(item)" @mousedown="disable">
+      <li v-for="item in filtered" @click="select(item)" @mousedown="disable" :key="item">
         {{item.name}}
       </li>
     </ul>
@@ -70,6 +69,7 @@
       },
       select (item) {
         this.$emit('search-result', item)
+        this.clear()
         this.$refs.searchinput.blur()
       },
       selectTopHit () {
@@ -80,7 +80,12 @@
       focus () {
         this.$refs.searchinput.focus()
       },
-      handleBlur () {
+      handleEsc () {
+        this.clear()
+        this.$refs.searchinput.blur()
+        this.$emit('esc')
+      },
+      clear () {
         this.searchQry = ''
         this.filtered = []
       },
