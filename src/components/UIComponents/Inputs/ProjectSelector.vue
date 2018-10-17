@@ -8,6 +8,7 @@
         ref="globalsearch"
         @search-result="moveProject"
         @query-change="onQueryChange"
+        @esc="$modal.hide('move-task')"
         search-category="projects">
       </global-search>
       <button class="btn btn-fill btn-info inpBtn">Move</button>
