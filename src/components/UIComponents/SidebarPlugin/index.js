@@ -4,9 +4,9 @@ const SidebarStore = {
   showSidebar: false,
   sidebarLinks: [
     {
-      name: 'Now',
+      name: 'Today',
       icon: 'ti-pin-alt',
-      path: '/now'
+      path: '/today'
     },
     {
       name: 'Plan',

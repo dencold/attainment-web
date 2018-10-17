@@ -190,7 +190,6 @@ export default {
 
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'today'))
-      .filter((entry) => excludeFutureSnoozed(entry))
 
     filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
