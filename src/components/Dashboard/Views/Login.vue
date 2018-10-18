@@ -6,7 +6,7 @@
 <template>
   <div class="login">
     <img
-      src="/static/img/attain-logo.jpg"
+      src="/img/attain-logo.jpg"
       height="500px"
       width="500px"
     />
