@@ -281,23 +281,23 @@ export default {
   },
 
   projectsActive: state => {
-    let ret = {}
+    let ret = []
 
     let filtered = Object.entries(state.projects)
       .filter((entry) => !isCompleted(entry))
 
-    filtered.forEach((entry) => { ret[entry[0]] = entry[1] })
+    filtered.forEach(entry => ret.push(entry[0]))
 
     return ret
   },
 
   projectsCompleted: state => {
-    var ret = {}
+    var ret = []
 
     let filtered = Object.entries(state.projects)
       .filter((entry) => isCompleted(entry))
 
-    filtered.forEach((entry) => { ret[entry[0]] = entry[1] })
+    filtered.forEach(entry => ret.push(entry[0]))
 
     return ret
   },

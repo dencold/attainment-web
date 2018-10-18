@@ -57,6 +57,14 @@ export default {
       .doc(projectDetails['id'])
       .update(newProj)
   },
+  deleteProject: (context, projectId) => {
+    // setup firebase connections
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .collection('projects')
+      .doc(projectId)
+      .delete()
+  },
   toggleProjectCompleted: (context, projectDetails) => {
     let newProj = projectDetails['proj']
 
@@ -142,6 +150,22 @@ export default {
     context.dispatch('updateTask', {id: taskId, newTask: newNow})
   },
 
+  deleteCompletedTasksAndProjects: (context) => {
+    // first, delete all of our completed tasks
+    let completedTasks = context.getters.tasksCompleted
+    let index = 0
+
+    for (index in completedTasks) {
+      context.dispatch('deleteTask', completedTasks[index])
+    }
+
+    // next, delete all of our completed projects
+    let completedProjects = context.getters.projectsCompleted
+    for (index in completedProjects) {
+      context.dispatch('deleteProject', completedProjects[index])
+    }
+  },
+
   syncProjects: (context) => {
     const collection = db.collection('users')
                     .doc(context.state.user.uid)
@@ -198,6 +222,14 @@ export default {
       .collection('tasks')
       .doc(taskDetails['id'])
       .update(newTask)
+  },
+  deleteTask: (context, taskId) => {
+    // setup firebase connections
+    db.collection('users')
+      .doc(context.state.user.uid)
+      .collection('tasks')
+      .doc(taskId)
+      .delete()
   },
   syncTasks: (context) => {
     const collection = db.collection('users')

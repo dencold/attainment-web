@@ -23,12 +23,18 @@
   export default {
     name: 'project-card',
     props: {
-      project: Object,
       id: String
     },
     computed: {
       numTasks () {
         return this.$store.getters.numTasksInProject(this.id)
+      },
+      project () {
+        if (this.id) {
+          return this.$store.state.projects[this.id]
+        }
+
+        return null
       }
     }
   }
