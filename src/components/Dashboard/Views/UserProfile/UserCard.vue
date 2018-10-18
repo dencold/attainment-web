@@ -1,7 +1,7 @@
 <template>
   <div class="card card-user">
     <div class="image">
-      <img src="/static/img/background.jpg" alt="background">
+      <img src="/img/background.jpg" alt="background">
     </div>
     <div class="content">
       <div class="author">
@@ -17,7 +17,7 @@
     <hr>
     <div class="text-center">
       <div class="row">
-        <div v-for="(info,index) in details" :class="getClasses(index)">
+        <div v-for="(info,index) in details" :class="getClasses(index)" :key="index">
           <h5>{{info.title}}
             <br>
             <small>{{info.subTitle}}</small>
