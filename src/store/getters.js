@@ -98,6 +98,9 @@ function sortDate (a, b, datefield, direction) {
   return 0
 }
 
+// this func is no longer in use, but could be down the road
+// remove the eslint-disable if we start using it again
+// eslint-disable-next-line
 function uniq (entries) {
   let seen = {}
   return entries.filter((entry) => {
@@ -208,48 +211,9 @@ export default {
     return filtered[0][0]
   },
 
-  weekView: state => {
-    // Task has status "weekly" (duh :)
-    // Task has a due date within this week
-    // Task snooze time has eclipsed (set to the current day or before)
-    let retTasks = []
-
-    // we want to include any tasks that are due within the week
-    let dueCompareDate = new Date(new Date().setHours(24 * 5, 0, 0))
-
-    let week = Object.entries(state.tasks)
-      .filter((entry) => isMatchingState(entry, 'week'))
-      // explicitly filter out any tasks that have Due or Snooze set,
-      // we'll add the correct ones back in below
-      .filter((entry) => excludeFutureDue(entry, dueCompareDate))
-      .filter((entry) => excludeFutureSnoozed(entry))
-
-    // we want to include any tasks that are due within the week
-    let due = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
-      .filter((entry) => includeDue(entry))
-      .filter((entry) => excludeFutureDue(entry, dueCompareDate))
-
-    // and any tasks that have had their snoozes tripped
-    let snooze = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
-      .filter((entry) => includeSnoozed(entry))
-      .filter((entry) => excludeFutureSnoozed(entry))
-
-    // combine all sets into one
-    let combined = week.concat(due, snooze)
-    combined = uniq(combined)
-
-    combined.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
-    combined.forEach(entry => retTasks.push(entry[0]))
-
-    return retTasks
-  },
-
   backlogView: state => {
     // INCLUDE:
     // - Task has status "backlog" (duh :)
-    // - Task has an unset status (backward compatibility for old tasks without state)
     // EXCLUDE:
     // - Task is completed
     // - Task has a due date within this week
@@ -259,12 +223,6 @@ export default {
 
     let backlog = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'backlog'))
-
-    let unset = Object.entries(state.tasks)
-      .filter((entry) => !isPropertySet(entry, 'state'))
-
-    // combine the two
-    backlog = backlog.concat(unset)
 
     // exclude tasks noted above using filters
     let dueCompareDate = new Date(new Date().setHours(24 * 5, 0, 0))

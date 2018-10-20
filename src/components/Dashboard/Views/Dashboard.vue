@@ -28,23 +28,13 @@
       </task-card>
     </div>
 
-    <h6>Week</h6>
-    <div class="flex-col" v-for="(id, index) in tasksWeek" :key="id">
-      <task-card
-        :id="id"
-        :isFocused="isFocused(2, index)"
-        showProject
-        @mouseover.native="updateFocus(2, index)">
-      </task-card>
-    </div>
-
     <h6>Backlog</h6>
     <div class="flex-col" v-for="(id, index) in tasksBacklog" :key="id">
       <task-card
         :id="id"
         :isFocused="isFocused(3, index)"
         showProject
-        @mouseover.native="updateFocus(3, index)">
+        @mouseover.native="updateFocus(2, index)">
       </task-card>
     </div>
   </div>
@@ -75,19 +65,15 @@
       tasksToday () {
         return this.$store.getters.todayTasks
       },
-      tasksWeek () {
-        return this.$store.getters.weekView
-      },
       tasksBacklog () {
         return this.$store.getters.backlogView
       },
       sectionLens () {
         let now = this.nowId ? 1 : 0
         let today = this.tasksToday.length
-        let week = this.tasksWeek.length
         let backlog = this.tasksBacklog.length
 
-        return [now, today, week, backlog]
+        return [now, today, backlog]
       },
       currFocusId () {
         if (this.currFocusSection === null || this.currFocusIndex === null) {
@@ -99,8 +85,6 @@
         } else if (this.currFocusSection === 1) {
           return this.tasksToday[this.currFocusIndex]
         } else if (this.currFocusSection === 2) {
-          return this.tasksWeek[this.currFocusIndex]
-        } else if (this.currFocusSection === 3) {
           return this.tasksBacklog[this.currFocusIndex]
         }
       }
