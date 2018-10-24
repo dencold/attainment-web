@@ -1,6 +1,6 @@
 <template>
+  <div></div>
 </template>
-
 <script>
   import moment from 'moment'
 

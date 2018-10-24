@@ -22,7 +22,7 @@ function initProject (projectName) {
 export default {
   signOut: (context) => {
     fireApp.auth().signOut()
-      .then(context.commit('UNSET_USER'), () => console.log('Failed to sign out'))
+      .then(context.commit('UNSET_USER'))
   },
   addProject: (context, projectName) => {
     const collection = db.collection('users').doc(context.state.user.uid).collection('projects')
