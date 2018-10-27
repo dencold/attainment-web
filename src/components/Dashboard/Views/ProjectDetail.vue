@@ -17,6 +17,11 @@
           @keyup.esc="$refs.nameInput.blur()"
           @keyup.stop
         />
+
+        <div class="icon pointer" @click="toggleStar">
+          <i v-show="project.starred" class="fa fa-star"></i>
+          <i v-show="!project.starred" class="fa fa-star-o"></i>
+        </div>
       </div>
 
       <div class="flex-row">
@@ -178,6 +183,11 @@
           'updateProject',
           {id: this.id, newProj: newProj}
         )
+      },
+      toggleStar () {
+        let newProj = this.project
+        newProj.starred = !this.project.starred
+        this.updateProject(newProj)
       },
       toggleCompleted () {
         this.$store.dispatch(

@@ -14,6 +14,7 @@ function initProject (projectName) {
     name: name,
     notes: '',
     state: 'active',
+    starred: false,
     createdAt: Date.now(),
     updatedAt: Date.now()
   }
