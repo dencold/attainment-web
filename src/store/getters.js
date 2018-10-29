@@ -211,29 +211,14 @@ export default {
     return filtered[0][0]
   },
 
-  backlogView: state => {
-    // INCLUDE:
-    // - Task has status "backlog" (duh :)
-    // EXCLUDE:
-    // - Task is completed
-    // - Task has a due date within this week
-    // - Task snooze time has eclipsed (set to the current day or before)
-    // - Project tasks that aren't starred
+  laterView: state => {
     let retTasks = []
 
-    let backlog = Object.entries(state.tasks)
-      .filter((entry) => isMatchingState(entry, 'backlog'))
+    let later = Object.entries(state.tasks)
+      .filter((entry) => isMatchingState(entry, 'later'))
 
-    // exclude tasks noted above using filters
-    let dueCompareDate = new Date(new Date().setHours(24 * 5, 0, 0))
-    let filtered = backlog
-      .filter((entry) => !isCompleted(entry))
-      .filter((entry) => isNextAction(entry))
-      .filter((entry) => excludeFutureDue(entry, dueCompareDate))
-      .filter((entry) => excludeFutureSnoozed(entry))
-
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
-    filtered.forEach(entry => retTasks.push(entry[0]))
+    later.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    later.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
   },

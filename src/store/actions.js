@@ -100,7 +100,7 @@ export default {
         Vue.prototype.$bus.$emit('empty-project', {projectId: newTask.projectId})
       }
     } else {
-      newTask.state = 'backlog'
+      newTask.state = 'later'
       newTask.completedAt = ''
     }
 

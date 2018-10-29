@@ -27,8 +27,8 @@
       handleKeyUp (e) {
         if (e.key === '!') {
           this.setNow()
-        } else if (e.key === 'b') {
-          this.backlog()
+        } else if (e.key === 'l') {
+          this.later()
         } else if (e.key === 'e') {
           this.toggleCompleted()
         } else if (e.key === 'i') {
@@ -84,9 +84,9 @@
       cycleSize () {
         this.$store.dispatch('cycleTaskSize', this.id)
       },
-      backlog () {
+      later () {
         let newTask = this.task
-        newTask.state = 'backlog'
+        newTask.state = 'later'
         this.updateTask(newTask)
       },
       setNow () {

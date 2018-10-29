@@ -16,7 +16,7 @@
     </ul>
 
     <div class="tab-content">
-      <div class="flex-col tab-pane" :class="{active: tabSelected === 'backlog'}" v-for="(id, index) in tasksBacklog" :key="id">
+      <div class="flex-col tab-pane" :class="{active: tabSelected === 'later'}" v-for="(id, index) in tasksLater" :key="id">
         <task-card
           :id="id"
           :isFocused="isFocused(0, index)"
@@ -69,7 +69,7 @@
         showSnoozed: false,
         currFocusSection: 0,
         currFocusIndex: 0,
-        tabData: [ 'backlog', 'snoozed', 'due', 'completed' ]
+        tabData: [ 'later', 'snoozed', 'due', 'completed' ]
       }
     },
 
@@ -85,8 +85,8 @@
     },
 
     computed: {
-      tasksBacklog () {
-        return this.$store.getters.backlogView
+      tasksLater () {
+        return this.$store.getters.laterView
       },
       tasksSnoozed () {
         return this.$store.getters.tasksSnoozed
@@ -99,7 +99,7 @@
       },
       sectionLens () {
         return [
-          this.tasksBacklog.length,
+          this.tasksLater.length,
           this.tasksSnoozed.length,
           this.tasksDue.length,
           this.tasksCompleted.length
@@ -111,7 +111,7 @@
         }
 
         if (this.currFocusSection === 0) {
-          return this.tasksBacklog[this.currFocusIndex]
+          return this.tasksLater[this.currFocusIndex]
         } else if (this.currFocusSection === 1) {
           return this.tasksSnoozed[this.currFocusIndex]
         } else if (this.currFocusSection === 2) {
@@ -125,8 +125,8 @@
           return this.$route.hash.substring(1)
         }
 
-        // default to backlog if user hasn't selected a tab
-        return 'backlog'
+        // default to later if user hasn't selected a tab
+        return 'later'
       }
     },
 

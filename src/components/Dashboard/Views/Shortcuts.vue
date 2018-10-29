@@ -50,7 +50,7 @@
   const taskShortcuts = [
     // GeneralTaskShortcuts
     { key: '!', description: 'Set now task' },
-    { key: 'b', description: 'Move to backlog' },
+    { key: 'l', description: 'Move to later' },
     { key: 'e', description: 'Complete task' },
     { key: 'i', description: 'Cycle task size' },
     { key: 'p', description: 'Jump to task\'s project' },

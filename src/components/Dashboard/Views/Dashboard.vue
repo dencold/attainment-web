@@ -28,15 +28,6 @@
       </task-card>
     </div>
 
-    <h6>Backlog</h6>
-    <div class="flex-col" v-for="(id, index) in tasksBacklog" :key="id">
-      <task-card
-        :id="id"
-        :isFocused="isFocused(3, index)"
-        showProject
-        @mouseover.native="updateFocus(2, index)">
-      </task-card>
-    </div>
   </div>
 </template>
 <script>
@@ -65,15 +56,11 @@
       tasksToday () {
         return this.$store.getters.todayTasks
       },
-      tasksBacklog () {
-        return this.$store.getters.backlogView
-      },
       sectionLens () {
         let now = this.nowId ? 1 : 0
         let today = this.tasksToday.length
-        let backlog = this.tasksBacklog.length
 
-        return [now, today, backlog]
+        return [now, today]
       },
       currFocusId () {
         if (this.currFocusSection === null || this.currFocusIndex === null) {
@@ -84,8 +71,6 @@
           return this.nowId
         } else if (this.currFocusSection === 1) {
           return this.tasksToday[this.currFocusIndex]
-        } else if (this.currFocusSection === 2) {
-          return this.tasksBacklog[this.currFocusIndex]
         }
       }
     },
