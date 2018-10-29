@@ -71,6 +71,14 @@ function isMatchingProject (entry, projectId) {
   return false
 }
 
+// Possible states are:
+// - inbox
+// - today
+// - now
+// - later
+// - weekend
+// - dateSet
+// - completed
 function isMatchingState (entry, state) {
   return (isPropertySet(entry, 'state') && entry[1].state === state)
 }
