@@ -195,6 +195,7 @@
         if (snooze !== this.task.snoozedUntil) {
           let newTask = this.task
           newTask.snoozedUntil = snooze
+          newTask.state = 'dateSet'
           this.updateTask(newTask)
         }
       },
@@ -202,6 +203,7 @@
         if (dueAt !== this.task.dueAt) {
           let newTask = this.task
           newTask.dueAt = dueAt
+          newTask.state = 'dateSet'
           this.updateTask(newTask)
         }
       },

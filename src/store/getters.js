@@ -263,7 +263,7 @@ export default {
     let retTasks = []
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingState(entry, 'dateSet'))
       .filter((entry) => includeDue(entry))
 
     filtered.sort((a, b) => sortDate(a, b, 'dueAt', 'desc'))
@@ -279,7 +279,7 @@ export default {
     let dueCompareDate = new Date(new Date().setHours(24 * days, 0, 0))
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingState(entry, 'dateSet'))
       .filter((entry) => includeDue(entry))
       .filter((entry) => excludeFutureDue(entry, dueCompareDate))
 
@@ -293,7 +293,7 @@ export default {
     let retTasks = []
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingState(entry, 'dateSet'))
       .filter((entry) => includeSnoozed(entry))
 
     filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
@@ -306,7 +306,7 @@ export default {
     let retTasks = []
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingState(entry, 'dateSet'))
       .filter((entry) => includeSnoozed(entry))
       .filter((entry) => excludeFutureSnoozed(entry))
 
@@ -345,9 +345,9 @@ export default {
     var retTasks = []
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
-      .filter((entry) => isMatchingProject(entry, projId))
+      .filter((entry) => isMatchingState(entry, 'dateSet'))
       .filter((entry) => includeSnoozed(entry))
+      .filter((entry) => isMatchingProject(entry, projId))
 
     filtered.sort((a, b) => sortDate(a, b, 'snoozedUntil', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))

@@ -150,6 +150,16 @@ export default {
     context.dispatch('updateTask', {id: taskId, newTask: newNow})
   },
 
+  runMigration: (context) => {
+    let later = Object.entries(context.state.tasks)
+      .filter((entry) => entry[1]['snoozedUntil'] !== '')
+
+    later.forEach(entry => entry[1]['state'] = 'dateSet')
+
+    // later.forEach(entry => console.log(entry[1]))
+    later.forEach(entry => context.dispatch('updateTask', {id: entry[0], newTask: entry[1]}))
+  },
+
   deleteCompletedTasksAndProjects: (context) => {
     // first, delete all of our completed tasks
     let completedTasks = context.getters.tasksCompleted
