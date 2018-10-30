@@ -47,8 +47,14 @@ export default {
   },
 
   created () {
-    window.addEventListener('keyup', this.handleGlobalShortcuts)
-    window.addEventListener('keydown', this.handleKeydown)
+    // this used to be an event listener on keyup, but for some reason, Chrome would
+    // not register certain keys, like a or t. very very strange. I tested all of the
+    // other places we set an event listener for keyup to see if something else was
+    // eating the event, but no dice. I also tested on Firefox and was able to see
+    // all keyup events, so this seems to be an issue just with Chrome. Switching to
+    // listen for the keypress event solved all problems, so I'm not spending more
+    // time diagnosing.
+    window.addEventListener('keypress', this.handleGlobalShortcuts)
     this.$bus.$on('empty-project', (payload) => {
       this.$router.push({name: 'project', params: { id: payload.projectId }})
     })
@@ -83,6 +89,7 @@ export default {
       } else if (e.key === '3') {
         this.$router.push({name: 'inbox'})
       } else if (e.key === '/') {
+        e.preventDefault()
         this.$bus.$emit('open-global-search')
       } else if (e.key === '<') {
         this.$router.back()

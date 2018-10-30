@@ -5,6 +5,7 @@
     :value="value"
     @change="update($event.target.value)"
     @keyup.esc="$refs.textarea.blur()"
+    @keypress.stop
     @keyup.stop
   />
 </template>

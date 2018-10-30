@@ -10,6 +10,7 @@
       @blur="updateFocus(false)"
       @keyup.enter="submit"
       @keyup.esc="updateFocus(false)"
+      @keypress.stop
       @keyup.stop
     />
     <button class="btn btn-fill btn-info inpBtn" @click="submit">+</button>

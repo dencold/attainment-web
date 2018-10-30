@@ -39,8 +39,6 @@
 
         return null
       }
-    },
-    methods: {
     }
   }
 

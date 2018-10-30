@@ -22,6 +22,7 @@
           @input="updateName"
           type="text"
           @keyup.esc="$refs.nameInput.blur()"
+          @keypress.stop
           @keyup.stop
         />
 

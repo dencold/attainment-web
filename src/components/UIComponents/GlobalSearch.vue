@@ -8,6 +8,7 @@
       placeholder="Search"
       @keyup.enter="selectTopHit"
       @keyup.esc="handleEsc"
+      @keypress.stop
       @keyup.stop
     >
     <!--
@@ -23,7 +24,7 @@
     </datalist>
     -->
     <ul>
-      <li v-for="item in filtered" @click="select(item)" @mousedown="disable" :key="item">
+      <li v-for="(item, index) in filtered" @click="select(item)" @mousedown="disable" :key="index">
         {{item.name}}
       </li>
     </ul>
