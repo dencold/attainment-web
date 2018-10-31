@@ -10,7 +10,7 @@ import Tasks from './components/Dashboard/Views/Tasks.vue'
 import Today from './components/Dashboard/Views/Today.vue'
 import Inbox from './components/Dashboard/Views/Inbox.vue'
 import Weekend from './components/Dashboard/Views/Weekend.vue'
-import Dashboard from './components/Dashboard/Views/Dashboard.vue'
+import Planning from './components/Dashboard/Views/Planning.vue'
 import ProjectDetail from './components/Dashboard/Views/ProjectDetail.vue'
 import TaskDetail from './components/Dashboard/Views/TaskDetail.vue'
 import UserProfile from './components/Dashboard/Views/UserProfile.vue'
@@ -37,7 +37,7 @@ const routes = [
       {
         path: '/plan',
         name: 'plan',
-        component: Dashboard
+        component: Planning
       },
       {
         path: '/settings',

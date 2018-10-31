@@ -257,14 +257,26 @@ export default {
     let retTasks = []
 
     let filtered = Object.entries(state.tasks)
-      .filter((entry) => !isCompleted(entry))
+      .filter((entry) => isMatchingState(entry, 'later'))
       .filter((entry) => isStarred(entry))
-      .filter((entry) => !includeSnoozed(entry))
 
     filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
+  },
+
+  projectsStarred: state => {
+    let retProjs = []
+
+    let filtered = Object.entries(state.projects)
+      .filter((entry) => isMatchingState(entry, 'active'))
+      .filter((entry) => isStarred(entry))
+
+    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.forEach(entry => retProjs.push(entry[0]))
+
+    return retProjs
   },
 
   tasksDue: state => {
