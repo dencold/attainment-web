@@ -59,7 +59,8 @@
         this.updateTask(newTask)
       },
       defaultSnooze () {
-        let dt = moment().add(7, 'days').utc()
+        let dt = moment().add(1, 'days')
+        dt.hour(7).minute(0).second(0).utc()
         this.updateSnooze(dt.format())
       },
       updateSnooze (snooze) {
