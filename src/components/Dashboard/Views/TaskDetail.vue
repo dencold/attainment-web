@@ -66,12 +66,15 @@
           :value="task.snoozedUntil"
           @input="updateSnooze"
           placeholder="Set snooze"
-          class="name"
+          class="dateform"
           type="date"
           input-format="YYYY-MM-DD"
           input-class="datetime-input"
           auto-close>
         </datetime>
+        <div class="icon pointer" @click="clearDate('snooze')">
+          <i class="ti-close"></i>
+        </div>
       </div>
       <div class="flex-row highlight">
         <div class="icon pointer" @click="showDatePicker('due')">
@@ -82,12 +85,15 @@
           :value="task.dueAt"
           @input="updateDue"
           placeholder="Set due date"
-          class="name"
+          class="dateform"
           type="date"
           input-format="YYYY-MM-DD"
           input-class="datetime-input"
           auto-close>
         </datetime>
+        <div class="icon pointer" @click="clearDate('due')">
+          <i class="ti-close"></i>
+        </div>
       </div>
 
       <div class="flex-row">
@@ -215,6 +221,14 @@
           this.updateTask(newTask)
         }
       },
+      clearDate (dateType) {
+        if (dateType === 'snooze') {
+          this.task.snoozedUntil = ''
+        } else if (dateType === 'due') {
+          this.task.dueAt = ''
+        }
+        this.updateTask(this.task)
+      },
       updateTask (newTask) {
         this.$store.dispatch(
           'updateTask',
@@ -277,16 +291,16 @@
   .project {
     width: 150px;
   }
+  .dateform {
+    width: 215px;
+    padding: 0 10px;
+  }
   .name {
     flex-grow: 1;
     padding: 0 10px;
   }
   .pom {
     width: 25px;
-  }
-  .due {
-    width: 25px;
-    text-align: right;
   }
   .flex-col{
     display: flex;
