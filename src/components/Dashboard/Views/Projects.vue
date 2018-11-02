@@ -14,8 +14,8 @@
       :focused.sync="isInputFocused">
     </text-input>
 
-    <div class="flex-col" v-for="(id, index) in projectsActive" :key="id">
-      <project-card
+    <div class="projects">
+      <project-card v-for="(id, index) in projectsActive" :key="id"
         :id="id"
         @click.native="toProject(id)"
         :isFocused="isFocused(index)"
@@ -96,6 +96,10 @@
   }
 
 </script>
-<style>
-
+<style scoped>
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    grid-gap: 10px;
+  }
 </style>
