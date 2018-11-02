@@ -23,9 +23,9 @@
         </div>
       </div>
 
-      <div class="snooze">
+      <div>
         <h6>Snooze Triggered</h6>
-        <div class="flex-col" v-for="(id, index) in snoozeTriggered" :key="id">
+        <div v-for="(id, index) in snoozeTriggered" :key="id">
           <task-card
             :id="id"
             :isFocused="isFocused(0, index)"
@@ -36,9 +36,9 @@
 
       </div>
 
-      <div class="due">
+      <div>
         <h6>Due Soon</h6>
-        <div class="flex-col" v-for="(id, index) in dueSoon" :key="id">
+        <div v-for="(id, index) in dueSoon" :key="id">
           <task-card
             :id="id"
             :isFocused="isFocused(1, index)"
@@ -48,9 +48,9 @@
         </div>
       </div>
 
-      <div class="starred">
+      <div class="later">
         <h6>Starred Later</h6>
-        <div class="flex-col" v-for="(id, index) in starred" :key="id">
+        <div v-for="(id, index) in starred" :key="id">
           <task-card
             :id="id"
             :isFocused="isFocused(2, index)"
@@ -60,9 +60,9 @@
         </div>
       </div>
 
-      <div class="starred">
-        <h6>Starred Projects</h6>
-        <div class="flex-col" v-for="(id, index) in projects" :key="id">
+      <h6>Starred Projects</h6>
+      <div class="projects">
+        <div v-for="(id, index) in projects" :key="id">
           <project-card
             :id="id"
             :isFocused="isFocused(3, index)"
@@ -162,12 +162,15 @@
     grid-column-start: 1;
     grid-column-end: 3;
   }
-  .starred {
+  .later {
     grid-column-start: 1;
     grid-column-end: 3;
   }
   .projects {
     grid-column-start: 1;
     grid-column-end: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
   }
 </style>
