@@ -83,7 +83,7 @@ export default {
       } else if (e.key === 'A') {
         this.$modal.show('add-task')
       } else if (e.key === '1') {
-        this.$router.push({name: 'now'})
+        this.$router.push({name: 'today'})
       } else if (e.key === '2') {
         this.$router.push({name: 'plan'})
       } else if (e.key === '3') {
