@@ -2,10 +2,10 @@
   <div>
     <div @click="toTaskDetail"
       v-if="task"
-      class="flex-row row-card pointer"
+      class="grid row-card pointer"
       :class="{ completed: task.state === 'completed', focused: isFocused }">
 
-      <div class="star">
+      <div>
         <span v-show="!task.starred">
           <i class="fa fa-star-o"></i>
         </span>
@@ -14,12 +14,14 @@
         </span>
       </div>
 
-      <div class="task">{{task.name}}</div>
-      <div v-if="project" class="project">
-        <i class="ti-folder"></i>
-        {{project.name}}
+      <div>{{task.name}}</div>
+      <div>
+        <span v-if="project">
+          <i class="ti-folder"></i>
+          {{project.name}}
+        </span>
       </div>
-      <div class="poms">
+      <div>
         <span v-if="task.size">
           {{task.size}}
         </span>
@@ -36,7 +38,7 @@
           {{ task.dueAt | moment("diff", Date.now(), "days") }}
         </span>
       </div>
-      <div class="poms">
+      <div>
         <span v-if="task.notes">
           <i class="ti-write"></i>
         </span>
@@ -93,38 +95,26 @@
     border-radius: 6px;
     border: 3px solid #FFF;
     margin-bottom: 3px;
-    padding: 0 15px 0 15px;
-  }
-  .focused {
-    border: 3px solid #c2d4de;
+    padding: 0 5px;
   }
   .row-card:hover {
+    border: 3px solid #c2d4de;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 20px auto 150px 20px 25px 25px 25px;
+    grid-column-gap: 5px;
+    align-items: center;
+  }
+  .focused {
     border: 3px solid #c2d4de;
   }
   .completed {
     background-color: #DDD;
     text-decoration: line-through;
   }
-  .flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .star {
-    width: 25px;
-  }
-  .project {
-    width: 150px;
-  }
-  .task {
-    flex-grow: 1;
-  }
-  .poms {
-    width: 50px;
-  }
   .due {
-    width: 50px;
-    text-align: right;
+    text-align: center;
   }
   .pointer {
     cursor: pointer;
