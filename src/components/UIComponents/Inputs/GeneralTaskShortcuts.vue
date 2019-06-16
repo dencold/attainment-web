@@ -59,7 +59,10 @@
         this.updateTask(newTask)
       },
       defaultSnooze () {
-        let dt = moment().add(1, 'days')
+        // we want a random date between 1-7 days so that we don't get a thundering
+        // herd when we snooze a bunch of tasks via the keyboard shortcut
+        let randomDay = Math.floor((Math.random() * 7) + 1)
+        let dt = moment().add(randomDay, 'days')
         dt.hour(7).minute(0).second(0).utc()
         this.updateSnooze(dt.format())
       },
