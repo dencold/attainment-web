@@ -151,7 +151,8 @@
 
     methods: {
       addTask (taskName) {
-        this.$store.dispatch('addTask', {name: taskName, projectId: this.id})
+        this.$store.dispatch('addTask',
+          {name: taskName, projectId: this.id, state: 'later'})
       },
       updateFocus (section, index) {
         this.currFocusSection = section
