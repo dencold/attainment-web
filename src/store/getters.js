@@ -74,7 +74,6 @@ function isMatchingProject (entry, projectId) {
 // Possible states are:
 // - inbox
 // - today
-// - now
 // - later
 // - weekend
 // - dateSet
@@ -206,17 +205,6 @@ export default {
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
-  },
-
-  nowTask: state => {
-    let filtered = Object.entries(state.tasks)
-      .filter((entry) => isMatchingState(entry, 'now'))
-
-    if (filtered.length === 0) {
-      return null
-    }
-
-    return filtered[0][0]
   },
 
   laterView: state => {

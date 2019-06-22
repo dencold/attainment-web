@@ -25,9 +25,7 @@
 
     methods: {
       handleKeyUp (e) {
-        if (e.key === '!') {
-          this.setNow()
-        } else if (e.key === 'l') {
+        if (e.key === 'l') {
           this.later()
         } else if (e.key === 'e') {
           this.toggleCompleted()
@@ -93,9 +91,6 @@
         let newTask = this.task
         newTask.state = 'later'
         this.updateTask(newTask)
-      },
-      setNow () {
-        this.$store.dispatch('setNowTask', this.id)
       },
       today () {
         let newTask = this.task

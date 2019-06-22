@@ -38,7 +38,7 @@
     { key: 'P', description: 'Jump to projects' },
     { key: 'T', description: 'Jump to tasks' },
     { key: 'W', description: 'Jump to weekend' },
-    { key: '1', description: 'Jump to now' },
+    { key: '1', description: 'Jump to today' },
     { key: '2', description: 'Jump to plan' },
     { key: '3', description: 'Jump to inbox' },
     { key: '/', description: 'Open global search' },
@@ -49,7 +49,6 @@
 
   const taskShortcuts = [
     // GeneralTaskShortcuts
-    { key: '!', description: 'Set now task' },
     { key: 'l', description: 'Move to later' },
     { key: 'e', description: 'Complete task' },
     { key: 'i', description: 'Cycle task size' },

@@ -137,20 +137,6 @@ export default {
     }
   },
 
-  setNowTask: (context, taskId) => {
-    // see if we already have a now task set
-    let nowTaskId = context.getters.nowTask
-    if (nowTaskId && nowTaskId !== taskId) {
-      let nowTask = context.state.tasks[nowTaskId]
-      nowTask.state = 'today'
-      context.dispatch('updateTask', {id: nowTaskId, newTask: nowTask})
-    }
-
-    let newNow = context.state.tasks[taskId]
-    newNow.state = 'now'
-    context.dispatch('updateTask', {id: taskId, newTask: newNow})
-  },
-
   runMigration: (context) => {
     let later = Object.entries(context.state.tasks)
       .filter((entry) => entry[1]['snoozedUntil'] !== '')

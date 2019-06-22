@@ -2,29 +2,18 @@
   <div>
     <vim-movement
       :sectionLens="sectionLens"
-      :currSection="currFocusSection"
+      :currSection="0"
       :currIndex="currFocusIndex"
       @focusChange="handleMovement">
     </vim-movement>
     <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
-    <h6>Now</h6>
-    <div class="flex-col">
-      <task-card
-        :id="nowId"
-        :isFocused="isFocused(0, 0)"
-        showProject
-        @mouseover.native="updateFocus(0, 0)">
-      </task-card>
-    </div>
-
-    <h6>Today</h6>
     <div class="flex-col" v-for="(id, index) in tasksToday" :key="id">
       <task-card
         :id="id"
-        :isFocused="isFocused(1, index)"
+        :isFocused="isFocused(index)"
         showProject
-        @mouseover.native="updateFocus(1, index)">
+        @mouseover.native="updateFocus(index)">
       </task-card>
     </div>
   </div>
@@ -43,47 +32,39 @@
 
     data () {
       return {
-        currFocusSection: this.nowId ? 0 : 1,
         currFocusIndex: 0
       }
     },
 
     computed: {
-      nowId () {
-        return this.$store.getters.nowTask
-      },
       tasksToday () {
         return this.$store.getters.todayTasks
       },
       sectionLens () {
-        let now = this.nowId ? 1 : 0
-        let today = this.tasksToday.length
-
-        return [now, today]
+        return [this.tasksToday.length]
       },
       currFocusId () {
-        if (this.currFocusSection === null || this.currFocusIndex === null) {
+        if (this.currFocusIndex === null) {
           return null
         }
 
-        if (this.currFocusSection === 0) {
-          return this.nowId
-        } else if (this.currFocusSection === 1) {
-          return this.tasksToday[this.currFocusIndex]
-        }
+        return this.tasksToday[this.currFocusIndex]
       }
     },
 
     methods: {
-      updateFocus (section, index) {
-        this.currFocusSection = section
-        this.currFocusIndex = index
-      },
-      isFocused (section, index) {
-        return (this.currFocusSection === section && this.currFocusIndex === index)
-      },
       handleMovement (e) {
-        this.updateFocus(e.section, e.index)
+        this.updateFocus(e.index)
+      },
+      updateFocus (index) {
+        this.currFocusIndex = index
+        this.isInputFocused = false
+      },
+      isFocused (index) {
+        return this.currFocusIndex === index
+      },
+      addTask (taskName) {
+        this.$store.dispatch('addTask', {name: taskName, state: 'weekend'})
       }
     }
   }
