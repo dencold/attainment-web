@@ -105,6 +105,22 @@ function sortDate (a, b, datefield, direction) {
   return 0
 }
 
+// our default sort that we use in most places. It will put starred tasks at
+// as the first elements and the sort by the time updated in descending order
+// (aka, most recently updated wins and will be at the top)
+function defaultSort (a, b) {
+  if (isStarred(a) && !isStarred(b)) {
+    return -1
+  }
+
+  if (!isStarred(a) && isStarred(b)) {
+    return 1
+  }
+
+  return sortDate(a, b, 'updatedAt', 'desc')
+}
+
+
 // this func is no longer in use, but could be down the road
 // remove the eslint-disable if we start using it again
 // eslint-disable-next-line
@@ -136,7 +152,7 @@ export default {
       .filter((entry) => isMatchingProject(entry, projId))
       .filter((entry) => !includeSnoozed(entry))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -165,7 +181,7 @@ export default {
       .filter((entry) => isNextAction(entry))
       .filter((entry) => !includeSnoozed(entry))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -177,7 +193,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'inbox'))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -189,7 +205,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'weekend'))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -201,7 +217,7 @@ export default {
     let filtered = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'today'))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -213,7 +229,7 @@ export default {
     let later = Object.entries(state.tasks)
       .filter((entry) => isMatchingState(entry, 'later'))
 
-    later.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    later.sort((a, b) => defaultSort(a, b))
     later.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -248,7 +264,7 @@ export default {
       .filter((entry) => isMatchingState(entry, 'later'))
       .filter((entry) => isStarred(entry))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retTasks.push(entry[0]))
 
     return retTasks
@@ -261,7 +277,7 @@ export default {
       .filter((entry) => isMatchingState(entry, 'active'))
       .filter((entry) => isStarred(entry))
 
-    filtered.sort((a, b) => sortDate(a, b, 'createdAt', 'desc'))
+    filtered.sort((a, b) => defaultSort(a, b))
     filtered.forEach(entry => retProjs.push(entry[0]))
 
     return retProjs
