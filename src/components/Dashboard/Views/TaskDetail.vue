@@ -227,6 +227,7 @@
         } else if (dateType === 'due') {
           this.task.dueAt = ''
         }
+        this.task.state = 'later'
         this.updateTask(this.task)
       },
       updateTask (newTask) {
