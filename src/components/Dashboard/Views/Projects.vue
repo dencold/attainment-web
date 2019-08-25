@@ -17,7 +17,6 @@
     <div class="projects">
       <project-card v-for="(id, index) in projectsActive" :key="id"
         :id="id"
-        @click.native="toProject(id)"
         :isFocused="isFocused(index)"
         @mouseover.native="updateFocus(index)">
       </project-card>
@@ -75,9 +74,6 @@
     methods: {
       addProject (e) {
         this.$store.dispatch('addProject', e)
-      },
-      toProject: function (projectId) {
-        this.$router.push({name: 'project', params: { id: projectId }})
       },
       toggleShowCompleted () {
         this.showCompleted = !this.showCompleted

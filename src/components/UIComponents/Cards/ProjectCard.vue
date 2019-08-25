@@ -1,5 +1,6 @@
 <template>
   <div
+    @click="toProjectDetail"
     class="project-card pointer"
     :class="{ focused: isFocused }">
     <div class="flex-row">
@@ -38,6 +39,13 @@
         }
 
         return null
+      }
+    },
+    methods: {
+      toProjectDetail () {
+        if (this.id) {
+          this.$router.push({name: 'project', params: { id: this.id }})
+        }
       }
     }
   }
