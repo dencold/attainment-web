@@ -1,6 +1,6 @@
 {
-  "name": "attainment-vue",
-  "version": "0.1.0",
+  "name": "attainment-web",
+  "version": "1.0.0",
   "private": true,
   "author": "dencold <dennis@dencold.com>",
   "scripts": {
@@ -31,8 +31,10 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "fibers": "^4.0.2",
     "node-sass": "^4.13.0",
-    "sass-loader": "^7.3.1",
+    "sass": "^1.24.0",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
