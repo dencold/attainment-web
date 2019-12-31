@@ -24,3 +24,8 @@ npm run test
 ```
 npm run lint
 ```
+
+### Deploy to prod
+```
+firebase deploy
+```
