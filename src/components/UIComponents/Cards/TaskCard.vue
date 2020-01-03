@@ -14,8 +14,8 @@
         </span>
       </div>
 
-      <div>{{task.name}}</div>
-      <div>
+      <div class="name">{{task.name}}</div>
+      <div class="project">
         <span v-if="project">
           <i class="ti-folder"></i>
           {{project.name}}
@@ -26,26 +26,26 @@
           {{task.size}}
         </span>
       </div>
-      <div class="due">
+      <div class="snoozed centered">
         <span v-if="task.snoozedUntil">
           <i class="ti-alarm-clock"></i>
           {{ task.snoozedUntil | moment("diff", Date.now(), "days") }}
         </span>
       </div>
-      <div class="due">
+      <div class="due centered">
         <span v-if="task.dueAt">
           <i class="ti-calendar"></i>
           {{ task.dueAt | moment("diff", Date.now(), "days") }}
         </span>
       </div>
-      <div>
+      <div class="notes">
         <span v-if="task.notes">
           <i class="ti-write"></i>
         </span>
       </div>
 
     </div>
-    <div v-if="!task" class="flex-row row-card">
+    <div v-if="!task" class="row-card">
       TASK NOT FOUND
     </div>
   </div>
@@ -102,7 +102,7 @@
   }
   .grid {
     display: grid;
-    grid-template-columns: 20px auto 150px 20px 25px 25px 25px;
+    grid-template-columns: 20px minmax(200px, 1fr) minmax(100px, 150px) 20px 25px 25px 25px;
     grid-column-gap: 5px;
     align-items: center;
   }
@@ -113,7 +113,12 @@
     background-color: #DDD;
     text-decoration: line-through;
   }
-  .due {
+  .project {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .centered {
     text-align: center;
   }
   .pointer {
