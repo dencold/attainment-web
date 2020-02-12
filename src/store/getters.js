@@ -43,6 +43,15 @@ function excludeFutureSnoozed (entry) {
   return entryDate < new Date()
 }
 
+function isBetweenDate (entry, dateField, begDate, endDate) {
+  if (!isPropertySet(entry, dateField)) {
+    return false
+  }
+
+  const entryDate = new Date(entry[1][dateField])
+  return entryDate >= begDate && entryDate < endDate
+}
+
 function includeDue (entry) {
   return isPropertySet(entry, 'dueAt')
 }
@@ -416,6 +425,48 @@ export default {
     const projTasks = getters.projectTasksActive(projId)
 
     return Object.keys(projTasks).length
+  },
+
+  numTasksToday: (state, getters) => {
+    return Object.keys(getters.todayTasks).length
+  },
+
+  totalTimeTasksToday: (state, getters) => {
+    var totalTimeInMins = 0
+
+    getters.todayTasks.forEach(key => {
+      let task = state.tasks[key]
+      switch (task.size) {
+        case 'T':
+          totalTimeInMins += 5
+          break;
+        case 'S':
+          totalTimeInMins += 30
+          break;
+        case 'M':
+          totalTimeInMins += 60
+          break;
+        case 'L':
+          totalTimeInMins += 120
+          break;
+        default:
+          break;
+      }
+    })
+
+    return totalTimeInMins
+  },
+
+  numTasksCompletedToday: (state) => {
+    const today = new Date()
+    const begDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 1)
+    const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)
+
+    let filtered = Object.entries(state.tasks)
+      .filter((entry) => isCompleted(entry))
+      .filter((entry) => isBetweenDate(entry, 'completedAt', begDay, endDay))
+
+    return filtered.length
   }
 
 }

@@ -11,15 +11,15 @@
 
       <div class="cards">
         <div class="card">
-          Hello
+          {{ numTasksToday }}
         </div>
 
         <div class="card">
-          Goodbye
+          {{ totalTimeTasksToday }}
         </div>
 
         <div class="card">
-          Young Fellow
+          {{ numTasksCompletedToday }}
         </div>
       </div>
 
@@ -107,6 +107,15 @@
       },
       projects () {
         return this.$store.getters.projectsStarred
+      },
+      numTasksToday () {
+        return this.$store.getters.numTasksToday
+      },
+      numTasksCompletedToday () {
+        return this.$store.getters.numTasksCompletedToday
+      },
+      totalTimeTasksToday () {
+        return this.$store.getters.totalTimeTasksToday
       },
       sectionLens () {
         let snoozed = this.snoozeTriggered.length
