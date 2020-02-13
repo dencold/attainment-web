@@ -7,21 +7,9 @@
       @focusChange="handleMovement">
     </vim-movement>
     <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
+
     <div class="main-grid">
-
-      <div class="cards">
-        <div class="card">
-          {{ numTasksToday }}
-        </div>
-
-        <div class="card">
-          {{ totalTimeTasksToday }}
-        </div>
-
-        <div class="card">
-          {{ numTasksCompletedToday }}
-        </div>
-      </div>
+      <today-stats class="stats"></today-stats>
 
       <div>
         <h6>Snooze Triggered</h6>
@@ -77,6 +65,7 @@
 <script>
   import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
   import ProjectCard from '@/components/UIComponents/Cards/ProjectCard.vue'
+  import TodayStats from '@/components/UIComponents/TodayStats.vue'
   import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
   import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
@@ -84,6 +73,7 @@
     components: {
       'task-card': TaskCard,
       'project-card': ProjectCard,
+      'today-stats': TodayStats,
       'vim-movement': VimMovement,
       'task-card-shortcuts': TaskCardShortcuts
     },
@@ -107,15 +97,6 @@
       },
       projects () {
         return this.$store.getters.projectsStarred
-      },
-      numTasksToday () {
-        return this.$store.getters.numTasksToday
-      },
-      numTasksCompletedToday () {
-        return this.$store.getters.numTasksCompletedToday
-      },
-      totalTimeTasksToday () {
-        return this.$store.getters.totalTimeTasksToday
       },
       sectionLens () {
         let snoozed = this.snoozeTriggered.length
@@ -163,10 +144,7 @@
     grid-gap: 20px;
     grid-template-columns: 500px 500px;
   }
-  .cards {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(3, 200px);
+  .stats {
     justify-content: center;
     grid-column-start: 1;
     grid-column-end: 3;
