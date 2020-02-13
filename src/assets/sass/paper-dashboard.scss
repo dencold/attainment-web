@@ -28,7 +28,8 @@
 @import "paper/footers";
 // Fancy Stuff
 @import "paper/dropdown";
-@import "paper/cards";
+// [dencold] removing due to conflicting cascade. this isn't needed
+// @import "paper/cards";
 @import "paper/chartist";
 @import "paper/responsive";
 
