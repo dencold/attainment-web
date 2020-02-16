@@ -273,6 +273,10 @@
   }
   .card {
     padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+    background-color: #ffffff;
+    color: #252422;
   }
   .highlight {
     color: #3091B2;

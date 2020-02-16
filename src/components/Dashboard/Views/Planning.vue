@@ -139,15 +139,11 @@
 
 </script>
 <style>
-  .main-grid {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: 500px 500px;
-  }
   .stats {
     justify-content: center;
     grid-column-start: 1;
     grid-column-end: 3;
+    margin-bottom: 20px;
   }
   .later {
     grid-column-start: 1;

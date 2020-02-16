@@ -8,6 +8,7 @@
     </vim-movement>
     <task-card-shortcuts :id="currFocusId"></task-card-shortcuts>
 
+    <today-stats class="stats"></today-stats>
     <div class="flex-col" v-for="(id, index) in tasksToday" :key="id">
       <task-card
         :id="id"
@@ -20,12 +21,14 @@
 </template>
 <script>
   import TaskCard from '@/components/UIComponents/Cards/TaskCard.vue'
+  import TodayStats from '@/components/UIComponents/TodayStats.vue'
   import VimMovement from '@/components/UIComponents/Inputs/VimMovement.vue'
   import TaskCardShortcuts from '@/components/UIComponents/Inputs/TaskCardShortcuts.vue'
 
   export default {
     components: {
       'task-card': TaskCard,
+      'today-stats': TodayStats,
       'vim-movement': VimMovement,
       'task-card-shortcuts': TaskCardShortcuts
     },
@@ -71,5 +74,14 @@
 
 </script>
 <style>
-
+  .main-grid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 500px 500px;
+  }
+  .stats {
+    justify-content: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
 </style>
