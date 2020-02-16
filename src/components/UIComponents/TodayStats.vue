@@ -37,10 +37,10 @@
 
     computed: {
       numTasksToday () {
-        return this.$store.getters.numTasksToday
+        return this.$store.getters.numTasksToday.toString()
       },
       numTasksCompletedToday () {
-        return this.$store.getters.numTasksCompletedToday
+        return this.$store.getters.numTasksCompletedToday.toString()
       },
       totalTimeTasksToday () {
         const totalTime = this.$store.getters.totalTimeTasksToday
