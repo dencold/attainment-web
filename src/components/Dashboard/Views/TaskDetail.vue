@@ -156,8 +156,6 @@
           this.$refs.notes.focus()
         } else if (e.key === 'r') {
           this.$refs.nameInput.focus()
-        } else if (e.key === 'v') {
-          this.$modal.show('move-task')
         } else if (e.key === 'Z') {
           this.showDatePicker('snooze')
         }
