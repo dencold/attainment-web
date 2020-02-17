@@ -3,10 +3,6 @@
     <general-task-shortcuts :id="id"></general-task-shortcuts>
 
     <div v-if="task" class="card">
-      <project-selector
-        :task-id="id">
-      </project-selector>
-
       <div class="flex-row title">
         <div class="icon pointer" @click="toggleCompleted">
           <i v-show="task.state === 'completed'" class="fa fa-check-square-o"></i>
@@ -111,14 +107,12 @@
 
 <script>
   import TextArea from '@/components/UIComponents/Inputs/TextArea.vue'
-  import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
   import GeneralTaskShortcuts from '@/components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
   import { Datetime } from 'vue-datetime'
 
   export default {
     components: {
       'text-area': TextArea,
-      'project-selector': ProjectSelector,
       'datetime': Datetime,
       'general-task-shortcuts': GeneralTaskShortcuts
     },

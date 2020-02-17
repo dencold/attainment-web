@@ -1,10 +1,19 @@
 <template>
-  <div></div>
+  <div>
+    <project-selector
+      :task-id="id">
+    </project-selector>
+  </div>
 </template>
 <script>
   import moment from 'moment'
+  import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
 
   export default {
+    components: {
+      'project-selector': ProjectSelector
+    },
+
     props: {
       id: String
     },
@@ -37,6 +46,8 @@
           this.toggleStar()
         } else if (e.key === 't') {
           this.today()
+        } else if (e.key === 'v') {
+          this.$modal.show('move-task')
         } else if (e.key === 'w') {
           this.weekend()
         } else if (e.key === 'z') {
