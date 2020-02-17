@@ -4,9 +4,7 @@
 
     <div v-if="task" class="card">
       <project-selector
-        :project-id="task.projectId"
-        @change-project="changeProject"
-        @create-project="createProject">
+        :task-id="id">
       </project-selector>
 
       <div class="flex-row title">
@@ -234,17 +232,6 @@
         this.$store.dispatch(
           'updateTask',
           {id: this.id, newTask: newTask}
-        )
-      },
-      changeProject (project) {
-        let newTask = this.task
-        newTask.projectId = project.id
-        this.updateTask(newTask)
-      },
-      createProject (projectName) {
-        this.$store.dispatch(
-          'addProjectAndSetTask',
-          {projectName: projectName, taskId: this.id, task: this.task}
         )
       },
       clickAction () {

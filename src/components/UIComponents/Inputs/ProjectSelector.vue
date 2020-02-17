@@ -6,7 +6,7 @@
       </strong>
       <global-search
         ref="globalsearch"
-        @search-result="moveProject"
+        @search-result="changeProject"
         @query-change="onQueryChange"
         @esc="$modal.hide('move-task')"
         search-category="projects">
@@ -26,7 +26,13 @@
     },
 
     props: {
-      projectId: String
+      taskId: String
+    },
+
+    computed: {
+      task () {
+        return this.$store.state.tasks[this.taskId]
+      }
     },
 
     data () {
@@ -36,19 +42,29 @@
     },
 
     methods: {
-      moveProject (project) {
-        this.$emit('change-project', project)
+      changeProject (project) {
+        let newTask = this.task
+        newTask.projectId = project.id
+        this.updateTask(newTask)
         this.$modal.hide('move-task')
       },
       onOpen () {
-        // this.$nextTick(() => this.$refs.globalsearch.focus())
         this.$refs.globalsearch.focus()
       },
       onQueryChange (query) {
         this.queryInput = query
       },
+      updateTask (newTask) {
+        this.$store.dispatch(
+          'updateTask',
+          {id: this.taskId, newTask: newTask}
+        )
+      },
       createProject () {
-        this.$emit('create-project', this.queryInput)
+        this.$store.dispatch(
+          'addProjectAndSetTask',
+          {projectName: this.queryInput, taskId: this.taskId, task: this.task}
+        )
         this.$modal.hide('move-task')
       }
     }
