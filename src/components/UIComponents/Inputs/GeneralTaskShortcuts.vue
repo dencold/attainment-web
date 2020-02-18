@@ -3,15 +3,20 @@
     <project-selector
       :task-id="id">
     </project-selector>
+    <date-selector
+      :task-id="id">
+    </date-selector>
   </div>
 </template>
 <script>
   import moment from 'moment'
   import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
+  import DateSelector from '@/components/UIComponents/Inputs/DateSelector.vue'
 
   export default {
     components: {
-      'project-selector': ProjectSelector
+      'project-selector': ProjectSelector,
+      'date-selector': DateSelector
     },
 
     props: {
@@ -48,6 +53,8 @@
           this.today()
         } else if (e.key === 'v') {
           this.$modal.show('move-task')
+        } else if (e.key === '9') {
+          this.$modal.show('date-selector')
         } else if (e.key === 'w') {
           this.weekend()
         } else if (e.key === 'z') {
