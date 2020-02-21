@@ -3,20 +3,25 @@
     <project-selector
       :task-id="id">
     </project-selector>
-    <date-selector
+    <due-selector
       :task-id="id">
-    </date-selector>
+    </due-selector>
+    <snooze-selector
+      :task-id="id">
+    </snooze-selector>
   </div>
 </template>
 <script>
   import moment from 'moment'
   import ProjectSelector from '@/components/UIComponents/Inputs/ProjectSelector.vue'
-  import DateSelector from '@/components/UIComponents/Inputs/DateSelector.vue'
+  import DueSelector from '@/components/UIComponents/Inputs/DueSelector.vue'
+  import SnoozeSelector from '@/components/UIComponents/Inputs/SnoozeSelector.vue'
 
   export default {
     components: {
       'project-selector': ProjectSelector,
-      'date-selector': DateSelector
+      'due-selector': DueSelector,
+      'snooze-selector': SnoozeSelector
     },
 
     props: {
@@ -39,7 +44,9 @@
 
     methods: {
       handleKeyUp (e) {
-        if (e.key === 'l') {
+        if (e.key === 'D') {
+          this.$modal.show('due-selector')
+        } else if (e.key === 'l') {
           this.later()
         } else if (e.key === 'e') {
           this.toggleCompleted()
@@ -53,10 +60,10 @@
           this.today()
         } else if (e.key === 'v') {
           this.$modal.show('move-task')
-        } else if (e.key === '9') {
-          this.$modal.show('date-selector')
         } else if (e.key === 'w') {
           this.weekend()
+        } else if (e.key === 'Z') {
+          this.$modal.show('snooze-selector')
         } else if (e.key === 'z') {
           this.defaultSnooze()
         }

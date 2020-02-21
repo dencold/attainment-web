@@ -7,6 +7,7 @@ import Notifications from './components/UIComponents/NotificationPlugin'
 import SideBar from './components/UIComponents/SidebarPlugin'
 import VueMoment from 'vue-moment'
 import VModal from 'vue-js-modal'
+import Datepicker from 'vuejs-datepicker'
 import App from './App'
 
 // library imports
@@ -26,6 +27,7 @@ Vue.use(Notifications)
 Vue.use(SideBar)
 Vue.use(VueMoment)
 Vue.use(VModal)
+Vue.use(Datepicker)
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {

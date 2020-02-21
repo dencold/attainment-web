@@ -76,8 +76,6 @@ export default {
         this.$router.push({name: 'projects'})
       } else if (e.key === 'T') {
         this.$router.push({name: 'tasks'})
-      } else if (e.key === 'D') {
-        this.$router.push({name: 'dashboard'})
       } else if (e.key === 'W') {
         this.$router.push({name: 'weekend'})
       } else if (e.key === 'A') {
