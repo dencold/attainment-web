@@ -1,11 +1,22 @@
 <template>
-  <modal name="snooze-selector" height="auto" :pivotY="0.15">
+  <modal name="snooze-selector" height="auto" :pivotY="0.15" @opened="onOpen" @closed="clear">
     <div class="content">
       <strong class="title">
-        Snooze Task
+        Snooze Until
       </strong>
+      <input
+        type="text"
+        ref="daysinput"
+        v-model.number="numDays"
+        placeholder="Number of days"
+        @input="addDays"
+        @keyup.enter="commitDays"
+        @keyup.esc="handleEsc"
+        @keypress.stop
+        @keyup.stop
+      >
       <datepicker
-        :value="Date()"
+        :value="displayDate"
         :inline="true"
         @input="updateSnooze">
       </datepicker>
@@ -32,6 +43,13 @@
       }
     },
 
+    data () {
+      return {
+        numDays: '',
+        displayDate: ''
+      }
+    },
+
     methods: {
       updateSnooze (snooze) {
         let dt = moment(snooze)
@@ -42,6 +60,7 @@
         newTask.state = 'dateSet'
         this.updateTask(newTask)
 
+        this.clear()
         this.$modal.hide('snooze-selector')
       },
 
@@ -50,6 +69,36 @@
           'updateTask',
           {id: this.taskId, newTask: newTask}
         )
+      },
+
+      addDays (e) {
+        let dt = moment().add(e.target.value, 'days')
+        dt.hour(0).minute(0).second(0).utc()
+        this.displayDate = dt.format()
+      },
+
+      commitDays () {
+        this.updateSnooze(this.displayDate)
+      },
+
+      focus () {
+        this.$refs.daysinput.focus()
+      },
+      onOpen () {
+        if (this.task && this.task.snoozedUntil) {
+          this.displayDate = this.task.snoozedUntil
+        }
+        this.focus()
+      },
+
+      handleEsc () {
+        this.clear()
+        this.$emit('esc')
+        this.$modal.hide('snooze-selector')
+      },
+      clear () {
+        this.numDays = ''
+        this.displayDate = ''
       }
     }
   }

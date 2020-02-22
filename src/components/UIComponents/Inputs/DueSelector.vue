@@ -1,5 +1,5 @@
 <template>
-  <modal name="due-selector" height="auto" :pivotY="0.15" @opened="onOpen">
+  <modal name="due-selector" height="auto" :pivotY="0.15" @opened="onOpen" @closed="clear">
     <div class="content">
       <strong class="title">
         Set Task Due
@@ -9,13 +9,14 @@
         ref="daysinput"
         v-model.number="numDays"
         placeholder="Number of days"
-        @keyup.enter="addDays"
+        @input="addDays"
+        @keyup.enter="commitDays"
         @keyup.esc="handleEsc"
         @keypress.stop
         @keyup.stop
       >
       <datepicker
-        :value="Date()"
+        :value="displayDate"
         :inline="true"
         @input="updateDue">
       </datepicker>
@@ -44,7 +45,8 @@
 
     data () {
       return {
-        numDays: ''
+        numDays: '',
+        displayDate: ''
       }
     },
 
@@ -69,16 +71,26 @@
         )
       },
 
-      addDays () {
-        let dt = moment().add(this.numDays, 'days')
-        this.updateDue(dt)
+      addDays (e) {
+        let dt = moment().add(e.target.value, 'days')
+        dt.hour(0).minute(0).second(0).utc()
+        this.displayDate = dt.format()
       },
+
+      commitDays () {
+        this.updateDue(this.displayDate)
+      },
+
       focus () {
         this.$refs.daysinput.focus()
       },
       onOpen () {
+        if (this.task && this.task.dueAt) {
+          this.displayDate = this.task.dueAt
+        }
         this.focus()
       },
+
       handleEsc () {
         this.clear()
         this.$emit('esc')
@@ -86,7 +98,7 @@
       },
       clear () {
         this.numDays = ''
-        this.$refs.daysinput.blur()
+        this.displayDate = ''
       }
     }
   }
