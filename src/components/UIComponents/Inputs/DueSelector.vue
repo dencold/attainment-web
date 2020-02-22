@@ -1,9 +1,19 @@
 <template>
-  <modal name="due-selector" height="auto" :pivotY="0.15">
+  <modal name="due-selector" height="auto" :pivotY="0.15" @opened="onOpen">
     <div class="content">
       <strong class="title">
         Set Task Due
       </strong>
+      <input
+        type="text"
+        ref="daysinput"
+        v-model.number="numDays"
+        placeholder="Number of days"
+        @keyup.enter="addDays"
+        @keyup.esc="handleEsc"
+        @keypress.stop
+        @keyup.stop
+      >
       <datepicker
         :value="Date()"
         :inline="true"
@@ -32,6 +42,12 @@
       }
     },
 
+    data () {
+      return {
+        numDays: ''
+      }
+    },
+
     methods: {
       updateDue (due) {
         let dt = moment(due)
@@ -42,6 +58,7 @@
         newTask.state = 'dateSet'
         this.updateTask(newTask)
 
+        this.clear()
         this.$modal.hide('due-selector')
       },
 
@@ -50,6 +67,26 @@
           'updateTask',
           {id: this.taskId, newTask: newTask}
         )
+      },
+
+      addDays () {
+        let dt = moment().add(this.numDays, 'days')
+        this.updateDue(dt)
+      },
+      focus () {
+        this.$refs.daysinput.focus()
+      },
+      onOpen () {
+        this.focus()
+      },
+      handleEsc () {
+        this.clear()
+        this.$emit('esc')
+        this.$modal.hide('due-selector')
+      },
+      clear () {
+        this.numDays = ''
+        this.$refs.daysinput.blur()
       }
     }
   }
