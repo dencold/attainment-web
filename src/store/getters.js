@@ -397,7 +397,7 @@ export default {
     if (searchCategory === 'all' || searchCategory === 'projects') {
       for (let key in state.projects) {
         // we only search active projects
-        if (state.projects[key].completed === false || state.projects[key].state !== 'completed') {
+        if (state.projects[key].state !== 'completed') {
           let proj = state.projects[key]
           proj['id'] = key
           proj['type'] = 'project'
@@ -409,7 +409,7 @@ export default {
     if (searchCategory === 'all' || searchCategory === 'tasks') {
       // and now our tasks
       for (let key in state.tasks) {
-        if (state.tasks[key].completed === false || state.tasks[key].state !== 'completed') {
+        if (state.tasks[key].state !== 'completed') {
           let task = state.tasks[key]
           task['id'] = key
           task['type'] = 'task'
