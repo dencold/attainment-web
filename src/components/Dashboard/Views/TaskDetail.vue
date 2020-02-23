@@ -55,17 +55,9 @@
         <div class="icon pointer" @click="showDatePicker('snooze')">
           <i class="ti-alarm-clock"></i>
         </div>
-        <datetime
-          ref="snoozepicker"
-          :value="task.snoozedUntil"
-          @input="updateSnooze"
-          placeholder="Set snooze"
-          class="dateform"
-          type="date"
-          input-format="YYYY-MM-DD"
-          input-class="datetime-input"
-          auto-close>
-        </datetime>
+        <span @click="showDatePicker('snooze')">
+          {{task.snoozedUntil}}
+        </span>
         <div class="icon pointer" @click="clearDate('snooze')">
           <i class="ti-close"></i>
         </div>
@@ -74,17 +66,9 @@
         <div class="icon pointer" @click="showDatePicker('due')">
           <i class="ti-calendar"></i>
         </div>
-        <datetime
-          ref="duepicker"
-          :value="task.dueAt"
-          @input="updateDue"
-          placeholder="Set due date"
-          class="dateform"
-          type="date"
-          input-format="YYYY-MM-DD"
-          input-class="datetime-input"
-          auto-close>
-        </datetime>
+        <span @click="showDatePicker('due')">
+          {{task.dueAt}}
+        </span>
         <div class="icon pointer" @click="clearDate('due')">
           <i class="ti-close"></i>
         </div>
@@ -108,12 +92,10 @@
 <script>
   import TextArea from '@/components/UIComponents/Inputs/TextArea.vue'
   import GeneralTaskShortcuts from '@/components/UIComponents/Inputs/GeneralTaskShortcuts.vue'
-  import { Datetime } from 'vue-datetime'
 
   export default {
     components: {
       'text-area': TextArea,
-      'datetime': Datetime,
       'general-task-shortcuts': GeneralTaskShortcuts
     },
 
@@ -144,20 +126,16 @@
     methods: {
       showDatePicker (pickerType) {
         if (pickerType === 'due') {
-          this.$refs.duepicker.open()
+          this.$modal.show('due-selector')
         } else if (pickerType === 'snooze') {
-          this.$refs.snoozepicker.open()
+          this.$modal.show('snooze-selector')
         }
       },
       handleKeyUp (e) {
-        if (e.key === 'd') {
-          this.showDatePicker('due')
-        } else if (e.key === 'n') {
+        if (e.key === 'n') {
           this.$refs.notes.focus()
         } else if (e.key === 'r') {
           this.$refs.nameInput.focus()
-        } else if (e.key === 'Z') {
-          this.showDatePicker('snooze')
         }
       },
       // there's a lot of boilerplate repeated code that I'm really unhappy with
@@ -187,22 +165,6 @@
       },
       cycleSize () {
         this.$store.dispatch('cycleTaskSize', this.id)
-      },
-      updateSnooze (snooze) {
-        if (snooze !== this.task.snoozedUntil) {
-          let newTask = this.task
-          newTask.snoozedUntil = snooze
-          newTask.state = 'dateSet'
-          this.updateTask(newTask)
-        }
-      },
-      updateDue (dueAt) {
-        if (dueAt !== this.task.dueAt) {
-          let newTask = this.task
-          newTask.dueAt = dueAt
-          newTask.state = 'dateSet'
-          this.updateTask(newTask)
-        }
       },
       updateNotes (newNotes) {
         if (newNotes !== this.task.notes) {
